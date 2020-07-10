@@ -25,4 +25,9 @@ define( 'FIRETREE_NOTIFY_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 require_once FIRETREE_NOTIFY_PLUGIN_DIR . 'vendor/autoload.php';
 require_once FIRETREE_NOTIFY_PLUGIN_DIR . 'includes/cpt.php';
+require_once FIRETREE_NOTIFY_PLUGIN_DIR . 'includes/filters.php';
+require_once FIRETREE_NOTIFY_PLUGIN_DIR . 'includes/events/post.php';
+require_once FIRETREE_NOTIFY_PLUGIN_DIR . 'includes/events/page.php';
 require_once FIRETREE_NOTIFY_PLUGIN_DIR . 'includes/fields.php';
+require_once FIRETREE_NOTIFY_PLUGIN_DIR . 'includes/notifications.php';
+require_once FIRETREE_NOTIFY_PLUGIN_DIR . 'includes/services/discord.php';
