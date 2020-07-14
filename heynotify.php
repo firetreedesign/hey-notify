@@ -35,7 +35,8 @@ require_once HEYNOTIFY_PLUGIN_DIR . 'includes/class-service.php';
 // Events
 require_once HEYNOTIFY_PLUGIN_DIR . 'includes/events/post/class-post-hook.php';
 require_once HEYNOTIFY_PLUGIN_DIR . 'includes/events/post/class-post-event.php';
-require_once HEYNOTIFY_PLUGIN_DIR . 'includes/events/page.php';
+require_once HEYNOTIFY_PLUGIN_DIR . 'includes/events/page/class-page-hook.php';
+require_once HEYNOTIFY_PLUGIN_DIR . 'includes/events/page/class-page-event.php';
 
 // Services
 require_once HEYNOTIFY_PLUGIN_DIR . 'includes/services/class-discord.php';
