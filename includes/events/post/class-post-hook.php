@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * This handles all of the Post actions.
  */
-class PostHook extends Hook {
+class Post_Hook extends Hook {
 	
 	/**
 	 * When a post enters a DRAFT state.
@@ -26,6 +26,10 @@ class PostHook extends Hook {
 	 * @return void
 	 */
 	public function post_draft( $new_status, $old_status, $post ) {
+
+		if ( 'post' !== $post->post_type ) {
+			return;
+		}
 		
 		if ( 'draft' === $old_status ) {
 			return;
@@ -34,7 +38,7 @@ class PostHook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'A new post was drafted!', 'heynotify' ), $post );
+		$this->send_notification( \__( 'Hey, a new post was drafted!', 'heynotify' ), $post );
 	}
 
 	/**
@@ -46,6 +50,10 @@ class PostHook extends Hook {
 	 * @return void
 	 */
 	public function post_published( $new_status, $old_status, $post ) {
+
+		if ( 'post' !== $post->post_type ) {
+			return;
+		}
 		
 		$valid = false;
 		switch ( $old_status ) {
@@ -61,7 +69,7 @@ class PostHook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'A new post was published!', 'heynotify' ), $post );
+		$this->send_notification( \__( 'Hey, a new post was published!', 'heynotify' ), $post );
 	}
 
 	/**
@@ -73,6 +81,10 @@ class PostHook extends Hook {
 	 * @return void
 	 */
 	public function post_scheduled( $new_status, $old_status, $post ) {
+
+		if ( 'post' !== $post->post_type ) {
+			return;
+		}
 		
 		$valid = false;
 		switch ( $old_status ) {
@@ -87,10 +99,14 @@ class PostHook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'A new post was scheduled!', 'heynotify' ), $post );
+		$this->send_notification( \__( 'Hey, a new post was scheduled!', 'heynotify' ), $post );
 	}
 
 	public function post_pending( $new_status, $old_status, $post ) {
+
+		if ( 'post' !== $post->post_type ) {
+			return;
+		}
 		
 		$valid = false;
 		switch ( $old_status ) {
@@ -106,7 +122,7 @@ class PostHook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'A new post is pending!', 'heynotify' ), $post );
+		$this->send_notification( \__( 'Hey, a new post is pending!', 'heynotify' ), $post );
 	}
 
 	/**
@@ -118,12 +134,16 @@ class PostHook extends Hook {
 	 * @return void
 	 */
 	public function post_updated( $new_status, $old_status, $post ) {
+
+		if ( 'post' !== $post->post_type ) {
+			return;
+		}
 		
 		if ( $old_status !== $new_status ) {
 			return;
 		}
 
-		$this->send_notification( \__( 'A post was updated!', 'heynotify' ), $post );
+		$this->send_notification( \__( 'Hey, a post was updated!', 'heynotify' ), $post );
 	}
 
 	/**
@@ -135,14 +155,25 @@ class PostHook extends Hook {
 	 * @return void
 	 */
 	public function post_trashed( $new_status, $old_status, $post ) {
+
+		if ( 'post' !== $post->post_type ) {
+			return;
+		}
 		
 		if ( 'trash' !== $new_status ) {
 			return;
 		}
 
-		$this->send_notification( \__( 'A post was deleted!', 'heynotify' ), $post );
+		$this->send_notification( \__( 'Hey, a post was deleted!', 'heynotify' ), $post );
 	}
 
+	/**
+	 * Send the notification
+	 *
+	 * @param string $title
+	 * @param object $post
+	 * @return void
+	 */
 	private function send_notification( $title, $post ) {
 		
 		$attachments = array(
@@ -159,7 +190,7 @@ class PostHook extends Hook {
 		);
 
 		$categories = \strip_tags( \get_the_term_list( $post->ID, 'category', '', ', ', '' ) );
-		if ( '' !== $categories && ! is_wp_error( $categories ) ) {
+		if ( '' !== $categories && ! \is_wp_error( $categories ) ) {
 			$attachments[] = array(
 				'name' => \esc_html__( 'Categories', 'heynotify' ),
 				'value' => $categories,
@@ -168,7 +199,7 @@ class PostHook extends Hook {
 		}
 
 		$tags = \strip_tags( \get_the_tag_list( '', ', ', '', $post->ID ) );
-		if ( '' !== $tags && ! is_wp_error( $tags ) ) {
+		if ( '' !== $tags && ! \is_wp_error( $tags ) ) {
 			$attachments[] = array(
 				'name' => \esc_html__( 'Tags', 'heynotify' ),
 				'value' => $tags,
@@ -176,7 +207,7 @@ class PostHook extends Hook {
 			);
 		}
 
-		$url = get_permalink( $post->ID );
+		$url = \get_permalink( $post->ID );
 
 		do_action(
 			'heynotify_send_message',

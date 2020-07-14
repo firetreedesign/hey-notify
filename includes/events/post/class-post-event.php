@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class PostEvent extends Event {
+class Post_Event extends Event {
 
 	public function types( $types = array() ) {
 		if ( ! isset( $types['post'] ) ) {
@@ -82,4 +82,4 @@ class PostEvent extends Event {
 
 }
 
-new PostEvent( 'post', '\HeyNotify\PostHook' );
+new Post_Event( 'post', '\HeyNotify\Post_Hook' );
