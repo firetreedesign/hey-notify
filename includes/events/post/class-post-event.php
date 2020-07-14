@@ -1,0 +1,85 @@
+<?php
+/**
+ * Post events
+ * 
+ * @package HeyNotify
+ */
+
+namespace HeyNotify;
+
+use Carbon_Fields\Field;
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+class PostEvent extends Event {
+
+	public function types( $types = array() ) {
+		if ( ! isset( $types['post'] ) ) {
+			$types['post'] = __( 'Posts', 'heynotify' );
+		}
+		return $types;
+	}
+
+	/**
+	 * Post events
+	 *
+	 * @param array $fields
+	 * @return array
+	 */
+	public function actions( $fields = array() ) {
+		$fields[] = (
+			Field::make( 'select', 'post', __( 'Action', 'heynotify' ) )
+				->set_options(
+					array(
+						'post_draft'     => __( 'Post Draft', 'heynotify' ),
+						'post_pending'   => __( 'Post Pending', 'heynotify' ),
+						'post_published' => __( 'Post Published', 'heynotify' ),
+						'post_scheduled' => __( 'Post Scheduled', 'heynotify' ),
+						'post_updated'   => __( 'Post Updated', 'heynotify' ),
+						'post_trashed'   => __( 'Post Moved to Trash', 'heynotify' ),
+					)
+				)
+				->set_conditional_logic(
+					array(
+						array(
+							'field' => 'type',
+							'value' => 'post',
+						)
+					)
+				)
+				->set_width( 50 )
+		);
+		return $fields;
+	}
+
+	public function watch( $notification, $event ) {
+		$hook = new $this->hook( $notification, $event );
+	
+		switch( $event[ $event['type'] ] ) {
+			case 'post_draft':
+				add_action( 'transition_post_status', array( $hook, 'post_draft' ), 10, 3 );
+				break;
+			case 'post_published':
+				add_action( 'transition_post_status', array( $hook, 'post_published' ), 10, 3 );
+				break;
+			case 'post_scheduled':
+				add_action( 'transition_post_status', array( $hook, 'post_scheduled' ), 10, 3 );
+				break;
+			case 'post_pending':
+				add_action( 'transition_post_status', array( $hook, 'post_pending' ), 10, 3 );
+				break;
+			case 'post_updated':
+				add_action( 'transition_post_status', array( $hook, 'post_updated' ), 10, 3 );
+				break;
+			case 'post_trashed':
+				add_action( 'transition_post_status', array( $hook, 'post_trashed' ), 10, 3 );
+				break;
+		}
+	}
+
+}
+
+new PostEvent( 'post', '\HeyNotify\PostHook' );

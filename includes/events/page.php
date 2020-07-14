@@ -2,10 +2,10 @@
 /**
  * Page events
  * 
- * @package FireTreeNotify
+ * @package HeyNotify
  */
 
-namespace FireTreeNotify\Events\Page;
+namespace HeyNotify\Events\Page;
 
 use Carbon_Fields\Field;
 
@@ -15,32 +15,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Filters
-add_filter( 'firetree_notify_event_types ', __NAMESPACE__ . '\\types' );
-add_filter( 'firetree_notify_event_actions', __NAMESPACE__ . '\\page' );
+add_filter( 'heynotify_event_types ', __NAMESPACE__ . '\\types' );
+add_filter( 'heynotify_event_actions', __NAMESPACE__ . '\\actions' );
 
+/**
+ * Add Page type
+ *
+ * @param array $types
+ * @return array
+ */
 function types( $types = array() ) {
 	if ( ! isset( $types['page'] ) ) {
-		$types['page'] = __( 'Pages', 'firetree-notify' );
+		$types['page'] = __( 'Pages', 'heynotify' );
 	}
 	return $types;
 }
 
 /**
- * Page events
+ * Add Page actions
  *
  * @param array $fields
  * @return array
  */
-function page( $fields = array() ) {
+function actions( $fields = array() ) {
 	$fields[] = (
-		Field::make( 'select', 'page', __( 'Action', 'firetree-notify' ) )
+		Field::make( 'select', 'page', __( 'Action', 'heynotify' ) )
 			->set_options(
 				array(
-					'page_published' => __( 'Page Published', 'firetree-notify' ),
-					'page_scheduled' => __( 'Page Scheduled', 'firetree-notify' ),
-					'page_pending'   => __( 'Page Pending', 'firetree-notify' ),
-					'page_updated'   => __( 'Page Updated', 'firetree-notify' ),
-					'page_trashed'   => __( 'Page Moved to Trash', 'firetree-notify' ),
+					'page_published' => __( 'Page Published', 'heynotify' ),
+					'page_scheduled' => __( 'Page Scheduled', 'heynotify' ),
+					'page_pending'   => __( 'Page Pending', 'heynotify' ),
+					'page_updated'   => __( 'Page Updated', 'heynotify' ),
+					'page_trashed'   => __( 'Page Moved to Trash', 'heynotify' ),
 				)
 			)
 			->set_conditional_logic(

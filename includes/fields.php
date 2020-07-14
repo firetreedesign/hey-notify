@@ -2,10 +2,10 @@
 /**
  * Fields
  * 
- * @package FireTreeNotify
+ * @package HeyNotify
  */
 
-namespace FireTreeNotify\Fields;
+namespace HeyNotify\Fields;
 
 use Carbon_Fields\Container;
 
@@ -34,11 +34,11 @@ function boot() {
  * @return void
  */
 function service_container() {
-	Container::make( 'post_meta', __( 'Service', 'firetree-notify' ) )
-		->where( 'post_type', '=', 'firetree_notify' )
+	Container::make( 'post_meta', __( 'Service', 'heynotify' ) )
+		->where( 'post_type', '=', 'heynotify' )
 		->set_context( 'normal' )
 		->set_priority( 'default' )
-		->add_fields( apply_filters( 'firetree_notify_service_fields', array() ) );
+		->add_fields( apply_filters( 'heynotify_service_fields', array() ) );
 }
 
 /**
@@ -47,9 +47,9 @@ function service_container() {
  * @return void
  */
 function notification_container() {
-	Container::make( 'post_meta', __( 'Events', 'firetree-notify' ) )
-		->where( 'post_type', '=', 'firetree_notify' )
+	Container::make( 'post_meta', __( 'Events', 'heynotify' ) )
+		->where( 'post_type', '=', 'heynotify' )
 		->set_context( 'normal' )
 		->set_priority( 'default' )
-		->add_fields( apply_filters( 'firetree_notify_event_fields', array() ) );
+		->add_fields( apply_filters( 'heynotify_event_fields', array() ) );
 }

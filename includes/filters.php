@@ -2,10 +2,10 @@
 /**
  * Filters
  * 
- * @package FireTreeNotify
+ * @package HeyNotify
  */
 
-namespace FireTreeNotify\Filters;
+namespace HeyNotify\Filters;
 
 use Carbon_Fields\Field;
 
@@ -15,9 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Filters
-add_filter( 'firetree_notify_service_fields', __NAMESPACE__ . '\\service_fields', 5 );
-add_filter( 'firetree_notify_services_options', __NAMESPACE__ . '\\services_options', 5 );
-add_filter( 'firetree_notify_event_fields', __NAMESPACE__ . '\\event_fields', 5 );
+add_filter( 'heynotify_service_fields', __NAMESPACE__ . '\\service_fields', 5 );
+add_filter( 'heynotify_services_options', __NAMESPACE__ . '\\services_options', 5 );
+add_filter( 'heynotify_event_fields', __NAMESPACE__ . '\\event_fields', 5 );
 
 /**
  * Service fields
@@ -27,37 +27,8 @@ add_filter( 'firetree_notify_event_fields', __NAMESPACE__ . '\\event_fields', 5 
  */
 function service_fields( $fields = array() ) {
 	$fields[] = (
-		Field::make( 'radio_image', 'firetree_notify_service', __( 'Select a service', 'firetree-notify' ) )
-			->set_options( apply_filters( 'firetree_notify_services_options', array() ) )
-	);
-	$fields[] = (
-		Field::make( 'text', 'firetree_notify_webhook_url', __( 'Webhook URL' ) )
-			->set_attribute( 'type', 'url' )
-			->set_help_text( __( 'The webhook that was generated for you by your preferred service.', 'firetree-notify' ) )
-	);
-	$fields[] = (
-		Field::make( 'text', 'firetree_notify_discord_username', __( 'Discord Username' ) )
-			->set_help_text( __( 'Override the default username of the webhook. Not required.', 'firetree-notify' ) )
-			->set_conditional_logic(
-				array(
-					array(
-						'field' => 'firetree_notify_service',
-						'value' => 'discord',
-					)
-				)
-			)
-	);
-	$fields[] = (
-		Field::make( 'image', 'firetree_notify_discord_avatar', __( 'Discord Avatar' ) )
-			->set_help_text( __( 'Override the default avatar of the webhook. Not required.', 'firetree-notify' ) )
-			->set_conditional_logic(
-				array(
-					array(
-						'field' => 'firetree_notify_service',
-						'value' => 'discord',
-					)
-				)
-			)
+		Field::make( 'radio_image', 'heynotify_service', __( 'Select a service', 'heynotify' ) )
+			->set_options( apply_filters( 'heynotify_services_options', array() ) )
 	);
 	return $fields;
 }
@@ -70,11 +41,7 @@ function service_fields( $fields = array() ) {
  */
 function services_options( $services = array() ) {
 	if ( ! isset( $services['slack'] ) ) {
-		$services['slack'] = FIRETREE_NOTIFY_PLUGIN_URL . '/images/services/slack.png';
-	}
-
-	if ( ! isset( $services['discord'] ) ) {
-		$services['discord'] = FIRETREE_NOTIFY_PLUGIN_URL . '/images/services/discord.png';
+		$services['slack'] = HEYNOTIFY_PLUGIN_URL . '/images/services/slack.png';
 	}
 
 	return $services;
@@ -88,20 +55,21 @@ function services_options( $services = array() ) {
  */
 function event_fields( $fields = array() ) {
 	$fields[] = (
-		Field::make( 'complex', 'firetree_notify_events', __( 'Notification Events', 'firetree-notify' ) )
+		Field::make( 'complex', 'heynotify_events', __( 'Notification Events', 'heynotify' ) )
 			->setup_labels(
 				array(
-					'plural_name' => __( 'Events', 'firetree-notify' ),
-					'singular_name' => __( 'Event', 'firetree-notify' )
+					'plural_name' => __( 'Events', 'heynotify' ),
+					'singular_name' => __( 'Event', 'heynotify' )
 				)
 			)
 			->add_fields(
 				array_merge(
 					array(
-						Field::make( 'select', 'type', __( 'Event Type', 'firetree-notify' ) )
-							->set_options( apply_filters( 'firetree_notify_event_types ', array() ) )
+						Field::make( 'select', 'type', __( 'Event Type', 'heynotify' ) )
+							->set_options( apply_filters( 'heynotify_event_types ', array() ) )
+							->set_width( 50 )
 					),
-					apply_filters( 'firetree_notify_event_actions', array() )
+					apply_filters( 'heynotify_event_actions', array() )
 				)
 			)
 			->set_header_template( '

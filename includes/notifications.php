@@ -2,10 +2,10 @@
 /**
  * Notifications
  * 
- * @package FireTreeNotify
+ * @package HeyNotify
  */
 
-namespace FireTreeNotify\Notifications;
+namespace HeyNotify\Notifications;
 
 use WP_Query;
 
@@ -30,40 +30,37 @@ function setup() {
 		$notifications = $query->get_posts();
 
 		foreach ( $notifications as $notification ) {
-			$events = \carbon_get_post_meta( $notification->ID, 'firetree_notify_events' );
+			// error_log( json_encode( $notification ) );
+			$events = \carbon_get_post_meta( $notification->ID, 'heynotify_events' );
 			if ( $events ) {
 				foreach ( $events as $event ) {
 					$type = $event['type'];
-					do_action( "firetree_notify_add_action_{$type}", $notification, $event );
+					// error_log( 'Do Action: ' . "heynotify_add_action_{$type}" );
+					do_action( "heynotify_add_action_{$type}", $notification, $event );
 				}
 			}
 		}
+	} else {
+		// error_log('No notifications set up');
 	}
 }
 
 function get_query() {
 	// Check the cache for the query.
-	$notifications = wp_cache_get( 'firetree_notify_notifications' );
+	$notifications = wp_cache_get( 'heynotify_notifications' );
 
 	// If the cache is empty, then run the query.
 	if ( false === $notifications ) {
 		$notifications = new WP_Query( array(
 			'posts_per_page' => -1,
-			'post_type'      => 'firetree_notify',
+			'post_type'      => 'heynotify',
 			'post_status'    => 'publish',
-			'meta_query' => array(
-				array(
-					'key'     => 'firetree_notify_webhook_url',
-					'value'   => '',
-					'compare' => '!=',
-				),
-			),
 		) );
 
 		// Save the query to the cache.
-		wp_cache_set( 'firetree_notify_notifications', $notifications );
+		wp_cache_set( 'heynotify_notifications', $notifications );
 
 	}
-
+	// error_log( json_encode( $notifications ) );
 	return $notifications;
 }
