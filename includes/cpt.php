@@ -14,10 +14,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Actions
 add_action( 'init', __NAMESPACE__ . '\\register_post_type' );
+add_action( 'manage_heynotify_posts_custom_column', __NAMESPACE__ . '\\column_content', 10, 2 );
 
 // Filters
 add_filter( 'use_block_editor_for_post_type', __NAMESPACE__ . '\\disable_block_editor', 10, 2 );
 add_filter( 'gutenberg_can_edit_post_type', __NAMESPACE__ . '\\disable_block_editor', 10, 2 );
+add_filter( 'manage_heynotify_posts_columns', __NAMESPACE__ . '\\column_titles' );
 
 /**
  * Register the Custom Post Type
@@ -78,4 +80,52 @@ function disable_block_editor($is_enabled, $post_type) {
 	}
 	
 	return $is_enabled;
+}
+
+/**
+ * Set up the Custom Post Type Column Titles
+ *
+ * @since 1.0.0
+ * @param array $defaults Defaults.
+ * @return array New Defaults
+ */
+function column_titles( $defaults ) {
+	$new_defaults = array();
+	foreach ( $defaults as $key => $title ) {
+		switch ( $key ) {
+			case 'title':
+				$new_defaults[ $key ] = $title;
+				$new_defaults['service'] = __( 'Service', 'heynotify' );
+				$new_defaults['events'] = __( 'Events', 'heynotify' );
+				break;
+			default:
+				$new_defaults[ $key ] = $title;
+				break;
+		}
+	}
+	return $new_defaults;
+}
+
+/**
+* Echo the Custom Post Type Column Content
+*
+* @since 1.0.0
+* @param string $column_name Column name.
+* @param int $post_id Post ID.
+* @return void
+*/
+function column_content( $column_name, $post_id ) {
+	switch ( $column_name ) {
+		case 'service':
+			echo ucfirst( \carbon_get_post_meta( $post_id, 'heynotify_service' ) );
+			break;
+		case 'events':
+			$events = \carbon_get_post_meta( $post_id, 'heynotify_events' );
+			if ( $events ) {
+				foreach ( $events as $event ) {
+					echo ucwords( str_replace( '_', ' ', "{$event[ $event['type'] ]}<br />" ) );
+				}
+			}
+			break;
+	}
 }
