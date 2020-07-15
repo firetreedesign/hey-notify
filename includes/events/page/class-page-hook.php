@@ -191,6 +191,12 @@ class Page_Hook extends Hook {
 
 		$url = \get_permalink( $post->ID );
 
+		$image = '';
+		if ( has_post_thumbnail( $post ) ) {
+			$image_id = \get_post_thumbnail_id($post);
+			$image = \wp_get_attachment_image_url( $image_id, 'thumbnail' );
+		}
+
 		do_action(
 			'heynotify_send_message',
 			array(
@@ -198,7 +204,8 @@ class Page_Hook extends Hook {
 				'content'      => $title,
 				'url_title'    => $post->post_title,
 				'url'          => $url,
-				'attachments'  => $attachments
+				'attachments'  => $attachments,
+				'image'        => $image
 			)
 		);
 	}

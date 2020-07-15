@@ -87,13 +87,9 @@ class Discord extends Service {
 	 * @return void
 	 */
 	public function message( $message ) {
-		// error_log('Running Discord Bot...');
-		// error_log( $message['notification']->ID );
 		$service = \carbon_get_post_meta( $message['notification']->ID, 'heynotify_service' );
-		// error_log('Service: ' . $service );
 	
 		if ( 'discord' !== $service ) {
-			error_log( 'Bailing out. Not for Discord.' );
 			return;
 		}
 	
@@ -121,6 +117,12 @@ class Discord extends Service {
 				);
 			}
 			$embed_item['fields'] = $fields;
+		}
+
+		if ( isset( $message['image'] ) ) {
+			$embed_item['thumbnail'] = array(
+				'url' => $message['image']
+			);
 		}
 	
 		$body = array(
@@ -151,19 +153,14 @@ class Discord extends Service {
 		) );
 		
 		if ( ! \is_wp_error( $response ) ) {
-			// The request went through successfully, check the response code against
-			// what we're expecting
 			if ( 204 == \wp_remote_retrieve_response_code( $response ) ) {
 				// error_log( 'Message sent to Discord!' );
 			} else {
-				// The response code was not what we were expecting, record the message
 				$error_message = \wp_remote_retrieve_response_message( $response );
-				\error_log( $error_message );
 			}
 		} else {
 			// There was an error making the request
 			$error_message = $response->get_error_message();
-			\error_log( $error_message );
 		}
 	}
 }

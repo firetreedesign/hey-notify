@@ -72,7 +72,6 @@ class Email extends Service {
 		$service = \carbon_get_post_meta( $message['notification']->ID, 'heynotify_service' );
 	
 		if ( 'email' !== $service ) {
-			\error_log( 'Bailing out. Not for Email.' );
 			return;
 		}
 	
@@ -116,9 +115,7 @@ class Email extends Service {
 			"From: {$from_name} <{$from_email}>"
 		);
 	
-		error_log( json_encode( array( $to_email, $subject, $body, $headers ) ) );
 		$result = wp_mail( $to_email, $subject, $body, $headers );
-		error_log( "Email sent: {$result}" );
 	}
 }
 
