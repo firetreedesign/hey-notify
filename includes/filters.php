@@ -18,6 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 add_filter( 'heynotify_service_fields', __NAMESPACE__ . '\\service_fields', 5 );
 add_filter( 'heynotify_services_options', __NAMESPACE__ . '\\services_options', 5 );
 add_filter( 'heynotify_event_fields', __NAMESPACE__ . '\\event_fields', 5 );
+add_filter( 'heynotify_settings_uninstall', __NAMESPACE__ . '\\settings_uninstall_fields', 5 );
+add_filter( 'heynotify_settings_general', __NAMESPACE__ . '\\settings_general_fields', 5 );
 
 /**
  * Service fields
@@ -29,6 +31,7 @@ function service_fields( $fields = array() ) {
 	$fields[] = (
 		Field::make( 'radio_image', 'heynotify_service', __( 'Select a service', 'heynotify' ) )
 			->set_options( apply_filters( 'heynotify_services_options', array() ) )
+			->set_default_value( \get_option( '_heynotify_default_service' ) )
 	);
 	return $fields;
 }
@@ -75,6 +78,51 @@ function event_fields( $fields = array() ) {
 			->set_header_template( '
 				Event: <%- type %>
 			' )
+	);
+	return $fields;
+}
+
+/**
+ * Settings - Uninstall fields
+ *
+ * @param array $fields
+ * @return void
+ */
+function settings_uninstall_fields( $fields = array() ) {
+	$fields[] = (
+		Field::make( 'html', 'heynotify_uninstall_heading' )
+    		->set_html(
+				sprintf(
+					'<p>%1s</p>',
+					__( 'Upon deletion of the plugin, you can optionally remove all custom data, settings, etc.', 'heynotify' )
+				)
+			)
+	);
+	$fields[] = (
+		Field::make( 'checkbox', 'heynotify_remove_data', __( 'Remove all data when Hey Notify is deleted.', 'heynotify' ) )
+	);
+	return $fields;
+}
+
+/**
+ * Settings - Services fields
+ *
+ * @param array $fields
+ * @return void
+ */
+function settings_general_fields( $fields = array() ) {
+	$fields[] = (
+		Field::make( 'html', 'heynotify_services_heading' )
+			->set_html(
+				sprintf(
+					'<p>%1s</p>',
+					__( 'General settings for Hey Notify.', 'heynotify' )
+				)
+			)
+	);
+	$fields[] = (
+		Field::make( 'radio_image', 'heynotify_default_service', __( 'Default service:', 'heynotify' ) )
+			->set_options( apply_filters( 'heynotify_services_options', array() ) )
 	);
 	return $fields;
 }
