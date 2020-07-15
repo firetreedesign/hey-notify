@@ -41,3 +41,4 @@ require_once HEYNOTIFY_PLUGIN_DIR . 'includes/events/page/class-page-event.php';
 // Services
 require_once HEYNOTIFY_PLUGIN_DIR . 'includes/services/class-discord.php';
 require_once HEYNOTIFY_PLUGIN_DIR . 'includes/services/class-slack.php';
+require_once HEYNOTIFY_PLUGIN_DIR . 'includes/services/class-email.php';
