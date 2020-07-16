@@ -17,7 +17,7 @@ class Service {
 	function __construct() {
 		add_filter( 'hey_notify_service_fields', array( $this, 'fields' ), 10 );
 		add_filter( 'hey_notify_services_options', array( $this, 'services' ), 10 );
-		add_action( 'hey_notify_send_message', array( $this, 'message' ), 10, 1 );
+		add_action( 'hey_notify_send_message', array( $this, 'send' ), 10, 1 );
 	}
 
 	/**
@@ -41,12 +41,12 @@ class Service {
 	}
 
 	/**
-	 * Process the message
+	 * Send the message
 	 *
 	 * @param array $message
 	 * @return void
 	 */
-	public function message( $message ) {
+	public function send( $message ) {
 		return;
 	}
 

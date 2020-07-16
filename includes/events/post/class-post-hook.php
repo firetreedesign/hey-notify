@@ -38,7 +38,7 @@ class Post_Hook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'Hey, a new post was drafted!', 'hey-notify' ), $post );
+		$this->prepare_data( \__( 'Hey, a new post was drafted!', 'hey-notify' ), $post );
 	}
 
 	/**
@@ -69,7 +69,7 @@ class Post_Hook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'Hey, a new post was published!', 'hey-notify' ), $post );
+		$this->prepare_data( \__( 'Hey, a new post was published!', 'hey-notify' ), $post );
 	}
 
 	/**
@@ -99,7 +99,7 @@ class Post_Hook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'Hey, a new post was scheduled!', 'hey-notify' ), $post );
+		$this->prepare_data( \__( 'Hey, a new post was scheduled!', 'hey-notify' ), $post );
 	}
 
 	public function post_pending( $new_status, $old_status, $post ) {
@@ -122,7 +122,7 @@ class Post_Hook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'Hey, a new post is pending!', 'hey-notify' ), $post );
+		$this->prepare_data( \__( 'Hey, a new post is pending!', 'hey-notify' ), $post );
 	}
 
 	/**
@@ -143,7 +143,7 @@ class Post_Hook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'Hey, a post was updated!', 'hey-notify' ), $post );
+		$this->prepare_data( \__( 'Hey, a post was updated!', 'hey-notify' ), $post );
 	}
 
 	/**
@@ -164,19 +164,19 @@ class Post_Hook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'Hey, a post was deleted!', 'hey-notify' ), $post );
+		$this->prepare_data( \__( 'Hey, a post was deleted!', 'hey-notify' ), $post );
 	}
 
 	/**
-	 * Send the notification
+	 * Prepare the data
 	 *
 	 * @param string $title
 	 * @param object $post
 	 * @return void
 	 */
-	private function send_notification( $title, $post ) {
+	private function prepare_data( $subject, $post ) {
 		
-		$attachments = array(
+		$fields = array(
 			array(
 				'name'   => \esc_html__( 'Author', 'hey-notify' ),
 				'value'  => \get_the_author_meta( 'display_name', $post->post_author ),
@@ -191,7 +191,7 @@ class Post_Hook extends Hook {
 
 		$categories = \strip_tags( \get_the_term_list( $post->ID, 'category', '', ', ', '' ) );
 		if ( '' !== $categories && ! \is_wp_error( $categories ) ) {
-			$attachments[] = array(
+			$fields[] = array(
 				'name' => \esc_html__( 'Categories', 'hey-notify' ),
 				'value' => $categories,
 				'inline' => false,
@@ -200,31 +200,27 @@ class Post_Hook extends Hook {
 
 		$tags = \strip_tags( \get_the_tag_list( '', ', ', '', $post->ID ) );
 		if ( '' !== $tags && ! \is_wp_error( $tags ) ) {
-			$attachments[] = array(
+			$fields[] = array(
 				'name' => \esc_html__( 'Tags', 'hey-notify' ),
 				'value' => $tags,
 				'inline' => false,
 			);
 		}
 
-		$url = \get_permalink( $post->ID );
-
 		$image = '';
-		if ( has_post_thumbnail( $post ) ) {
+		if ( \has_post_thumbnail( $post ) ) {
 			$image_id = \get_post_thumbnail_id($post);
 			$image = \wp_get_attachment_image_url( $image_id, 'thumbnail' );
 		}
 
-		do_action(
-			'hey_notify_send_message',
-			array(
-				'notification' => $this->notification,
-				'content'      => $title,
-				'url_title'    => $post->post_title,
-				'url'          => $url,
-				'attachments'  => $attachments,
-				'image'        => $image
-			)
+		$data = array(
+			'subject' => $subject,
+			'title' => $post->post_title,
+			'url' => \get_permalink( $post->ID ),
+			'image' => $image,
+			'fields' => $fields,
 		);
+
+		$this->send( $data );
 	}
 }

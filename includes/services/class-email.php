@@ -62,12 +62,12 @@ class Email extends Service {
 	}
 
 	/**
-	 * Process the message
+	 * Send the message
 	 *
 	 * @param array $message
 	 * @return void
 	 */
-	public function message( $message ) {
+	public function send( $message ) {
 
 		$service = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_service' );
 	
@@ -90,25 +90,41 @@ class Email extends Service {
 
 		$from_email = \get_option('admin_email');
 		$from_name = \__( 'Hey Notify', 'hey-notify' );
-		$subject = __( "Hey, here's your notification!", 'hey-notify' );
-		if ( isset( $message['content'] ) && '' !== $message['content'] ) {
-			$subject = $message['content'];
+
+		// Subject
+		if ( isset( $message['subject'] ) && '' !== $message['subject'] ) {
+			$subject = $message['subject'];
+		} else {
+			$subject = __( "Hey, here's your notification!", 'hey-notify' );
 		}
 
 		$body = '';
 		
-		if ( '' !== $message['url_title'] ) {
-			$body .= "{$message['url_title']}\r\n";
+		// Title
+		if ( isset( $message['title'] ) && '' !== $message['title'] ) {
+			$body .= "{$message['title']}\r\n";
 		}
 
-		if ( '' !== $message['url'] ) {
+		// URL
+		if ( isset( $message['url'] ) && '' !== $message['url'] ) {
 			$body .= "{$message['url']}\r\n\r\n";
 		}
+
+		// Content
+		if ( isset( $message['content'] ) && '' !== $message['content'] ) {
+			$body .= "{$message['content']}\r\n\r\n";
+		}
 	
-		if ( isset( $message['attachments'] ) && is_array( $message['attachments'] ) ) {
-			foreach( $message['attachments'] as $field ) {
+		// Fields
+		if ( isset( $message['fields'] ) && is_array( $message['fields'] ) ) {
+			foreach( $message['fields'] as $field ) {
 				$body .= "{$field['name']}: {$field['value']}\r\n";
 			}
+		}
+
+		// Footer
+		if ( isset( $message['footer'] ) && '' !== $message['footer'] ) {
+			$body .= "{$message['footer']}";
 		}
 
 		$headers = array(

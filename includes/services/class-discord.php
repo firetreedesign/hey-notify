@@ -81,12 +81,12 @@ class Discord extends Service {
 	}
 
 	/**
-	 * Process the message
+	 * Send the message
 	 *
 	 * @param array $message
 	 * @return void
 	 */
-	public function message( $message ) {
+	public function send( $message ) {
 		$service = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_service' );
 	
 		if ( 'discord' !== $service ) {
@@ -97,19 +97,28 @@ class Discord extends Service {
 		$username    = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_discord_username' );
 		$avatar      = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_discord_avatar' );
 	
+		$body = array();
 		$embed_item = array();
-	
-		if ( '' !== $message['url_title'] ) {
-			$embed_item['title'] = $message['url_title'];
+
+		// Subject
+		if ( isset( $message['subject'] ) && '' !== $message['subject'] ) {
+			$body['content'] = $message['subject'];
 		}
 	
+		// Title
+		if ( '' !== $message['subject'] ) {
+			$embed_item['title'] = $message['subject'];
+		}
+	
+		// URL
 		if ( '' !== $message['url'] ) {
 			$embed_item['url'] = $message['url'];
 		}
 	
-		if ( isset( $message['attachments'] ) && is_array( $message['attachments'] ) ) {
+		// Fields
+		if ( isset( $message['fields'] ) && is_array( $message['fields'] ) ) {
 			$fields = array();
-			foreach( $message['attachments'] as $field ) {
+			foreach( $message['fields'] as $field ) {
 				$fields[] = array(
 					'name' => $field['name'],
 					'value' => $field['value'],
@@ -119,9 +128,22 @@ class Discord extends Service {
 			$embed_item['fields'] = $fields;
 		}
 
+		// Image
 		if ( isset( $message['image'] ) ) {
 			$embed_item['thumbnail'] = array(
 				'url' => $message['image']
+			);
+		}
+
+		// Content
+		if ( isset( $message['content'] ) && '' !== $message['content'] ) {
+			$embed_item['description'] = $message['content'];
+		}
+
+		// Footer
+		if ( isset( $message['footer'] ) && '' !== $message['footer'] ) {
+			$embed_item['footer'] = array(
+				'text' => $message['content']
 			);
 		}
 	
@@ -138,10 +160,6 @@ class Discord extends Service {
 			if ( false !== $avatar ) {
 				$body['avatar_url'] = $avatar;
 			}
-		}
-	
-		if ( isset( $message['content'] ) && '' !== $message['content'] ) {
-			$body['content'] = $message['content'];
 		}
 	
 		$json = \json_encode( $body );

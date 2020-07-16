@@ -73,7 +73,7 @@ class Slack extends Service {
 		return $fields;
 	}
 
-	function message( $message ) {
+	function send( $message ) {
 		$service = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_service' );
 	
 		if ( 'slack' !== $service ) {
@@ -86,6 +86,45 @@ class Slack extends Service {
 		
 		$blocks = array();
 
+		// Subject
+		if ( isset( $message['subject'] ) && '' !== $message['subject'] ) {
+			$blocks[] = array(
+				'type' => 'section',
+				'text' => array(
+					'type' => 'mrkdwn',
+					'text' => $message['subject']
+				)
+			);
+		}
+
+		// Title and URL
+		if ( '' !== $message['title'] && '' !== $message['url'] ) {
+			$blocks[] = array(
+				'type' => 'section',
+				'text' => array(
+					'type' => 'mrkdwn',
+					'text' => "*<{$message['url']}|{$message['title']}>*"
+				)
+			);
+		} elseif ( '' !== $message['title'] && '' === $message['url'] ) {
+			$blocks[] = array(
+				'type' => 'section',
+				'text' => array(
+					'type' => 'mrkdwn',
+					'text' => "*{$message['title']}*"
+				)
+			);
+		} elseif ( '' === $message['title'] && '' !== $message['url'] ) {
+			$blocks[] = array(
+				'type' => 'section',
+				'text' => array(
+					'type' => 'mrkdwn',
+					'text' => "*<{$message['url']}|{$message['url']}>*"
+				)
+			);
+		}
+
+		// Content
 		if ( isset( $message['content'] ) && '' !== $message['content'] ) {
 			$blocks[] = array(
 				'type' => 'section',
@@ -95,36 +134,11 @@ class Slack extends Service {
 				)
 			);
 		}
-
-		if ( '' !== $message['url_title'] && '' !== $message['url'] ) {
-			$blocks[] = array(
-				'type' => 'section',
-				'text' => array(
-					'type' => 'mrkdwn',
-					'text' => "*<{$message['url']}|{$message['url_title']}>*"
-				)
-			);
-		} elseif ( '' !== $message['url_title'] && '' === $message['url'] ) {
-			$blocks[] = array(
-				'type' => 'section',
-				'text' => array(
-					'type' => 'mrkdwn',
-					'text' => "*{$message['url_title']}*"
-				)
-			);
-		} elseif ( '' === $message['url_title'] && '' !== $message['url'] ) {
-			$blocks[] = array(
-				'type' => 'section',
-				'text' => array(
-					'type' => 'mrkdwn',
-					'text' => "*<{$message['url']}|{$message['url']}>*"
-				)
-			);
-		}
 	
-		if ( isset( $message['attachments'] ) && is_array( $message['attachments'] ) ) {
+		// Fields
+		if ( isset( $message['fields'] ) && is_array( $message['fields'] ) ) {
 			$fields = array();
-			foreach( $message['attachments'] as $field ) {
+			foreach( $message['fields'] as $field ) {
 				$fields[] = array(
 					'type' => 'mrkdwn',
 					'text' => "*{$field['name']}*\n{$field['value']}"
@@ -139,17 +153,27 @@ class Slack extends Service {
 				$fields_array['accessory'] = array(
 					'type' => 'image',
 					'image_url' => $message['image'],
-					'alt_text' => isset( $message['url_title'] ) ? $message['url_title'] : __( 'Attached image', 'hey-notify' )
+					'alt_text' => isset( $message['title'] ) ? $message['title'] : __( 'Attached image', 'hey-notify' )
 				);
 			}
 
 			$blocks[] = $fields_array;
 		}
 
+		// Footer
+		if ( isset( $message['footer'] ) && '' !== $message['footer'] ) {
+			$blocks[] = array(
+				'type' => 'section',
+				'text' => array(
+					'type' => 'mrkdwn',
+					'text' => $message['footer']
+				)
+			);
+		}
+
 		$body = array();
 		$body['attachments'] = array();
 		$body['attachments'][]['blocks'] = $blocks;
-		// $body['blocks'] = $blocks;
 
 		if ( '' !== $username ) {
 			$body['username'] = $username;
@@ -163,7 +187,6 @@ class Slack extends Service {
 		}
 
 		$json = \json_encode( $body );
-		error_log( $json );
 		$response = \wp_remote_post( $webhook_url, array(
 			'headers' => array(
 				'Content-Type' => 'application/json; charset=utf-8',
@@ -173,15 +196,15 @@ class Slack extends Service {
 		
 		if ( ! \is_wp_error( $response ) ) {
 			if ( 200 == \wp_remote_retrieve_response_code( $response ) ) {
-				error_log( 'Message sent to Slack!' );
+				// error_log( 'Message sent to Slack!' );
 			} else {
 				$error_message = \wp_remote_retrieve_response_message( $response );
-				error_log( $error_message );
+				// error_log( $error_message );
 			}
 		} else {
 			// There was an error making the request
 			$error_message = $response->get_error_message();
-			error_log( $error_message );
+			// error_log( $error_message );
 		}
 	}
 
