@@ -135,6 +135,19 @@ function column_content( $column_name, $post_id ) {
 }
 
 function admin_head() {
+	global $pagenow;
+
+	if ( 'edit.php' !== $pagenow ) {
+		return;
+	}
+
+	if ( ! isset( $_GET['post_type'] ) ) {
+		return;
+	}
+
+	if ( 'hey_notify' !== $_GET['post_type'] ) {
+		return;
+	}
 	?>
 	<style>
 		.hey-notify-tag { border-radius: 3px; display: inline-block; margin-bottom: 4px; padding: 3px 6px; font-size: 12px; }
