@@ -58,7 +58,7 @@ class Page_Event extends Event {
 	public function watch( $notification, $event ) {
 		$hook = new $this->hook( $notification, $event );
 	
-		switch( $event[ $event['type'] ] ) {
+		switch( $event->{$event->type} ) {
 			case 'page_draft':
 				add_action( 'transition_post_status', array( $hook, 'page_draft' ), 10, 3 );
 				break;

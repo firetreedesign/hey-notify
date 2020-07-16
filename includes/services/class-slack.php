@@ -135,7 +135,7 @@ class Slack extends Service {
 				'fields' => $fields
 			);
 
-			if ( isset( $message['image'] ) ) {
+			if ( isset( $message['image'] ) && '' !== $message['image'] ) {
 				$fields_array['accessory'] = array(
 					'type' => 'image',
 					'image_url' => $message['image'],
@@ -147,7 +147,9 @@ class Slack extends Service {
 		}
 
 		$body = array();
-		$body['blocks'] = $blocks;
+		$body['attachments'] = array();
+		$body['attachments'][]['blocks'] = $blocks;
+		// $body['blocks'] = $blocks;
 
 		if ( '' !== $username ) {
 			$body['username'] = $username;
@@ -161,6 +163,7 @@ class Slack extends Service {
 		}
 
 		$json = \json_encode( $body );
+		error_log( $json );
 		$response = \wp_remote_post( $webhook_url, array(
 			'headers' => array(
 				'Content-Type' => 'application/json; charset=utf-8',
@@ -170,13 +173,15 @@ class Slack extends Service {
 		
 		if ( ! \is_wp_error( $response ) ) {
 			if ( 200 == \wp_remote_retrieve_response_code( $response ) ) {
-				// error_log( 'Message sent to Slack!' );
+				error_log( 'Message sent to Slack!' );
 			} else {
 				$error_message = \wp_remote_retrieve_response_message( $response );
+				error_log( $error_message );
 			}
 		} else {
 			// There was an error making the request
 			$error_message = $response->get_error_message();
+			error_log( $error_message );
 		}
 	}
 

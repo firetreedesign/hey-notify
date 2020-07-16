@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Actions
-add_action( 'init', __NAMESPACE__ . '\\setup', 15 );
+add_action( 'plugins_loaded', __NAMESPACE__ . '\\setup' );
 
 /**
  * Setup
@@ -24,14 +24,13 @@ add_action( 'init', __NAMESPACE__ . '\\setup', 15 );
  */
 function setup() {
 	$query = get_query();
-	if ( is_object( $query ) && $query->have_posts() ) {
+	if ( \is_object( $query ) && $query->have_posts() ) {
 		$notifications = $query->get_posts();
 		foreach ( $notifications as $notification ) {
-			$events = \carbon_get_post_meta( $notification->ID, 'hey_notify_events' );
+			$events = \json_decode( \get_post_meta( $notification->ID, '_hey_notify_events_json', true ) );
 			if ( $events ) {
 				foreach ( $events as $event ) {
-					$type = $event['type'];
-					do_action( "hey_notify_add_action_{$type}", $notification, $event );
+					\do_action( "hey_notify_add_action_{$event->type}", $notification, $event );
 				}
 			}
 		}
@@ -45,7 +44,7 @@ function setup() {
  */
 function get_query() {
 	// Check the cache for the query.
-	$notifications = wp_cache_get( 'hey_notify_notifications' );
+	$notifications = \wp_cache_get( 'hey_notify_notifications' );
 
 	// If the cache is empty, then run the query.
 	if ( false === $notifications ) {
@@ -56,7 +55,7 @@ function get_query() {
 		) );
 
 		// Save the query to the cache.
-		wp_cache_set( 'hey_notify_notifications', $notifications );
+		\wp_cache_set( 'hey_notify_notifications', $notifications );
 
 	}
 	return $notifications;

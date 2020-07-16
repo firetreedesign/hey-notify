@@ -15,10 +15,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Actions
-add_action( 'after_setup_theme', __NAMESPACE__ . '\\boot' );
+add_action( 'plugins_loaded', __NAMESPACE__ . '\\boot' );
 add_action( 'carbon_fields_register_fields', __NAMESPACE__ . '\\service_container' );
 add_action( 'carbon_fields_register_fields', __NAMESPACE__ . '\\notification_container' );
 add_action( 'carbon_fields_register_fields', __NAMESPACE__ . '\\settings' );
+add_action( 'carbon_fields_post_meta_container_saved', __NAMESPACE__ . '\\save_events_meta' );
 
 /**
  * Boot up Carbon Fields
@@ -73,4 +74,13 @@ function settings() {
 			__( 'Uninstall', 'hey-notify' ),
 			apply_filters( 'hey_notify_settings_uninstall', array() )
 		);
+}
+
+function save_events_meta( $post_id ) {
+	if ( \get_post_type( $post_id ) !== 'hey_notify' ) {
+        return false;
+    }
+
+	$events = \carbon_get_post_meta( $post_id, 'hey_notify_events' );
+	\update_post_meta( $post_id, '_hey_notify_events_json', \json_encode( $events ) );
 }
