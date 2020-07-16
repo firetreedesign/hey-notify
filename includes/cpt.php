@@ -119,13 +119,15 @@ function column_titles( $defaults ) {
 function column_content( $column_name, $post_id ) {
 	switch ( $column_name ) {
 		case 'service':
-			echo ucfirst( \carbon_get_post_meta( $post_id, 'hey_notify_service' ) );
+			$services = \apply_filters( 'hey_notify_services_options', array() );
+			$service = \carbon_get_post_meta( $post_id, 'hey_notify_service' );
+			echo "<img src='{$services[ $service ]}' />";
 			break;
 		case 'events':
 			$events = \carbon_get_post_meta( $post_id, 'hey_notify_events' );
 			if ( $events ) {
 				foreach ( $events as $event ) {
-					echo '<span class="hey-notify-tag">' . ucwords( str_replace( '_', ' ', $event[ $event['type'] ] ) ) . '</span>';
+					echo '<span class="wp-ui-primary hey-notify-tag">' . ucwords( str_replace( '_', ' ', $event[ $event['type'] ] ) ) . '</span>';
 				}
 			}
 			break;
@@ -136,15 +138,13 @@ function admin_head() {
 	?>
 	<style>
 		.hey-notify-tag {
-			background-color: #72777c;
-			color: #fff;
-			padding: 4px 8px;
-			border-radius: 4px;
-			margin-bottom: 4px;
+			border-radius: 3px;
 			display: inline-block;
+			margin-bottom: 4px;
+			padding: 3px 6px;
 		}
 		.hey-notify-tag:not(:last-of-type) {
-			margin-right: 10px;
+			margin-right: 4px;
 		}
 	</style>
 	<?php
