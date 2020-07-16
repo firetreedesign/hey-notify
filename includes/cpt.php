@@ -121,7 +121,7 @@ function column_content( $column_name, $post_id ) {
 		case 'service':
 			$services = \apply_filters( 'hey_notify_services_options', array() );
 			$service = \carbon_get_post_meta( $post_id, 'hey_notify_service' );
-			echo "<img src='{$services[ $service ]}' />";
+			echo "<img src='{$services[ $service ]}' style='height: 60px; width: auto;' />";
 			break;
 		case 'events':
 			$events = \carbon_get_post_meta( $post_id, 'hey_notify_events' );
@@ -137,15 +137,8 @@ function column_content( $column_name, $post_id ) {
 function admin_head() {
 	?>
 	<style>
-		.hey-notify-tag {
-			border-radius: 3px;
-			display: inline-block;
-			margin-bottom: 4px;
-			padding: 3px 6px;
-		}
-		.hey-notify-tag:not(:last-of-type) {
-			margin-right: 4px;
-		}
+		.hey-notify-tag { border-radius: 3px; display: inline-block; margin-bottom: 4px; padding: 3px 6px; font-size: 12px; }
+		.hey-notify-tag:not(:last-of-type) { margin-right: 4px; }
 	</style>
 	<?php
 }
