@@ -2,10 +2,10 @@
 /**
  * Custom Post Type
  * 
- * @package HeyNotify
+ * @package Hey_Notify
  */
 
-namespace HeyNotify\CPT;
+namespace Hey_Notify\CPT;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -15,6 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Actions
 add_action( 'init', __NAMESPACE__ . '\\register_post_type' );
 add_action( 'manage_hey_notify_posts_custom_column', __NAMESPACE__ . '\\column_content', 10, 2 );
+add_action( 'admin_head', __NAMESPACE__ . '\\admin_head' );
 
 // Filters
 add_filter( 'use_block_editor_for_post_type', __NAMESPACE__ . '\\disable_block_editor', 10, 2 );
@@ -124,9 +125,27 @@ function column_content( $column_name, $post_id ) {
 			$events = \carbon_get_post_meta( $post_id, 'hey_notify_events' );
 			if ( $events ) {
 				foreach ( $events as $event ) {
-					echo ucwords( str_replace( '_', ' ', "{$event[ $event['type'] ]}<br />" ) );
+					echo '<span class="hey-notify-tag">' . ucwords( str_replace( '_', ' ', $event[ $event['type'] ] ) ) . '</span>';
 				}
 			}
 			break;
 	}
+}
+
+function admin_head() {
+	?>
+	<style>
+		.hey-notify-tag {
+			background-color: #72777c;
+			color: #fff;
+			padding: 4px 8px;
+			border-radius: 4px;
+			margin-bottom: 4px;
+			display: inline-block;
+		}
+		.hey-notify-tag:not(:last-of-type) {
+			margin-right: 10px;
+		}
+	</style>
+	<?php
 }
