@@ -2,10 +2,10 @@
 /**
  * Discord
  * 
- * @package HeyNotify
+ * @package Hey_Notify
  */
 
-namespace HeyNotify;
+namespace Hey_Notify;
 
 use Carbon_Fields\Field;
 
@@ -24,7 +24,7 @@ class Discord extends Service {
 	 */
 	public function services( $services = array() ) {
 		if ( ! isset( $services['discord'] ) ) {
-			$services['discord'] = HEYNOTIFY_PLUGIN_URL . '/images/services/discord.png';
+			$services['discord'] = HEY_NOTIFY_PLUGIN_URL . '/images/services/discord.png';
 		}
 
 		return $services;
@@ -38,25 +38,25 @@ class Discord extends Service {
 	 */
 	public function fields( $fields = array() ) {
 		$fields[] = (
-			Field::make( 'text', 'heynotify_discord_webhook', __( 'Webhook URL', 'heynotify' ) )
+			Field::make( 'text', 'hey_notify_discord_webhook', __( 'Webhook URL', 'hey-notify' ) )
 				->set_attribute( 'type', 'url' )
-				->set_help_text( sprintf( '%1s <a href="%2s">%3s</a>', __( 'The webhook that you created for your Discord channel.', 'heynotify' ), 'https://support.discord.com/hc/en-us/articles/228383668', __( 'Learn More', 'heynotify' ) ) )
+				->set_help_text( sprintf( '%1s <a href="%2s">%3s</a>', __( 'The webhook that you created for your Discord channel.', 'hey-notify' ), 'https://support.discord.com/hc/en-us/articles/228383668', __( 'Learn More', 'hey-notify' ) ) )
 				->set_conditional_logic(
 					array(
 						array(
-							'field' => 'heynotify_service',
+							'field' => 'hey_notify_service',
 							'value' => 'discord',
 						)
 					)
 				)
 		);
 		$fields[] = (
-			Field::make( 'image', 'heynotify_discord_avatar', __( 'Discord Avatar', 'heynotify' ) )
-				->set_help_text( __( 'Override the default avatar of the webhook. Not required.', 'heynotify' ) )
+			Field::make( 'image', 'hey_notify_discord_avatar', __( 'Discord Avatar', 'hey-notify' ) )
+				->set_help_text( __( 'Override the default avatar of the webhook. Not required.', 'hey-notify' ) )
 				->set_conditional_logic(
 					array(
 						array(
-							'field' => 'heynotify_service',
+							'field' => 'hey_notify_service',
 							'value' => 'discord',
 						)
 					)
@@ -64,12 +64,12 @@ class Discord extends Service {
 				->set_width( 50 )
 		);
 		$fields[] = (
-			Field::make( 'text', 'heynotify_discord_username', __( 'Discord Username', 'heynotify' ) )
-				->set_help_text( __( 'Override the default username of the webhook. Not required.', 'heynotify' ) )
+			Field::make( 'text', 'hey_notify_discord_username', __( 'Discord Username', 'hey-notify' ) )
+				->set_help_text( __( 'Override the default username of the webhook. Not required.', 'hey-notify' ) )
 				->set_conditional_logic(
 					array(
 						array(
-							'field' => 'heynotify_service',
+							'field' => 'hey_notify_service',
 							'value' => 'discord',
 						)
 					)
@@ -87,15 +87,15 @@ class Discord extends Service {
 	 * @return void
 	 */
 	public function message( $message ) {
-		$service = \carbon_get_post_meta( $message['notification']->ID, 'heynotify_service' );
+		$service = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_service' );
 	
 		if ( 'discord' !== $service ) {
 			return;
 		}
 	
-		$webhook_url = \carbon_get_post_meta( $message['notification']->ID, 'heynotify_discord_webhook' );
-		$username    = \carbon_get_post_meta( $message['notification']->ID, 'heynotify_discord_username' );
-		$avatar      = \carbon_get_post_meta( $message['notification']->ID, 'heynotify_discord_avatar' );
+		$webhook_url = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_discord_webhook' );
+		$username    = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_discord_username' );
+		$avatar      = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_discord_avatar' );
 	
 		$embed_item = array();
 	

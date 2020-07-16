@@ -2,10 +2,10 @@
 /**
  * Post events
  * 
- * @package HeyNotify
+ * @package Hey_Notify
  */
 
-namespace HeyNotify;
+namespace Hey_Notify;
 
 use Carbon_Fields\Field;
 
@@ -18,7 +18,7 @@ class Post_Event extends Event {
 
 	public function types( $types = array() ) {
 		if ( ! isset( $types['post'] ) ) {
-			$types['post'] = __( 'Posts', 'heynotify' );
+			$types['post'] = __( 'Posts', 'hey-notify' );
 		}
 		return $types;
 	}
@@ -31,15 +31,15 @@ class Post_Event extends Event {
 	 */
 	public function actions( $fields = array() ) {
 		$fields[] = (
-			Field::make( 'select', 'post', __( 'Action', 'heynotify' ) )
+			Field::make( 'select', 'post', __( 'Action', 'hey-notify' ) )
 				->set_options(
 					array(
-						'post_draft'     => __( 'Post Draft', 'heynotify' ),
-						'post_pending'   => __( 'Post Pending', 'heynotify' ),
-						'post_published' => __( 'Post Published', 'heynotify' ),
-						'post_scheduled' => __( 'Post Scheduled', 'heynotify' ),
-						'post_updated'   => __( 'Post Updated', 'heynotify' ),
-						'post_trashed'   => __( 'Post Moved to Trash', 'heynotify' ),
+						'post_draft'     => __( 'Post Draft', 'hey-notify' ),
+						'post_pending'   => __( 'Post Pending', 'hey-notify' ),
+						'post_published' => __( 'Post Published', 'hey-notify' ),
+						'post_scheduled' => __( 'Post Scheduled', 'hey-notify' ),
+						'post_updated'   => __( 'Post Updated', 'hey-notify' ),
+						'post_trashed'   => __( 'Post Moved to Trash', 'hey-notify' ),
 					)
 				)
 				->set_conditional_logic(
@@ -82,4 +82,4 @@ class Post_Event extends Event {
 
 }
 
-new Post_Event( 'post', '\HeyNotify\Post_Hook' );
+new Post_Event( 'post', '\Hey_Notify\Post_Hook' );

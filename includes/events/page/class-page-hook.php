@@ -2,10 +2,10 @@
 /**
  * Page hook
  * 
- * @package HeyNotify
+ * @package Hey_Notify
  */
 
-namespace HeyNotify;
+namespace Hey_Notify;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -38,7 +38,7 @@ class Page_Hook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'Hey, a new page was drafted!', 'heynotify' ), $post );
+		$this->send_notification( \__( 'Hey, a new page was drafted!', 'hey-notify' ), $post );
 	}
 
 	/**
@@ -69,7 +69,7 @@ class Page_Hook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'Hey, a new page was published!', 'heynotify' ), $post );
+		$this->send_notification( \__( 'Hey, a new page was published!', 'hey-notify' ), $post );
 	}
 
 	/**
@@ -99,7 +99,7 @@ class Page_Hook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'Hey, a new page was scheduled!', 'heynotify' ), $post );
+		$this->send_notification( \__( 'Hey, a new page was scheduled!', 'hey-notify' ), $post );
 	}
 
 	public function page_pending( $new_status, $old_status, $post ) {
@@ -122,7 +122,7 @@ class Page_Hook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'Hey, a new page is pending!', 'heynotify' ), $post );
+		$this->send_notification( \__( 'Hey, a new page is pending!', 'hey-notify' ), $post );
 	}
 
 	/**
@@ -143,7 +143,7 @@ class Page_Hook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'Hey, a page was updated!', 'heynotify' ), $post );
+		$this->send_notification( \__( 'Hey, a page was updated!', 'hey-notify' ), $post );
 	}
 
 	/**
@@ -164,7 +164,7 @@ class Page_Hook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'Hey, a page was deleted!', 'heynotify' ), $post );
+		$this->send_notification( \__( 'Hey, a page was deleted!', 'hey-notify' ), $post );
 	}
 
 	/**
@@ -178,12 +178,12 @@ class Page_Hook extends Hook {
 		
 		$attachments = array(
 			array(
-				'name'   => \esc_html__( 'Author', 'heynotify' ),
+				'name'   => \esc_html__( 'Author', 'hey-notify' ),
 				'value'  => \get_the_author_meta( 'display_name', $post->post_author ),
 				'inline' => true,
 			),
 			array(
-				'name'   => \esc_html__( 'Date', 'heynotify' ),
+				'name'   => \esc_html__( 'Date', 'hey-notify' ),
 				'value'  => \get_the_date( null, $post->ID ),
 				'inline' => true,
 			)
@@ -198,7 +198,7 @@ class Page_Hook extends Hook {
 		}
 
 		do_action(
-			'heynotify_send_message',
+			'hey_notify_send_message',
 			array(
 				'notification' => $this->notification,
 				'content'      => $title,

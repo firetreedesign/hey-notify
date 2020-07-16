@@ -2,25 +2,25 @@
 /**
  * Uninstall
  * 
- * @package HeyNotify
+ * @package Hey_Notify
  */
 
-namespace HeyNotify\Uninstall;
+namespace Hey_Notify\Uninstall;
 
 // Exit if accessed directly.
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-$remove_data = get_option( '_heynotify_remove_data' );
+$remove_data = get_option( '_hey_notify_remove_data' );
 
 if ( 'yes' === $remove_data ) {
-	delete_option( '_heynotify_remove_data' );
-	delete_option( '_heynotify_default_service' );
+	delete_option( '_hey_notify_remove_data' );
+	delete_option( '_hey_notify_default_service' );
 
 	$all_posts = get_posts(
 		array(
-			'post_type'   => 'heynotify',
+			'post_type'   => 'hey_notify',
 			'numberposts' => -1
 		)
 	);

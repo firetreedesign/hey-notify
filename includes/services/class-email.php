@@ -2,10 +2,10 @@
 /**
  * Email
  * 
- * @package HeyNotify
+ * @package Hey_Notify
  */
 
-namespace HeyNotify;
+namespace Hey_Notify;
 
 use Carbon_Fields\Field;
 
@@ -24,7 +24,7 @@ class Email extends Service {
 	 */
 	public function services( $services = array() ) {
 		if ( ! isset( $services['email'] ) ) {
-			$services['email'] = HEYNOTIFY_PLUGIN_URL . '/images/services/email.png';
+			$services['email'] = HEY_NOTIFY_PLUGIN_URL . '/images/services/email.png';
 		}
 
 		return $services;
@@ -38,20 +38,20 @@ class Email extends Service {
 	 */
 	public function fields( $fields = array() ) {
 		$fields[] = (
-			Field::make( 'complex', 'heynotify_email_addresses', __( 'Send notifications to', 'heynotify' ) )
+			Field::make( 'complex', 'hey_notify_email_addresses', __( 'Send notifications to', 'hey-notify' ) )
 				->add_fields( array(
-					Field::make( 'text', 'email', __( 'Email Address', 'heynotify' ) ),
+					Field::make( 'text', 'email', __( 'Email Address', 'hey-notify' ) ),
 				) )
 				->setup_labels(
 					array(
-						'plural_name' => __( 'Email Addresses', 'heynotify' ),
-						'singular_name' => __( 'Email Address', 'heynotify' )
+						'plural_name' => __( 'Email Addresses', 'hey-notify' ),
+						'singular_name' => __( 'Email Address', 'hey-notify' )
 					)
 				)
 				->set_conditional_logic(
 					array(
 						array(
-							'field' => 'heynotify_service',
+							'field' => 'hey_notify_service',
 							'value' => 'email',
 						)
 					)
@@ -69,13 +69,13 @@ class Email extends Service {
 	 */
 	public function message( $message ) {
 
-		$service = \carbon_get_post_meta( $message['notification']->ID, 'heynotify_service' );
+		$service = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_service' );
 	
 		if ( 'email' !== $service ) {
 			return;
 		}
 	
-		$email_addresses = \carbon_get_post_meta( $message['notification']->ID, 'heynotify_email_addresses' );
+		$email_addresses = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_email_addresses' );
 		$to_email = array();
 		if ( $email_addresses ) {
 			foreach ( $email_addresses as $email ) {
@@ -89,8 +89,8 @@ class Email extends Service {
 		}
 
 		$from_email = \get_option('admin_email');
-		$from_name = \__( 'Hey Notify', 'heynotify' );
-		$subject = __( "Hey, here's your notification!", 'heynotify' );
+		$from_name = \__( 'Hey Notify', 'hey-notify' );
+		$subject = __( "Hey, here's your notification!", 'hey-notify' );
 		if ( isset( $message['content'] ) && '' !== $message['content'] ) {
 			$subject = $message['content'];
 		}

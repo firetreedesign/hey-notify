@@ -2,10 +2,10 @@
 /**
  * Page events
  * 
- * @package HeyNotify
+ * @package Hey_Notify
  */
 
-namespace HeyNotify;
+namespace Hey_Notify;
 
 use Carbon_Fields\Field;
 
@@ -18,7 +18,7 @@ class Page_Event extends Event {
 
 	public function types( $types = array() ) {
 		if ( ! isset( $types['page'] ) ) {
-			$types['page'] = __( 'Pages', 'heynotify' );
+			$types['page'] = __( 'Pages', 'hey-notify' );
 		}
 		return $types;
 	}
@@ -31,15 +31,15 @@ class Page_Event extends Event {
 	 */
 	public function actions( $fields = array() ) {
 		$fields[] = (
-			Field::make( 'select', 'page', __( 'Action', 'heynotify' ) )
+			Field::make( 'select', 'page', __( 'Action', 'hey-notify' ) )
 				->set_options(
 					array(
-						'page_draft'     => __( 'Page Draft', 'heynotify' ),
-						'page_pending'   => __( 'Page Pending', 'heynotify' ),
-						'page_published' => __( 'Page Published', 'heynotify' ),
-						'page_scheduled' => __( 'Page Scheduled', 'heynotify' ),
-						'page_updated'   => __( 'Page Updated', 'heynotify' ),
-						'page_trashed'   => __( 'Page Moved to Trash', 'heynotify' ),
+						'page_draft'     => __( 'Page Draft', 'hey-notify' ),
+						'page_pending'   => __( 'Page Pending', 'hey-notify' ),
+						'page_published' => __( 'Page Published', 'hey-notify' ),
+						'page_scheduled' => __( 'Page Scheduled', 'hey-notify' ),
+						'page_updated'   => __( 'Page Updated', 'hey-notify' ),
+						'page_trashed'   => __( 'Page Moved to Trash', 'hey-notify' ),
 					)
 				)
 				->set_conditional_logic(
@@ -82,4 +82,4 @@ class Page_Event extends Event {
 
 }
 
-new Page_Event( 'page', '\HeyNotify\Page_Hook' );
+new Page_Event( 'page', '\Hey_Notify\Page_Hook' );

@@ -2,10 +2,10 @@
 /**
  * Filters
  * 
- * @package HeyNotify
+ * @package Hey_Notify
  */
 
-namespace HeyNotify\Filters;
+namespace Hey_Notify\Filters;
 
 use Carbon_Fields\Field;
 
@@ -15,11 +15,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Filters
-add_filter( 'heynotify_service_fields', __NAMESPACE__ . '\\service_fields', 5 );
-add_filter( 'heynotify_services_options', __NAMESPACE__ . '\\services_options', 5 );
-add_filter( 'heynotify_event_fields', __NAMESPACE__ . '\\event_fields', 5 );
-add_filter( 'heynotify_settings_uninstall', __NAMESPACE__ . '\\settings_uninstall_fields', 5 );
-add_filter( 'heynotify_settings_general', __NAMESPACE__ . '\\settings_general_fields', 5 );
+add_filter( 'hey_notify_service_fields', __NAMESPACE__ . '\\service_fields', 5 );
+add_filter( 'hey_notify_event_fields', __NAMESPACE__ . '\\event_fields', 5 );
+add_filter( 'hey_notify_settings_uninstall', __NAMESPACE__ . '\\settings_uninstall_fields', 5 );
+add_filter( 'hey_notify_settings_general', __NAMESPACE__ . '\\settings_general_fields', 5 );
 
 /**
  * Service fields
@@ -29,25 +28,11 @@ add_filter( 'heynotify_settings_general', __NAMESPACE__ . '\\settings_general_fi
  */
 function service_fields( $fields = array() ) {
 	$fields[] = (
-		Field::make( 'radio_image', 'heynotify_service', __( 'Select a service', 'heynotify' ) )
-			->set_options( apply_filters( 'heynotify_services_options', array() ) )
-			->set_default_value( \get_option( '_heynotify_default_service' ) )
+		Field::make( 'radio_image', 'hey_notify_service', __( 'Select a service', 'hey-notify' ) )
+			->set_options( apply_filters( 'hey_notify_services_options', array() ) )
+			->set_default_value( \get_option( '_hey_notify_default_service' ) )
 	);
 	return $fields;
-}
-
-/**
- * Service options
- *
- * @param array $services
- * @return array
- */
-function services_options( $services = array() ) {
-	if ( ! isset( $services['slack'] ) ) {
-		$services['slack'] = HEYNOTIFY_PLUGIN_URL . '/images/services/slack.png';
-	}
-
-	return $services;
 }
 
 /**
@@ -58,21 +43,21 @@ function services_options( $services = array() ) {
  */
 function event_fields( $fields = array() ) {
 	$fields[] = (
-		Field::make( 'complex', 'heynotify_events', __( 'Notification Events', 'heynotify' ) )
+		Field::make( 'complex', 'hey_notify_events', __( 'Notification Events', 'hey-notify' ) )
 			->setup_labels(
 				array(
-					'plural_name' => __( 'Events', 'heynotify' ),
-					'singular_name' => __( 'Event', 'heynotify' )
+					'plural_name' => __( 'Events', 'hey-notify' ),
+					'singular_name' => __( 'Event', 'hey-notify' )
 				)
 			)
 			->add_fields(
 				array_merge(
 					array(
-						Field::make( 'select', 'type', __( 'Event Type', 'heynotify' ) )
-							->set_options( apply_filters( 'heynotify_event_types ', array() ) )
+						Field::make( 'select', 'type', __( 'Event Type', 'hey-notify' ) )
+							->set_options( apply_filters( 'hey_notify_event_types ', array() ) )
 							->set_width( 50 )
 					),
-					apply_filters( 'heynotify_event_actions', array() )
+					apply_filters( 'hey_notify_event_actions', array() )
 				)
 			)
 			->set_header_template( '
@@ -90,16 +75,16 @@ function event_fields( $fields = array() ) {
  */
 function settings_uninstall_fields( $fields = array() ) {
 	$fields[] = (
-		Field::make( 'html', 'heynotify_uninstall_heading' )
+		Field::make( 'html', 'hey_notify_uninstall_heading' )
     		->set_html(
 				sprintf(
 					'<p>%1s</p>',
-					__( 'Upon deletion of the plugin, you can optionally remove all custom data, settings, etc.', 'heynotify' )
+					__( 'Upon deletion of the plugin, you can optionally remove all custom data, settings, etc.', 'hey-notify' )
 				)
 			)
 	);
 	$fields[] = (
-		Field::make( 'checkbox', 'heynotify_remove_data', __( 'Remove all data when Hey Notify is deleted.', 'heynotify' ) )
+		Field::make( 'checkbox', 'hey_notify_remove_data', __( 'Remove all data when Hey Notify is deleted.', 'hey-notify' ) )
 	);
 	return $fields;
 }
@@ -112,17 +97,17 @@ function settings_uninstall_fields( $fields = array() ) {
  */
 function settings_general_fields( $fields = array() ) {
 	$fields[] = (
-		Field::make( 'html', 'heynotify_services_heading' )
+		Field::make( 'html', 'hey_notify_services_heading' )
 			->set_html(
 				sprintf(
 					'<p>%1s</p>',
-					__( 'General settings for Hey Notify.', 'heynotify' )
+					__( 'General settings for Hey Notify.', 'hey-notify' )
 				)
 			)
 	);
 	$fields[] = (
-		Field::make( 'radio_image', 'heynotify_default_service', __( 'Default service:', 'heynotify' ) )
-			->set_options( apply_filters( 'heynotify_services_options', array() ) )
+		Field::make( 'radio_image', 'hey_notify_default_service', __( 'Default service:', 'hey-notify' ) )
+			->set_options( apply_filters( 'hey_notify_services_options', array() ) )
 	);
 	return $fields;
 }

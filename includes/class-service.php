@@ -2,10 +2,10 @@
 /**
  * Service
  * 
- * @package HeyNotify
+ * @package Hey_Notify
  */
 
-namespace HeyNotify;
+namespace Hey_Notify;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -15,9 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Service {
 
 	function __construct() {
-		add_filter( 'heynotify_service_fields', array( $this, 'fields' ), 10 );
-		add_filter( 'heynotify_services_options', array( $this, 'services' ), 10 );
-		add_action( 'heynotify_send_message', array( $this, 'message' ), 10, 1 );
+		add_filter( 'hey_notify_service_fields', array( $this, 'fields' ), 10 );
+		add_filter( 'hey_notify_services_options', array( $this, 'services' ), 10 );
+		add_action( 'hey_notify_send_message', array( $this, 'message' ), 10, 1 );
 	}
 
 	/**

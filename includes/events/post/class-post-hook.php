@@ -2,10 +2,10 @@
 /**
  * Post hook
  * 
- * @package HeyNotify
+ * @package Hey_Notify
  */
 
-namespace HeyNotify;
+namespace Hey_Notify;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -38,7 +38,7 @@ class Post_Hook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'Hey, a new post was drafted!', 'heynotify' ), $post );
+		$this->send_notification( \__( 'Hey, a new post was drafted!', 'hey-notify' ), $post );
 	}
 
 	/**
@@ -69,7 +69,7 @@ class Post_Hook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'Hey, a new post was published!', 'heynotify' ), $post );
+		$this->send_notification( \__( 'Hey, a new post was published!', 'hey-notify' ), $post );
 	}
 
 	/**
@@ -99,7 +99,7 @@ class Post_Hook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'Hey, a new post was scheduled!', 'heynotify' ), $post );
+		$this->send_notification( \__( 'Hey, a new post was scheduled!', 'hey-notify' ), $post );
 	}
 
 	public function post_pending( $new_status, $old_status, $post ) {
@@ -122,7 +122,7 @@ class Post_Hook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'Hey, a new post is pending!', 'heynotify' ), $post );
+		$this->send_notification( \__( 'Hey, a new post is pending!', 'hey-notify' ), $post );
 	}
 
 	/**
@@ -143,7 +143,7 @@ class Post_Hook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'Hey, a post was updated!', 'heynotify' ), $post );
+		$this->send_notification( \__( 'Hey, a post was updated!', 'hey-notify' ), $post );
 	}
 
 	/**
@@ -164,7 +164,7 @@ class Post_Hook extends Hook {
 			return;
 		}
 
-		$this->send_notification( \__( 'Hey, a post was deleted!', 'heynotify' ), $post );
+		$this->send_notification( \__( 'Hey, a post was deleted!', 'hey-notify' ), $post );
 	}
 
 	/**
@@ -178,12 +178,12 @@ class Post_Hook extends Hook {
 		
 		$attachments = array(
 			array(
-				'name'   => \esc_html__( 'Author', 'heynotify' ),
+				'name'   => \esc_html__( 'Author', 'hey-notify' ),
 				'value'  => \get_the_author_meta( 'display_name', $post->post_author ),
 				'inline' => true,
 			),
 			array(
-				'name'   => \esc_html__( 'Date', 'heynotify' ),
+				'name'   => \esc_html__( 'Date', 'hey-notify' ),
 				'value'  => \get_the_date( null, $post->ID ),
 				'inline' => true,
 			)
@@ -192,7 +192,7 @@ class Post_Hook extends Hook {
 		$categories = \strip_tags( \get_the_term_list( $post->ID, 'category', '', ', ', '' ) );
 		if ( '' !== $categories && ! \is_wp_error( $categories ) ) {
 			$attachments[] = array(
-				'name' => \esc_html__( 'Categories', 'heynotify' ),
+				'name' => \esc_html__( 'Categories', 'hey-notify' ),
 				'value' => $categories,
 				'inline' => false,
 			);
@@ -201,7 +201,7 @@ class Post_Hook extends Hook {
 		$tags = \strip_tags( \get_the_tag_list( '', ', ', '', $post->ID ) );
 		if ( '' !== $tags && ! \is_wp_error( $tags ) ) {
 			$attachments[] = array(
-				'name' => \esc_html__( 'Tags', 'heynotify' ),
+				'name' => \esc_html__( 'Tags', 'hey-notify' ),
 				'value' => $tags,
 				'inline' => false,
 			);
@@ -216,7 +216,7 @@ class Post_Hook extends Hook {
 		}
 
 		do_action(
-			'heynotify_send_message',
+			'hey_notify_send_message',
 			array(
 				'notification' => $this->notification,
 				'content'      => $title,

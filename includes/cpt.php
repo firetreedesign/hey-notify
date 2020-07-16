@@ -14,12 +14,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Actions
 add_action( 'init', __NAMESPACE__ . '\\register_post_type' );
-add_action( 'manage_heynotify_posts_custom_column', __NAMESPACE__ . '\\column_content', 10, 2 );
+add_action( 'manage_hey_notify_posts_custom_column', __NAMESPACE__ . '\\column_content', 10, 2 );
 
 // Filters
 add_filter( 'use_block_editor_for_post_type', __NAMESPACE__ . '\\disable_block_editor', 10, 2 );
 add_filter( 'gutenberg_can_edit_post_type', __NAMESPACE__ . '\\disable_block_editor', 10, 2 );
-add_filter( 'manage_heynotify_posts_columns', __NAMESPACE__ . '\\column_titles' );
+add_filter( 'manage_hey_notify_posts_columns', __NAMESPACE__ . '\\column_titles' );
 
 /**
  * Register the Custom Post Type
@@ -29,19 +29,19 @@ add_filter( 'manage_heynotify_posts_columns', __NAMESPACE__ . '\\column_titles' 
  */
 function register_post_type() {
 	$labels = array(
-		'name'                => _x( 'Notifications', 'Post Type General Name', 'heynotify' ),
-		'singular_name'       => _x( 'Notification', 'Post Type Singular Name', 'heynotify' ),
-		'menu_name'           => __( 'Hey Notify', 'heynotify' ),
-		'parent_item_colon'   => __( 'Parent Notification:', 'heynotify' ),
-		'all_items'           => __( 'All Notifications', 'heynotify' ),
-		'view_item'           => __( 'View Notification', 'heynotify' ),
-		'add_new_item'        => __( 'Add New Notification', 'heynotify' ),
-		'add_new'             => __( 'Add New', 'heynotify' ),
-		'edit_item'           => __( 'Edit Notification', 'heynotify' ),
-		'update_item'         => __( 'Update Notification', 'heynotify' ),
-		'search_items'        => __( 'Search Notifications', 'heynotify' ),
-		'not_found'           => __( 'Not found', 'heynotify' ),
-		'not_found_in_trash'  => __( 'Not found in Trash', 'heynotify' ),
+		'name'                => _x( 'Notifications', 'Post Type General Name', 'hey-notify' ),
+		'singular_name'       => _x( 'Notification', 'Post Type Singular Name', 'hey-notify' ),
+		'menu_name'           => __( 'Hey Notify', 'hey-notify' ),
+		'parent_item_colon'   => __( 'Parent Notification:', 'hey-notify' ),
+		'all_items'           => __( 'All Notifications', 'hey-notify' ),
+		'view_item'           => __( 'View Notification', 'hey-notify' ),
+		'add_new_item'        => __( 'Add New Notification', 'hey-notify' ),
+		'add_new'             => __( 'Add New', 'hey-notify' ),
+		'edit_item'           => __( 'Edit Notification', 'hey-notify' ),
+		'update_item'         => __( 'Update Notification', 'hey-notify' ),
+		'search_items'        => __( 'Search Notifications', 'hey-notify' ),
+		'not_found'           => __( 'Not found', 'hey-notify' ),
+		'not_found_in_trash'  => __( 'Not found in Trash', 'hey-notify' ),
 	);
 
 	$args = array(
@@ -64,18 +64,19 @@ function register_post_type() {
 		'capability_type'     => 'post',
 	);
 
-	\register_post_type( 'heynotify', $args );
+	\register_post_type( 'hey_notify', $args );
 }
 
 /**
  * Disable the block editor
  *
+ * @since 1.0.0
  * @param boolean $is_enabled
  * @param string $post_type
  * @return boolean
  */
 function disable_block_editor($is_enabled, $post_type) {
-	if ( 'heynotify' === $post_type ) {
+	if ( 'hey_notify' === $post_type ) {
 		return false;
 	}
 	
@@ -86,8 +87,8 @@ function disable_block_editor($is_enabled, $post_type) {
  * Set up the Custom Post Type Column Titles
  *
  * @since 1.0.0
- * @param array $defaults Defaults.
- * @return array New Defaults
+ * @param array $defaults
+ * @return array
  */
 function column_titles( $defaults ) {
 	$new_defaults = array();
@@ -95,8 +96,8 @@ function column_titles( $defaults ) {
 		switch ( $key ) {
 			case 'title':
 				$new_defaults[ $key ] = $title;
-				$new_defaults['service'] = __( 'Service', 'heynotify' );
-				$new_defaults['events'] = __( 'Events', 'heynotify' );
+				$new_defaults['service'] = __( 'Service', 'hey-notify' );
+				$new_defaults['events'] = __( 'Events', 'hey-notify' );
 				break;
 			default:
 				$new_defaults[ $key ] = $title;
@@ -110,17 +111,17 @@ function column_titles( $defaults ) {
 * Echo the Custom Post Type Column Content
 *
 * @since 1.0.0
-* @param string $column_name Column name.
-* @param int $post_id Post ID.
+* @param string $column_name
+* @param int $post_id
 * @return void
 */
 function column_content( $column_name, $post_id ) {
 	switch ( $column_name ) {
 		case 'service':
-			echo ucfirst( \carbon_get_post_meta( $post_id, 'heynotify_service' ) );
+			echo ucfirst( \carbon_get_post_meta( $post_id, 'hey_notify_service' ) );
 			break;
 		case 'events':
-			$events = \carbon_get_post_meta( $post_id, 'heynotify_events' );
+			$events = \carbon_get_post_meta( $post_id, 'hey_notify_events' );
 			if ( $events ) {
 				foreach ( $events as $event ) {
 					echo ucwords( str_replace( '_', ' ', "{$event[ $event['type'] ]}<br />" ) );

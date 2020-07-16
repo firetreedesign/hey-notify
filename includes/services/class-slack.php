@@ -2,10 +2,10 @@
 /**
  * Slack
  * 
- * @package HeyNotify
+ * @package Hey_Notify
  */
 
-namespace HeyNotify;
+namespace Hey_Notify;
 
 use Carbon_Fields\Field;
 
@@ -24,7 +24,7 @@ class Slack extends Service {
 	 */
 	public function services( $services = array() ) {
 		if ( ! isset( $services['slack'] ) ) {
-			$services['slack'] = HEYNOTIFY_PLUGIN_URL . '/images/services/slack.png';
+			$services['slack'] = HEY_NOTIFY_PLUGIN_URL . '/images/services/slack.png';
 		}
 
 		return $services;
@@ -32,25 +32,25 @@ class Slack extends Service {
 
 	function fields( $fields = array() ) {
 		$fields[] = (
-			Field::make( 'text', 'heynotify_slack_webhook', __( 'Webhook URL', 'heynotify' ) )
+			Field::make( 'text', 'hey_notify_slack_webhook', __( 'Webhook URL', 'hey-notify' ) )
 				->set_attribute( 'type', 'url' )
-				->set_help_text( __( 'The webhook that was generated for you by your preferred service.', 'heynotify' ) )
+				->set_help_text( sprintf( '%1s <a href="%2s">%3s</a>', __( 'The webhook that you created for your Slack channel.', 'hey-notify' ), 'https://api.slack.com/messaging/webhooks', __( 'Learn More', 'hey-notify' ) ) )
 				->set_conditional_logic(
 					array(
 						array(
-							'field' => 'heynotify_service',
+							'field' => 'hey_notify_service',
 							'value' => 'slack',
 						)
 					)
 				)
 		);
 		$fields[] = (
-			Field::make( 'image', 'heynotify_slack_icon', __( 'Slack Icon', 'heynotify' ) )
-				->set_help_text( __( 'Override the default icon of the webhook. Not required.', 'heynotify' ) )
+			Field::make( 'image', 'hey_notify_slack_icon', __( 'Slack Icon', 'hey-notify' ) )
+				->set_help_text( __( 'Override the default icon of the webhook. Not required.', 'hey-notify' ) )
 				->set_conditional_logic(
 					array(
 						array(
-							'field' => 'heynotify_service',
+							'field' => 'hey_notify_service',
 							'value' => 'slack',
 						)
 					)
@@ -58,12 +58,12 @@ class Slack extends Service {
 				->set_width( 50 )
 		);
 		$fields[] = (
-			Field::make( 'text', 'heynotify_slack_username', __( 'Slack Username', 'heynotify' ) )
-				->set_help_text( __( 'Override the default username of the webhook. Not required.', 'heynotify' ) )
+			Field::make( 'text', 'hey_notify_slack_username', __( 'Slack Username', 'hey-notify' ) )
+				->set_help_text( __( 'Override the default username of the webhook. Not required.', 'hey-notify' ) )
 				->set_conditional_logic(
 					array(
 						array(
-							'field' => 'heynotify_service',
+							'field' => 'hey_notify_service',
 							'value' => 'slack',
 						)
 					)
@@ -74,16 +74,15 @@ class Slack extends Service {
 	}
 
 	function message( $message ) {
-		// TODO
-		$service = \carbon_get_post_meta( $message['notification']->ID, 'heynotify_service' );
+		$service = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_service' );
 	
 		if ( 'slack' !== $service ) {
 			return;
 		}
 
-		$webhook_url = \carbon_get_post_meta( $message['notification']->ID, 'heynotify_slack_webhook' );
-		$username    = \carbon_get_post_meta( $message['notification']->ID, 'heynotify_slack_username' );
-		$icon        = \carbon_get_post_meta( $message['notification']->ID, 'heynotify_slack_icon' );
+		$webhook_url = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_slack_webhook' );
+		$username    = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_slack_username' );
+		$icon        = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_slack_icon' );
 		
 		$blocks = array();
 
@@ -140,7 +139,7 @@ class Slack extends Service {
 				$fields_array['accessory'] = array(
 					'type' => 'image',
 					'image_url' => $message['image'],
-					'alt_text' => isset( $message['url_title'] ) ? $message['url_title'] : __( 'Attached image', 'heynotify' )
+					'alt_text' => isset( $message['url_title'] ) ? $message['url_title'] : __( 'Attached image', 'hey-notify' )
 				);
 			}
 

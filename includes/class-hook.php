@@ -2,10 +2,10 @@
 /**
  * Event hook
  * 
- * @package HeyNotify
+ * @package Hey_Notify
  */
 
-namespace HeyNotify;
+namespace Hey_Notify;
 
 class Hook {
 	public $notification;

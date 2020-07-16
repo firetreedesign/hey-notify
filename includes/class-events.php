@@ -2,10 +2,10 @@
 /**
  * Events
  * 
- * @package HeyNotify
+ * @package Hey_Notify
  */
 
-namespace HeyNotify;
+namespace Hey_Notify;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -22,11 +22,11 @@ class Event {
 		$this->hook = $hook;
 
 		// Filters
-		add_filter( 'heynotify_event_types ', array( $this, 'types' ) );
-		add_filter( 'heynotify_event_actions', array( $this, 'actions' ) );
+		add_filter( 'hey_notify_event_types ', array( $this, 'types' ) );
+		add_filter( 'hey_notify_event_actions', array( $this, 'actions' ) );
 
 		// Actions
-		add_action( "heynotify_add_action_${type}", array( $this, 'watch' ), 10, 2 );
+		add_action( "hey_notify_add_action_${type}", array( $this, 'watch' ), 10, 2 );
 	}
 
 	public function types( $types = array() ) {
