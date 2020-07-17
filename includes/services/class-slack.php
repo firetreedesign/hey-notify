@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Slack extends Service {
 
 	/**
-	 * Service options
+	 * Add the service
 	 *
 	 * @param array $services
 	 * @return array
@@ -30,6 +30,12 @@ class Slack extends Service {
 		return $services;
 	}
 
+	/**
+	 * Add the fields specific to this service
+	 * 
+	 * @param array $fields
+	 * @return array
+	 */
 	function fields( $fields = array() ) {
 		$fields[] = (
 			Field::make( 'text', 'hey_notify_slack_webhook', __( 'Webhook URL', 'hey-notify' ) )
@@ -73,12 +79,64 @@ class Slack extends Service {
 		return $fields;
 	}
 
+	/**
+	 * Prepare the message
+	 * 
+	 * @param array $message
+	 * @return array
+	 */
+	function prepare( $message ) {
+		$clean_message = array(
+			'notification' => $message['notification'],
+			'subject'      => $this->sanitize( $message['subject'] ),
+			'title'        => $this->sanitize( $message['title'] ),
+			'url'          => $message['url'],
+			'image'        => $message['image'],
+			'content'      => $this->sanitize( $message['content'] ),
+			'footer'       => $this->sanitize( $message['footer'] ),
+		);
+
+		$clean_fields = array();
+		foreach ( $message['fields'] as $field ) {
+			$clean_fields[] = array(
+				'name' => $this->sanitize( $field['name'] ),
+				'value' => $this->sanitize( $field['value'] ),
+				'inline' => $field['inline']
+			);
+		}
+
+		$clean_message['fields'] = $clean_fields;
+
+		return $clean_message;
+	}
+
+	/**
+	 * Sanitize a string for Slack
+	 * 
+	 * @param string $string
+	 * @return string
+	 */
+	function sanitize( $string ) {
+		$string = str_replace( '&', '&amp;', $string );
+		$string = str_replace( '<', '&lt;', $string );
+		$string = str_replace( '>', '&gt;', $string );
+		return $string;
+	}
+
+	/**
+	 * Send the message
+	 * 
+	 * @param array $message
+	 * @return void
+	 */
 	function send( $message ) {
 		$service = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_service' );
 	
 		if ( 'slack' !== $service ) {
 			return;
 		}
+
+		$message = $this->prepare( $message );
 
 		$webhook_url = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_slack_webhook' );
 		$username    = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_slack_username' );
