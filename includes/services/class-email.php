@@ -48,6 +48,8 @@ class Email extends Service {
 						'singular_name' => __( 'Email Address', 'hey-notify' )
 					)
 				)
+				->set_header_template( '<%- email %>' )
+				->set_collapsed( true )
 				->set_conditional_logic(
 					array(
 						array(
