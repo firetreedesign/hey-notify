@@ -121,7 +121,7 @@ function column_content( $column_name, $post_id ) {
 		case 'service':
 			$services = \apply_filters( 'hey_notify_services_options', array() );
 			$service = \carbon_get_post_meta( $post_id, 'hey_notify_service' );
-			echo "<img src='{$services[ $service ]}' style='height: 40px; width: auto;' />";
+			echo "<img src='{$services[ $service ]}' style='width: 100px; height: auto;' />";
 			break;
 		case 'events':
 			$events = \carbon_get_post_meta( $post_id, 'hey_notify_events' );

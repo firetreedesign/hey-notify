@@ -20,6 +20,7 @@ add_action( 'carbon_fields_register_fields', __NAMESPACE__ . '\\service_containe
 add_action( 'carbon_fields_register_fields', __NAMESPACE__ . '\\notification_container' );
 add_action( 'carbon_fields_register_fields', __NAMESPACE__ . '\\settings' );
 add_action( 'carbon_fields_post_meta_container_saved', __NAMESPACE__ . '\\save_events_meta' );
+add_action( 'admin_head', __NAMESPACE__ . '\\admin_head' );
 
 /**
  * Boot up Carbon Fields
@@ -83,4 +84,22 @@ function save_events_meta( $post_id ) {
 
 	$events = \carbon_get_post_meta( $post_id, 'hey_notify_events' );
 	\update_post_meta( $post_id, '_hey_notify_events_json', \json_encode( $events ) );
+}
+
+function admin_head() {
+	global $pagenow;
+
+	if ( 'edit.php' !== $pagenow && 'post.php' !== $pagenow ) {
+		return;
+	}
+
+	if ( ( ! isset( $_GET['post_type'] ) || 'hey_notify' !== $_GET['post_type'] ) && ( ! isset( $_GET['action'] ) || 'edit' !== $_GET['action'] ) ) {
+		return;
+	}
+
+	?>
+	<style>
+		body .cf-container-theme-options .cf-radio__list-item, body .cf-radio-image .cf-radio__list-item { flex: 0 0 120px; }
+	</style>
+	<?php
 }
