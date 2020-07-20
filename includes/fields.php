@@ -89,11 +89,18 @@ function save_events_meta( $post_id ) {
 function admin_head() {
 	global $pagenow;
 
-	if ( 'edit.php' !== $pagenow && 'post.php' !== $pagenow ) {
+	if (
+		'edit.php' !== $pagenow
+		&& 'post.php' !== $pagenow
+		&& 'post-new.php' !== $pagenow
+	) {
 		return;
 	}
 
-	if ( ( ! isset( $_GET['post_type'] ) || 'hey_notify' !== $_GET['post_type'] ) && ( ! isset( $_GET['action'] ) || 'edit' !== $_GET['action'] ) ) {
+	if (
+		( ! isset( $_GET['post_type'] ) || 'hey_notify' !== $_GET['post_type'] )
+		&& ( ! isset( $_GET['action'] ) || 'edit' !== $_GET['action'] )
+	) {
 		return;
 	}
 
