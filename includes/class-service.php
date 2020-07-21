@@ -1,7 +1,7 @@
 <?php
 /**
  * Service
- * 
+ *
  * @package Hey_Notify
  */
 
@@ -12,9 +12,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Service class
+ */
 class Service {
 
-	function __construct() {
+	/**
+	 * Class constructor
+	 */
+	private function __construct() {
 		add_filter( 'hey_notify_service_fields', array( $this, 'fields' ), 10 );
 		add_filter( 'hey_notify_services_options', array( $this, 'services' ), 10 );
 		add_action( 'hey_notify_send_message', array( $this, 'send' ), 10, 1 );
@@ -23,7 +29,7 @@ class Service {
 	/**
 	 * Service options
 	 *
-	 * @param array $services
+	 * @param array $services Services.
 	 * @return array
 	 */
 	public function services( $services = array() ) {
@@ -33,7 +39,7 @@ class Service {
 	/**
 	 * Fields
 	 *
-	 * @param array $fields
+	 * @param array $fields Fields.
 	 * @return array
 	 */
 	public function fields( $fields = array() ) {
@@ -43,11 +49,11 @@ class Service {
 	/**
 	 * Send the message
 	 *
-	 * @param array $message
+	 * @param array $message Message.
 	 * @return void
 	 */
 	public function send( $message ) {
-		return;
+		// Do something.
 	}
 
 }

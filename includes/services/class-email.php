@@ -1,7 +1,7 @@
 <?php
 /**
  * Email
- * 
+ *
  * @package Hey_Notify
  */
 
@@ -14,12 +14,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Email class
+ */
 class Email extends Service {
 
 	/**
 	 * Service options
 	 *
-	 * @param array $services
+	 * @param array $services Services.
 	 * @return array
 	 */
 	public function services( $services = array() ) {
@@ -33,19 +36,21 @@ class Email extends Service {
 	/**
 	 * Service fields
 	 *
-	 * @param array $fields
+	 * @param array $fields Fields.
 	 * @return array
 	 */
 	public function fields( $fields = array() ) {
 		$fields[] = (
 			Field::make( 'complex', 'hey_notify_email_addresses', __( 'Send notifications to', 'hey-notify' ) )
-				->add_fields( array(
-					Field::make( 'text', 'email', __( 'Email Address', 'hey-notify' ) ),
-				) )
+				->add_fields(
+					array(
+						Field::make( 'text', 'email', __( 'Email Address', 'hey-notify' ) ),
+					)
+				)
 				->setup_labels(
 					array(
-						'plural_name' => __( 'Email Addresses', 'hey-notify' ),
-						'singular_name' => __( 'Email Address', 'hey-notify' )
+						'plural_name'   => __( 'Email Addresses', 'hey-notify' ),
+						'singular_name' => __( 'Email Address', 'hey-notify' ),
 					)
 				)
 				->set_header_template( '<%- email %>' )
@@ -55,7 +60,7 @@ class Email extends Service {
 						array(
 							'field' => 'hey_notify_service',
 							'value' => 'email',
-						)
+						),
 					)
 				)
 		);
@@ -66,19 +71,19 @@ class Email extends Service {
 	/**
 	 * Send the message
 	 *
-	 * @param array $message
+	 * @param array $message Message.
 	 * @return void
 	 */
 	public function send( $message ) {
 
 		$service = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_service' );
-	
+
 		if ( 'email' !== $service ) {
 			return;
 		}
-	
+
 		$email_addresses = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_email_addresses' );
-		$to_email = array();
+		$to_email        = array();
 		if ( $email_addresses ) {
 			foreach ( $email_addresses as $email ) {
 				if ( '' !== trim( $email['email'] ) ) {
@@ -90,10 +95,10 @@ class Email extends Service {
 			return; // No addresses to send to.
 		}
 
-		$from_email = \get_option('admin_email');
-		$from_name = \__( 'Hey Notify', 'hey-notify' );
+		$from_email = \get_option( 'admin_email' );
+		$from_name  = \__( 'Hey Notify', 'hey-notify' );
 
-		// Subject
+		// Subject.
 		if ( isset( $message['subject'] ) && '' !== $message['subject'] ) {
 			$subject = $message['subject'];
 		} else {
@@ -101,39 +106,41 @@ class Email extends Service {
 		}
 
 		$body = '';
-		
-		// Title
+
+		// Title.
 		if ( isset( $message['title'] ) && '' !== $message['title'] ) {
 			$body .= "{$message['title']}\r\n";
 		}
 
-		// URL
+		// URL.
 		if ( isset( $message['url'] ) && '' !== $message['url'] ) {
 			$body .= "{$message['url']}\r\n\r\n";
 		}
 
-		// Content
+		// Content.
 		if ( isset( $message['content'] ) && '' !== $message['content'] ) {
 			$body .= "{$message['content']}\r\n\r\n";
 		}
-	
-		// Fields
+
+		// Fields.
 		if ( isset( $message['fields'] ) && is_array( $message['fields'] ) ) {
-			foreach( $message['fields'] as $field ) {
+			foreach ( $message['fields'] as $field ) {
 				$body .= "{$field['name']}: {$field['value']}\r\n";
 			}
 		}
 
-		// Footer
+		// Footer.
 		if ( isset( $message['footer'] ) && '' !== $message['footer'] ) {
 			$body .= "{$message['footer']}";
 		}
 
 		$headers = array(
-			"From: {$from_name} <{$from_email}>"
+			"From: {$from_name} <{$from_email}>",
 		);
-	
+
 		$result = wp_mail( $to_email, $subject, $body, $headers );
+
+		do_action( 'hey_notify_message_sent', $body, $result );
 	}
 }
 

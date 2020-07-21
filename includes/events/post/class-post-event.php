@@ -1,7 +1,7 @@
 <?php
 /**
  * Post events
- * 
+ *
  * @package Hey_Notify
  */
 
@@ -14,8 +14,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Post Event class
+ */
 class Post_Event extends Event {
 
+	/**
+	 * Add 'Posts' to the $types array
+	 *
+	 * @param array $types Event types.
+	 * @return array
+	 */
 	public function types( $types = array() ) {
 		if ( ! isset( $types['post'] ) ) {
 			$types['post'] = __( 'Posts', 'hey-notify' );
@@ -26,7 +35,7 @@ class Post_Event extends Event {
 	/**
 	 * Post events
 	 *
-	 * @param array $fields
+	 * @param array $fields Action fields.
 	 * @return array
 	 */
 	public function actions( $fields = array() ) {
@@ -47,7 +56,7 @@ class Post_Event extends Event {
 						array(
 							'field' => 'type',
 							'value' => 'post',
-						)
+						),
 					)
 				)
 				->set_width( 50 )
@@ -55,10 +64,18 @@ class Post_Event extends Event {
 		return $fields;
 	}
 
+	/**
+	 * Add the event actions
+	 *
+	 * @param object $notification Notification post object.
+	 * @param object $event Event object.
+	 * @return void
+	 */
 	public function watch( $notification, $event ) {
+
 		$hook = new $this->hook( $notification, $event );
-	
-		switch( $event->{$event->type} ) {
+
+		switch ( $event->{$event->type} ) {
 			case 'post_draft':
 				add_action( 'transition_post_status', array( $hook, 'post_draft' ), 10, 3 );
 				break;

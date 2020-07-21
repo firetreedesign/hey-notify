@@ -1,7 +1,7 @@
 <?php
 /**
  * Fields
- * 
+ *
  * @package Hey_Notify
  */
 
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Actions
+// Actions.
 add_action( 'plugins_loaded', __NAMESPACE__ . '\\boot' );
 add_action( 'carbon_fields_register_fields', __NAMESPACE__ . '\\service_container' );
 add_action( 'carbon_fields_register_fields', __NAMESPACE__ . '\\notification_container' );
@@ -46,7 +46,7 @@ function service_container() {
 
 /**
  * Notification post meta container
- * 
+ *
  * @return void
  */
 function notification_container() {
@@ -77,15 +77,26 @@ function settings() {
 		);
 }
 
+/**
+ * Save events meta
+ *
+ * @param int $post_id Post ID.
+ * @return varies
+ */
 function save_events_meta( $post_id ) {
 	if ( \get_post_type( $post_id ) !== 'hey_notify' ) {
-        return false;
-    }
+		return;
+	}
 
 	$events = \carbon_get_post_meta( $post_id, 'hey_notify_events' );
-	\update_post_meta( $post_id, '_hey_notify_events_json', \json_encode( $events ) );
+	\update_post_meta( $post_id, '_hey_notify_events_json', \wp_json_encode( $events ) );
 }
 
+/**
+ * Content to output in the Admin head
+ *
+ * @return void
+ */
 function admin_head() {
 	global $pagenow;
 
@@ -98,8 +109,8 @@ function admin_head() {
 	}
 
 	if (
-		( ! isset( $_GET['post_type'] ) || 'hey_notify' !== $_GET['post_type'] )
-		&& ( ! isset( $_GET['action'] ) || 'edit' !== $_GET['action'] )
+		( ! isset( $_GET['post_type'] ) || 'hey_notify' !== $_GET['post_type'] ) // phpcs:ignore
+		&& ( ! isset( $_GET['action'] ) || 'edit' !== $_GET['action'] ) // phpcs:ignore
 	) {
 		return;
 	}

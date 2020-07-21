@@ -1,7 +1,7 @@
 <?php
 /**
  * Filters
- * 
+ *
  * @package Hey_Notify
  */
 
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Filters
+// Filters.
 add_filter( 'hey_notify_service_fields', __NAMESPACE__ . '\\service_fields', 5 );
 add_filter( 'hey_notify_event_fields', __NAMESPACE__ . '\\event_fields', 5 );
 add_filter( 'hey_notify_settings_uninstall', __NAMESPACE__ . '\\settings_uninstall_fields', 5 );
@@ -23,7 +23,7 @@ add_filter( 'hey_notify_settings_general', __NAMESPACE__ . '\\settings_general_f
 /**
  * Service fields
  *
- * @param array $fields
+ * @param array $fields Fields.
  * @return array
  */
 function service_fields( $fields = array() ) {
@@ -38,7 +38,7 @@ function service_fields( $fields = array() ) {
 /**
  * Event fields
  *
- * @param array $fields
+ * @param array $fields Fields.
  * @return array
  */
 function event_fields( $fields = array() ) {
@@ -46,23 +46,21 @@ function event_fields( $fields = array() ) {
 		Field::make( 'complex', 'hey_notify_events', __( 'Notification Events', 'hey-notify' ) )
 			->setup_labels(
 				array(
-					'plural_name' => __( 'Events', 'hey-notify' ),
-					'singular_name' => __( 'Event', 'hey-notify' )
+					'plural_name'   => __( 'Events', 'hey-notify' ),
+					'singular_name' => __( 'Event', 'hey-notify' ),
 				)
 			)
 			->add_fields(
 				array_merge(
 					array(
 						Field::make( 'select', 'type', __( 'Event Type', 'hey-notify' ) )
-							->set_options( apply_filters( 'hey_notify_event_types ', array() ) )
-							->set_width( 50 )
+							->set_options( apply_filters( 'hey_notify_event_types', array() ) )
+							->set_width( 50 ),
 					),
 					apply_filters( 'hey_notify_event_actions', array() )
 				)
 			)
-			->set_header_template( '
-				Event: <%- type %>
-			' )
+			->set_header_template( 'Event: <%- type %>' )
 	);
 	return $fields;
 }
@@ -70,13 +68,13 @@ function event_fields( $fields = array() ) {
 /**
  * Settings - Uninstall fields
  *
- * @param array $fields
- * @return void
+ * @param array $fields Fields.
+ * @return array
  */
 function settings_uninstall_fields( $fields = array() ) {
 	$fields[] = (
 		Field::make( 'html', 'hey_notify_uninstall_heading' )
-    		->set_html(
+			->set_html(
 				sprintf(
 					'<p>%1s</p>',
 					__( 'Upon deletion of the plugin, you can optionally remove all custom data, settings, etc.', 'hey-notify' )
@@ -92,8 +90,8 @@ function settings_uninstall_fields( $fields = array() ) {
 /**
  * Settings - Services fields
  *
- * @param array $fields
- * @return void
+ * @param array $fields Fields.
+ * @return array
  */
 function settings_general_fields( $fields = array() ) {
 	$fields[] = (

@@ -1,31 +1,58 @@
 <?php
 /**
  * Event hook
- * 
+ *
  * @package Hey_Notify
  */
 
 namespace Hey_Notify;
 
+/**
+ * Hook class
+ */
 class Hook {
+
+	/**
+	 * Notification
+	 *
+	 * @var object
+	 */
 	public $notification;
+
+	/**
+	 * Event
+	 *
+	 * @var object
+	 */
 	public $event;
 
-	function __construct( $notification, $event ) {
+	/**
+	 * Class constructor
+	 *
+	 * @param object $notification Notification.
+	 * @param object $event Event.
+	 */
+	private function __construct( $notification, $event ) {
 		$this->notification = $notification;
-		$this->event = $event;
+		$this->event        = $event;
 	}
 
+	/**
+	 * Send the message
+	 *
+	 * @param array $data Message data.
+	 * @return void
+	 */
 	protected function send( $data ) {
-		
+
 		$defaults = array(
 			'subject' => null,
-			'title' => null,
-			'url' => null,
-			'image' => null,
+			'title'   => null,
+			'url'     => null,
+			'image'   => null,
 			'content' => null,
-			'fields' => array(),
-			'footer' => null,
+			'fields'  => array(),
+			'footer'  => null,
 		);
 
 		$new_data = wp_parse_args( $data, $defaults );

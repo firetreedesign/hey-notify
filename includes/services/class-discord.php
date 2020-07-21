@@ -1,7 +1,7 @@
 <?php
 /**
  * Discord
- * 
+ *
  * @package Hey_Notify
  */
 
@@ -14,12 +14,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Discord class
+ */
 class Discord extends Service {
 
 	/**
 	 * Service options
 	 *
-	 * @param array $services
+	 * @param array $services Services.
 	 * @return array
 	 */
 	public function services( $services = array() ) {
@@ -33,7 +36,7 @@ class Discord extends Service {
 	/**
 	 * Service fields
 	 *
-	 * @param array $fields
+	 * @param array $fields Service fields.
 	 * @return array
 	 */
 	public function fields( $fields = array() ) {
@@ -46,7 +49,7 @@ class Discord extends Service {
 						array(
 							'field' => 'hey_notify_service',
 							'value' => 'discord',
-						)
+						),
 					)
 				)
 		);
@@ -58,7 +61,7 @@ class Discord extends Service {
 						array(
 							'field' => 'hey_notify_service',
 							'value' => 'discord',
-						)
+						),
 					)
 				)
 				->set_width( 50 )
@@ -71,7 +74,7 @@ class Discord extends Service {
 						array(
 							'field' => 'hey_notify_service',
 							'value' => 'discord',
-						)
+						),
 					)
 				)
 				->set_width( 50 )
@@ -83,101 +86,104 @@ class Discord extends Service {
 	/**
 	 * Send the message
 	 *
-	 * @param array $message
+	 * @param array $message Message.
 	 * @return void
 	 */
-	public function send( $message ) {
+	private function send( $message ) {
 		$service = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_service' );
-	
+
 		if ( 'discord' !== $service ) {
 			return;
 		}
-	
+
 		$webhook_url = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_discord_webhook' );
 		$username    = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_discord_username' );
 		$avatar      = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_discord_avatar' );
-	
-		$body = array();
-		$embed_item = array();
+		$body        = array();
+		$embed_item  = array();
 
-		// Subject
+		// Subject.
 		if ( isset( $message['subject'] ) && '' !== $message['subject'] ) {
 			$body['content'] = $message['subject'];
 		}
-	
-		// Title
+
+		// Title.
 		if ( '' !== $message['subject'] ) {
 			$embed_item['title'] = $message['subject'];
 		}
-	
-		// URL
+
+		// URL.
 		if ( '' !== $message['url'] ) {
 			$embed_item['url'] = $message['url'];
 		}
-	
-		// Fields
+
+		// Fields.
 		if ( isset( $message['fields'] ) && is_array( $message['fields'] ) ) {
 			$fields = array();
-			foreach( $message['fields'] as $field ) {
+			foreach ( $message['fields'] as $field ) {
 				$fields[] = array(
-					'name' => $field['name'],
-					'value' => $field['value'],
-					'inline' => $field['inline']
+					'name'   => $field['name'],
+					'value'  => $field['value'],
+					'inline' => $field['inline'],
 				);
 			}
 			$embed_item['fields'] = $fields;
 		}
 
-		// Image
+		// Image.
 		if ( isset( $message['image'] ) ) {
 			$embed_item['thumbnail'] = array(
-				'url' => $message['image']
+				'url' => $message['image'],
 			);
 		}
 
-		// Content
+		// Content.
 		if ( isset( $message['content'] ) && '' !== $message['content'] ) {
 			$embed_item['description'] = $message['content'];
 		}
 
-		// Footer
+		// Footer.
 		if ( isset( $message['footer'] ) && '' !== $message['footer'] ) {
 			$embed_item['footer'] = array(
-				'text' => $message['content']
+				'text' => $message['content'],
 			);
 		}
-	
+
 		$body = array(
 			'embeds' => array( $embed_item ),
 		);
-	
+
 		if ( '' !== $username ) {
 			$body['username'] = $username;
 		}
-	
+
 		if ( '' !== $avatar ) {
 			$avatar = \wp_get_attachment_image_url( $avatar, array( 250, 250 ) );
 			if ( false !== $avatar ) {
 				$body['avatar_url'] = $avatar;
 			}
 		}
-	
-		$json = \json_encode( $body );
-		$response = \wp_remote_post( $webhook_url, array(
-			'headers' => array(
-				'Content-Type' => 'application/json; charset=utf-8',
-			),
-			'body' => $json,
-		) );
-		
+
+		$json     = \wp_json_encode( $body );
+		$response = \wp_remote_post(
+			$webhook_url,
+			array(
+				'headers' => array(
+					'Content-Type' => 'application/json; charset=utf-8',
+				),
+				'body'    => $json,
+			)
+		);
+
+		do_action( 'hey_notify_message_sent', $json, $response );
+
 		if ( ! \is_wp_error( $response ) ) {
-			if ( 204 == \wp_remote_retrieve_response_code( $response ) ) {
-				// error_log( 'Message sent to Discord!' );
-			} else {
+			if ( 204 !== \wp_remote_retrieve_response_code( $response ) ) {
+				// There was an error making the request.
 				$error_message = \wp_remote_retrieve_response_message( $response );
 			}
 		} else {
-			// There was an error making the request
+			// There was an error making the request.
 			$error_message = $response->get_error_message();
 		}
 	}

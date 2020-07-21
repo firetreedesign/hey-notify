@@ -29,14 +29,14 @@ require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/filters.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/fields.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/notifications.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/class-hook.php';
-require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/class-events.php';
+require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/class-event.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/class-service.php';
 
-// Events
+// Events.
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/events/post/loader.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/events/page/loader.php';
 
-// Services
+// Services.
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/services/class-slack.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/services/class-discord.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/services/class-email.php';

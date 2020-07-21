@@ -1,7 +1,7 @@
 <?php
 /**
  * Notifications
- * 
+ *
  * @package Hey_Notify
  */
 
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Actions
+// Actions.
 add_action( 'plugins_loaded', __NAMESPACE__ . '\\setup' );
 
 /**
@@ -48,11 +48,13 @@ function get_query() {
 
 	// If the cache is empty, then run the query.
 	if ( false === $notifications ) {
-		$notifications = new WP_Query( array(
-			'posts_per_page' => -1,
-			'post_type'      => 'hey_notify',
-			'post_status'    => 'publish',
-		) );
+		$notifications = new WP_Query(
+			array(
+				'posts_per_page' => -1,
+				'post_type'      => 'hey_notify',
+				'post_status'    => 'publish',
+			)
+		);
 
 		// Save the query to the cache.
 		\wp_cache_set( 'hey_notify_notifications', $notifications );

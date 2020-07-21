@@ -1,7 +1,7 @@
 <?php
 /**
  * Slack
- * 
+ *
  * @package Hey_Notify
  */
 
@@ -14,12 +14,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Slack class
+ */
 class Slack extends Service {
 
 	/**
 	 * Add the service
 	 *
-	 * @param array $services
+	 * @param array $services Services.
 	 * @return array
 	 */
 	public function services( $services = array() ) {
@@ -32,11 +35,11 @@ class Slack extends Service {
 
 	/**
 	 * Add the fields specific to this service
-	 * 
-	 * @param array $fields
+	 *
+	 * @param array $fields Fields.
 	 * @return array
 	 */
-	function fields( $fields = array() ) {
+	public function fields( $fields = array() ) {
 		$fields[] = (
 			Field::make( 'text', 'hey_notify_slack_webhook', __( 'Webhook URL', 'hey-notify' ) )
 				->set_attribute( 'type', 'url' )
@@ -46,7 +49,7 @@ class Slack extends Service {
 						array(
 							'field' => 'hey_notify_service',
 							'value' => 'slack',
-						)
+						),
 					)
 				)
 		);
@@ -58,7 +61,7 @@ class Slack extends Service {
 						array(
 							'field' => 'hey_notify_service',
 							'value' => 'slack',
-						)
+						),
 					)
 				)
 				->set_width( 50 )
@@ -71,7 +74,7 @@ class Slack extends Service {
 						array(
 							'field' => 'hey_notify_service',
 							'value' => 'slack',
-						)
+						),
 					)
 				)
 				->set_width( 50 )
@@ -81,11 +84,11 @@ class Slack extends Service {
 
 	/**
 	 * Prepare the message
-	 * 
-	 * @param array $message
+	 *
+	 * @param array $message Message.
 	 * @return array
 	 */
-	function prepare( $message ) {
+	private function prepare( $message ) {
 		$clean_message = array(
 			'notification' => $message['notification'],
 			'subject'      => $this->sanitize( $message['subject'] ),
@@ -99,9 +102,9 @@ class Slack extends Service {
 		$clean_fields = array();
 		foreach ( $message['fields'] as $field ) {
 			$clean_fields[] = array(
-				'name' => $this->sanitize( $field['name'] ),
-				'value' => $this->sanitize( $field['value'] ),
-				'inline' => $field['inline']
+				'name'   => $this->sanitize( $field['name'] ),
+				'value'  => $this->sanitize( $field['value'] ),
+				'inline' => $field['inline'],
 			);
 		}
 
@@ -112,11 +115,11 @@ class Slack extends Service {
 
 	/**
 	 * Sanitize a string for Slack
-	 * 
-	 * @param string $string
+	 *
+	 * @param string $string Text.
 	 * @return string
 	 */
-	function sanitize( $string ) {
+	private function sanitize( $string ) {
 		$string = str_replace( '&', '&amp;', $string );
 		$string = str_replace( '<', '&lt;', $string );
 		$string = str_replace( '>', '&gt;', $string );
@@ -125,13 +128,13 @@ class Slack extends Service {
 
 	/**
 	 * Send the message
-	 * 
-	 * @param array $message
+	 *
+	 * @param array $message Message.
 	 * @return void
 	 */
-	function send( $message ) {
+	private function send( $message ) {
 		$service = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_service' );
-	
+
 		if ( 'slack' !== $service ) {
 			return;
 		}
@@ -141,102 +144,101 @@ class Slack extends Service {
 		$webhook_url = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_slack_webhook' );
 		$username    = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_slack_username' );
 		$icon        = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_slack_icon' );
-		
-		$blocks = array();
+		$blocks      = array();
 
-		// Subject
+		// Subject.
 		if ( isset( $message['subject'] ) && '' !== $message['subject'] ) {
 			$blocks[] = array(
 				'type' => 'section',
 				'text' => array(
 					'type' => 'mrkdwn',
-					'text' => $message['subject']
-				)
+					'text' => $message['subject'],
+				),
 			);
 		}
 
-		// Title and URL
+		// Title and URL.
 		if ( '' !== $message['title'] && '' !== $message['url'] ) {
 			$blocks[] = array(
 				'type' => 'section',
 				'text' => array(
 					'type' => 'mrkdwn',
-					'text' => "*<{$message['url']}|{$message['title']}>*"
-				)
+					'text' => "*<{$message['url']}|{$message['title']}>*",
+				),
 			);
 		} elseif ( '' !== $message['title'] && '' === $message['url'] ) {
 			$blocks[] = array(
 				'type' => 'section',
 				'text' => array(
 					'type' => 'mrkdwn',
-					'text' => "*{$message['title']}*"
-				)
+					'text' => "*{$message['title']}*",
+				),
 			);
 		} elseif ( '' === $message['title'] && '' !== $message['url'] ) {
 			$blocks[] = array(
 				'type' => 'section',
 				'text' => array(
 					'type' => 'mrkdwn',
-					'text' => "*<{$message['url']}|{$message['url']}>*"
-				)
+					'text' => "*<{$message['url']}|{$message['url']}>*",
+				),
 			);
 		}
 
-		// Content
+		// Content.
 		if ( isset( $message['content'] ) && '' !== $message['content'] ) {
 			$blocks[] = array(
 				'type' => 'section',
 				'text' => array(
 					'type' => 'mrkdwn',
-					'text' => $message['content']
-				)
+					'text' => $message['content'],
+				),
 			);
 		}
-	
-		// Fields
+
+		// Fields.
 		if ( isset( $message['fields'] ) && is_array( $message['fields'] ) ) {
 			$fields = array();
-			foreach( $message['fields'] as $field ) {
+			foreach ( $message['fields'] as $field ) {
 				$fields[] = array(
 					'type' => 'mrkdwn',
-					'text' => "*{$field['name']}*\n{$field['value']}"
+					'text' => "*{$field['name']}*\n{$field['value']}",
 				);
 			}
 			$fields_array = array(
-				'type' => 'section',
-				'fields' => $fields
+				'type'   => 'section',
+				'fields' => $fields,
 			);
 
 			if ( isset( $message['image'] ) && '' !== $message['image'] ) {
 				$fields_array['accessory'] = array(
-					'type' => 'image',
+					'type'      => 'image',
 					'image_url' => $message['image'],
-					'alt_text' => isset( $message['title'] ) ? $message['title'] : __( 'Attached image', 'hey-notify' )
+					'alt_text'  => isset( $message['title'] ) ? $message['title'] : __( 'Attached image', 'hey-notify' ),
 				);
 			}
 
 			$blocks[] = $fields_array;
 		}
 
-		// Footer
+		// Footer.
 		if ( isset( $message['footer'] ) && '' !== $message['footer'] ) {
 			$blocks[] = array(
 				'type' => 'section',
 				'text' => array(
 					'type' => 'mrkdwn',
-					'text' => $message['footer']
-				)
+					'text' => $message['footer'],
+				),
 			);
 		}
 
-		$body = array();
-		$body['attachments'] = array();
+		$body                            = array();
+		$body['attachments']             = array();
 		$body['attachments'][]['blocks'] = $blocks;
 
 		if ( '' !== $username ) {
 			$body['username'] = $username;
 		}
-	
+
 		if ( '' !== $icon ) {
 			$icon_url = \wp_get_attachment_image_url( $icon, array( 250, 250 ) );
 			if ( false !== $icon_url ) {
@@ -244,25 +246,26 @@ class Slack extends Service {
 			}
 		}
 
-		$json = \json_encode( $body );
-		$response = \wp_remote_post( $webhook_url, array(
-			'headers' => array(
-				'Content-Type' => 'application/json; charset=utf-8',
-			),
-			'body' => $json,
-		) );
-		
+		$json     = \wp_json_encode( $body );
+		$response = \wp_remote_post(
+			$webhook_url,
+			array(
+				'headers' => array(
+					'Content-Type' => 'application/json; charset=utf-8',
+				),
+				'body'    => $json,
+			)
+		);
+
+		do_action( 'hey_notify_message_sent', $json, $response );
+
 		if ( ! \is_wp_error( $response ) ) {
-			if ( 200 == \wp_remote_retrieve_response_code( $response ) ) {
-				// error_log( 'Message sent to Slack!' );
-			} else {
+			if ( 200 !== \wp_remote_retrieve_response_code( $response ) ) {
 				$error_message = \wp_remote_retrieve_response_message( $response );
-				// error_log( $error_message );
 			}
 		} else {
-			// There was an error making the request
+			// There was an error making the request.
 			$error_message = $response->get_error_message();
-			// error_log( $error_message );
 		}
 	}
 

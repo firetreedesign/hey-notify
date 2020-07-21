@@ -1,7 +1,7 @@
 <?php
 /**
  * Uninstall
- * 
+ *
  * @package Hey_Notify
  */
 
@@ -21,7 +21,7 @@ if ( 'yes' === $remove_data ) {
 	$all_posts = get_posts(
 		array(
 			'post_type'   => 'hey_notify',
-			'numberposts' => -1
+			'numberposts' => -1,
 		)
 	);
 	foreach ( $all_posts as $single_post ) {

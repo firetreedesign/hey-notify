@@ -1,7 +1,7 @@
 <?php
 /**
  * Page events
- * 
+ *
  * @package Hey_Notify
  */
 
