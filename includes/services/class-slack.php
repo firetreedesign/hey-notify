@@ -132,7 +132,7 @@ class Slack extends Service {
 	 * @param array $message Message.
 	 * @return void
 	 */
-	private function send( $message ) {
+	public function send( $message ) {
 		$service = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_service' );
 
 		if ( 'slack' !== $service ) {

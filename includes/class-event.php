@@ -44,11 +44,11 @@ class Event {
 	 * @param string $type Type.
 	 * @param string $hook Hook.
 	 */
-	private function __construct( $type, $hook ) {
+	public function __construct( $type, $hook ) {
 		$this->hook = $hook;
 
 		// Filters.
-		add_filter( 'hey_notify_event_types ', array( $this, 'types' ) );
+		add_filter( 'hey_notify_event_types', array( $this, 'types' ) );
 		add_filter( 'hey_notify_event_actions', array( $this, 'actions' ) );
 
 		// Actions.

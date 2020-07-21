@@ -32,7 +32,7 @@ class Hook {
 	 * @param object $notification Notification.
 	 * @param object $event Event.
 	 */
-	private function __construct( $notification, $event ) {
+	public function __construct( $notification, $event ) {
 		$this->notification = $notification;
 		$this->event        = $event;
 	}
