@@ -64,7 +64,7 @@ class Slack extends Service {
 						),
 					)
 				)
-				->set_width( 50 )
+				->set_width( 33 )
 		);
 		$fields[] = (
 			Field::make( 'text', 'hey_notify_slack_username', __( 'Slack Username', 'hey-notify' ) )
@@ -77,7 +77,20 @@ class Slack extends Service {
 						),
 					)
 				)
-				->set_width( 50 )
+				->set_width( 33 )
+		);
+		$fields[] = (
+			Field::make( 'color', 'hey_notify_slack_color', __( 'Color', 'hey-notify' ) )
+				->set_help_text( __( 'Select a color to use for the message attachment.', 'hey-notify' ) )
+				->set_conditional_logic(
+					array(
+						array(
+							'field' => 'hey_notify_service',
+							'value' => 'slack',
+						),
+					)
+				)
+				->set_width( 33 )
 		);
 		return $fields;
 	}
@@ -144,6 +157,7 @@ class Slack extends Service {
 		$webhook_url = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_slack_webhook' );
 		$username    = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_slack_username' );
 		$icon        = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_slack_icon' );
+		$color       = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_slack_color' );
 		$blocks      = array();
 
 		// Subject.
@@ -231,9 +245,12 @@ class Slack extends Service {
 			);
 		}
 
-		$body                            = array();
-		$body['attachments']             = array();
-		$body['attachments'][]['blocks'] = $blocks;
+		$body = array();
+
+		$body['attachments'][] = array(
+			'color'  => $color,
+			'blocks' => $blocks,
+		);
 
 		if ( '' !== $username ) {
 			$body['username'] = $username;
