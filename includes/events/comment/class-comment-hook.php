@@ -71,10 +71,16 @@ class Comment_Hook extends Hook {
 			),
 		);
 
+		$image = \get_avatar_url( $comment->comment_author_email );
+		if ( false === $image ) {
+			$image = '';
+		}
+
 		$data = array(
 			'subject' => $subject,
 			'title'   => \get_the_title( $comment->comment_post_ID ),
 			'url'     => \get_comment_link( $comment ),
+			'image'   => $image,
 			'fields'  => $fields,
 			'footer'  => $comment->comment_content,
 		);

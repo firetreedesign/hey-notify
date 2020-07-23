@@ -25,7 +25,7 @@ Get notified when things happen in WordPress.
 * Posts
 * Pages
 * Comments
-* Users (coming soon)
+* Users
 * System Events (coming soon)
 
 == Installation ==
@@ -42,6 +42,7 @@ Get notified when things happen in WordPress.
 
 = 1.1.0 =
 * Added comment notifications.
+* Added user notifications.
 
 = 1.0.0 =
 * Initial release.
