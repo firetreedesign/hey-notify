@@ -74,7 +74,7 @@ class Comment_Hook extends Hook {
 		$data = array(
 			'subject' => $subject,
 			'title'   => \get_the_title( $comment->comment_post_ID ),
-			'url'     => \get_permalink( $comment->comment_post_ID ),
+			'url'     => \get_comment_link( $comment ),
 			'fields'  => $fields,
 			'footer'  => $comment->comment_content,
 		);
