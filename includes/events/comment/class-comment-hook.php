@@ -59,6 +59,16 @@ class Comment_Hook extends Hook {
 				'value'  => $comment->comment_author_email,
 				'inline' => true,
 			),
+			array(
+				'name'   => \esc_html__( 'Date', 'hey-notify' ),
+				'value'  => $this->format_comment_date( $comment ),
+				'inline' => true,
+			),
+			array(
+				'name'   => \esc_html__( 'Status', 'hey-notify' ),
+				'value'  => $this->get_comment_status( $comment ),
+				'inline' => true,
+			),
 		);
 
 		$data = array(
@@ -70,5 +80,38 @@ class Comment_Hook extends Hook {
 		);
 
 		$this->send( $data );
+	}
+
+	/**
+	 * Get the comment status
+	 *
+	 * @param object $comment Comment object.
+	 * @return string
+	 */
+	private function get_comment_status( $comment ) {
+		switch ( $comment->comment_approved ) {
+			case '1':
+				return __( 'Approved', 'hey-notify' );
+			case '0':
+				return __( 'Pending', 'hey-notify' );
+			case 'spam':
+				return __( 'Spam', 'hey-notify' );
+			default:
+				return $comment->comment_approved;
+		}
+	}
+
+	/**
+	 * Get the date/time format
+	 *
+	 * @param object $comment Comment object.
+	 * @return string
+	 */
+	private function format_comment_date( $comment ) {
+		$date_format  = get_option( 'date_format' );
+		$time_format  = get_option( 'time_format' );
+		$comment_date = date_create( $comment->comment_date );
+
+		return date_format( $comment_date, $date_format . ' ' . $time_format );
 	}
 }
