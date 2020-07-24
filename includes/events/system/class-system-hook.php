@@ -64,7 +64,7 @@ class System_Hook extends Hook {
 
 		$subject = \sprintf(
 			'%1s %2s!',
-			\__( 'Hey, here is a new version of WordPress available on', 'hey-notify' ),
+			\__( 'Hey, a new version of WordPress is available on', 'hey-notify' ),
 			\get_bloginfo( 'name' )
 		);
 
