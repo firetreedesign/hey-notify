@@ -76,10 +76,10 @@ class System_Event extends Event {
 				add_action( 'wp_version_check', array( $hook, 'system_core_update' ), 9 );
 				break;
 			case 'system_theme_update':
-				// add_action( 'wp_update_themes', array( $hook, 'system_theme_update' ), 10 );
+				add_action( 'wp_update_themes', array( $hook, 'system_theme_update' ), 10 );
 				break;
 			case 'system_plugin_update':
-				// add_action( 'wp_update_plugins', array( $hook, 'system_plugin_update' ), 10 );
+				add_action( 'wp_update_plugins', array( $hook, 'system_plugin_update' ), 10 );
 				break;
 		}
 	}

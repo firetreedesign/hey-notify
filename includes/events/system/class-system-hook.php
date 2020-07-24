@@ -90,4 +90,151 @@ class System_Hook extends Hook {
 
 		$this->send( $data );
 	}
+
+	/**
+	 * Theme Update Available
+	 * 
+	 * @return void
+	 */
+	public function system_theme_update() {
+
+		$update_themes = get_site_transient( 'update_themes' );
+
+		if ( false === $update_themes ) {
+			return;
+		}
+
+		if ( ! is_object( $update_themes ) ) {
+			return;
+		}
+		
+		if ( ! isset( $update_themes->response ) ) {
+			return;
+		}
+
+		$last_theme_versions = get_option( 'hey_notify_theme_versions', array() );
+		$new_theme_versions  = array();
+
+		$fields = array();
+
+		foreach ( $update_themes->response as $theme_directory => $update_data ) {
+
+			$new_theme_versions[ $theme_directory ] = $update_data['new_version'];
+
+			if ( $update_themes->checked[ $theme_directory ] === $update_data['new_version'] ) {
+				continue;
+			}
+
+			if (
+				isset( $last_theme_versions[ $theme_directory ] )
+				&& $last_theme_versions[ $theme_directory ] === $update_data->new_version
+			) {
+				continue;
+			}
+
+			$theme_data = \wp_get_theme( $theme_directory );
+
+			$fields[] = array(
+				'name'   => \esc_html__( 'Plugin (Version)', 'hey-notify' ),
+				'value'  => "{$theme_data->get( 'Name' )} ({$update_data['new_version']})",
+				'inline' => false,
+			);
+
+		}
+
+		update_option( 'hey_notify_theme_versions', $new_theme_versions );
+
+		if ( empty( $fields ) ) {
+			return;
+		}
+
+		$subject = \sprintf(
+			'%1s %2s!',
+			\__( 'Hey, new theme updates are available on', 'hey-notify' ),
+			\get_bloginfo( 'name' )
+		);
+
+		$data = array(
+			'subject' => $subject,
+			'title'   => __( 'View the updates', 'hey-notify' ),
+			'url'     => \admin_url( 'update-core.php' ),
+			'fields'  => array( $fields ),
+		);
+
+		$this->send( $data );
+	}
+
+	/**
+	 * Plugin Update Available
+	 * 
+	 * @return void
+	 */
+	public function system_plugin_update() {
+
+		$update_plugins = get_site_transient( 'update_plugins' );
+
+		if ( false === $update_plugins ) {
+			return;
+		}
+
+		if ( ! is_object( $update_plugins ) ) {
+			return;
+		}
+		
+		if ( ! isset( $update_plugins->response ) ) {
+			return;
+		}
+
+		$last_plugin_versions = get_option( 'hey_notify_plugin_versions', array() );
+		$new_plugin_versions  = array();
+
+		$fields = array();
+
+		foreach ( $update_plugins->response as $plugin_file => $update_data ) {
+
+			$new_plugin_versions[ $plugin_file ] = $update_data->new_version;
+
+			if ( $update_plugins->checked[ $plugin_file ] === $update_data->new_version ) {
+				continue;
+			}
+
+			if (
+				isset( $last_plugin_versions[ $plugin_file ] )
+				&& $last_plugin_versions[ $plugin_file ] === $update_data->new_version
+			) {
+				continue;
+			}
+
+			$plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin_file, true, false );
+
+			$fields[] = array(
+				'name'   => \esc_html__( 'Theme (Version)', 'hey-notify' ),
+				'value'  => "{$plugin_data['Name']} ({$update_data->new_version})",
+				'inline' => false,
+			);
+
+		}
+
+		update_option( 'hey_notify_plugin_versions', $new_plugin_versions );
+
+		if ( empty( $fields ) ) {
+			return;
+		}
+
+		$subject = \sprintf(
+			'%1s %2s!',
+			\__( 'Hey, new plugin updates are available on', 'hey-notify' ),
+			\get_bloginfo( 'name' )
+		);
+
+		$data = array(
+			'subject' => $subject,
+			'title'   => __( 'View the updates', 'hey-notify' ),
+			'url'     => \admin_url( 'update-core.php' ),
+			'fields'  => array( $fields ),
+		);
+
+		$this->send( $data );
+
+	}
 }
