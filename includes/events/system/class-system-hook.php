@@ -223,7 +223,7 @@ class System_Hook extends Hook {
 
 		$subject = \sprintf(
 			/* translators: %s: Name of the site */
-			esc_html__( 'Hey, new plugin updates are available on %s!', 'hey-notify' ),
+			\esc_html__( 'Hey, new plugin updates are available on %s!', 'hey-notify' ),
 			\get_bloginfo( 'name' )
 		);
 
