@@ -26,9 +26,11 @@ class Email extends Service {
 	 * @return array
 	 */
 	public function services( $services = array() ) {
-		if ( ! isset( $services['email'] ) ) {
-			$services['email'] = HEY_NOTIFY_PLUGIN_URL . '/images/services/email.png';
-		}
+		$services[] = array(
+			'value' => 'email',
+			'label' => __( 'Email', 'hey-notify' ),
+			'image' => HEY_NOTIFY_PLUGIN_URL . 'images/services/email.png',
+		);
 
 		return $services;
 	}

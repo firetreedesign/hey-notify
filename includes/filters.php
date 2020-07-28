@@ -29,7 +29,7 @@ add_filter( 'hey_notify_settings_general', __NAMESPACE__ . '\\settings_general_f
 function service_fields( $fields = array() ) {
 	$fields[] = (
 		Field::make( 'radio_image', 'hey_notify_service', __( 'Select a service', 'hey-notify' ) )
-			->set_options( apply_filters( 'hey_notify_services_options', array() ) )
+			->set_options( get_service_options() )
 			->set_default_value( \get_option( '_hey_notify_default_service' ) )
 	);
 	return $fields;
@@ -105,7 +105,26 @@ function settings_general_fields( $fields = array() ) {
 	);
 	$fields[] = (
 		Field::make( 'radio_image', 'hey_notify_default_service', __( 'Default service:', 'hey-notify' ) )
-			->set_options( apply_filters( 'hey_notify_services_options', array() ) )
+			->set_options( get_service_options() )
 	);
 	return $fields;
+}
+
+/**
+ * Get the service options from the filter
+ *
+ * @return array
+ */
+function get_service_options() {
+
+	$services = apply_filters( 'hey_notify_services_options', array() );
+	$options  = array();
+
+	foreach ( $services as $service ) {
+		if ( isset( $service['image'] ) ) {
+			$options[ $service['value'] ] = $service['image'];
+		}
+	}
+
+	return $options;
 }

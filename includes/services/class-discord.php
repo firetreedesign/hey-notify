@@ -26,9 +26,11 @@ class Discord extends Service {
 	 * @return array
 	 */
 	public function services( $services = array() ) {
-		if ( ! isset( $services['discord'] ) ) {
-			$services['discord'] = HEY_NOTIFY_PLUGIN_URL . '/images/services/discord.png';
-		}
+		$services[] = array(
+			'value' => 'discord',
+			'label' => __( 'Discord', 'hey-notify' ),
+			'image' => HEY_NOTIFY_PLUGIN_URL . 'images/services/discord.png',
+		);
 
 		return $services;
 	}

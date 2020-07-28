@@ -119,9 +119,13 @@ function column_titles( $defaults ) {
 function column_content( $column_name, $post_id ) {
 	switch ( $column_name ) {
 		case 'service':
-			$services = \apply_filters( 'hey_notify_services_options', array() );
-			$service  = \carbon_get_post_meta( $post_id, 'hey_notify_service' );
-			echo "<img src='" . esc_attr( $services[ $service ] ) . "' style='width: 100px; height: auto;' />";
+			$services_array = \apply_filters( 'hey_notify_services_options', array() );
+			$service        = \carbon_get_post_meta( $post_id, 'hey_notify_service' );
+			foreach ( $services_array as $services ) {
+				if ( $service === $services['value'] ) {
+					echo "<img src='" . esc_attr( $services['image'] ) . "' style='width: 100px; height: auto;' />";
+				}
+			}
 			break;
 		case 'events':
 			$events = \carbon_get_post_meta( $post_id, 'hey_notify_events' );

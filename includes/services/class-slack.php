@@ -26,9 +26,12 @@ class Slack extends Service {
 	 * @return array
 	 */
 	public function services( $services = array() ) {
-		if ( ! isset( $services['slack'] ) ) {
-			$services['slack'] = HEY_NOTIFY_PLUGIN_URL . '/images/services/slack.png';
-		}
+
+		$services[] = array(
+			'value' => 'slack',
+			'label' => __( 'Slack', 'hey-notify' ),
+			'image' => HEY_NOTIFY_PLUGIN_URL . 'images/services/slack.png',
+		);
 
 		return $services;
 	}
@@ -40,6 +43,7 @@ class Slack extends Service {
 	 * @return array
 	 */
 	public function fields( $fields = array() ) {
+
 		$fields[] = (
 			Field::make( 'text', 'hey_notify_slack_webhook', __( 'Webhook URL', 'hey-notify' ) )
 				->set_attribute( 'type', 'url' )
