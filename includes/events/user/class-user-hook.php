@@ -32,8 +32,8 @@ class User_Hook extends Hook {
 		}
 
 		$subject = \sprintf(
-			'%1s %2s!',
-			\__( 'Hey, a new user just registered on', 'hey-notify' ),
+			/* translators: %s: Name of the site */
+			\__( 'Hey, a new user just registered on %s!', 'hey-notify' ),
 			\get_bloginfo( 'name' )
 		);
 
@@ -55,8 +55,8 @@ class User_Hook extends Hook {
 		}
 
 		$subject = \sprintf(
-			'%1s %2s!',
-			\__( 'Hey, an administrator just logged in to', 'hey-notify' ),
+			/* translators: %s: Name of the site */
+			\__( 'Hey, an administrator just logged in to %s!', 'hey-notify' ),
 			\get_bloginfo( 'name' )
 		);
 
@@ -88,8 +88,8 @@ class User_Hook extends Hook {
 		}
 
 		$subject = \sprintf(
-			'%1s %2s!',
-			\__( 'Hey, an administrator just failed to log in to', 'hey-notify' ),
+			/* translators: %s: Name of the site */
+			\__( 'Hey, an administrator just failed to log in to %s!', 'hey-notify' ),
 			\get_bloginfo( 'name' )
 		);
 
@@ -158,7 +158,7 @@ class User_Hook extends Hook {
 		} elseif ( ! empty( $_SERVER['REMOTE_ADDR'] ) ) {
 			return sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );
 		} else {
-			return '';
+			return __( 'Unknown', 'hey-notify' );
 		}
 
 	}

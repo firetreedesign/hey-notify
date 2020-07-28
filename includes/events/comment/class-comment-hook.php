@@ -30,13 +30,19 @@ class Comment_Hook extends Hook {
 			return;
 		}
 
-		$comment = get_comment( $comment_id );
+		$comment = \get_comment( $comment_id );
 
-		if ( is_wp_error( $comment ) ) {
+		if ( \is_wp_error( $comment ) ) {
 			return;
 		}
 
-		$this->prepare_data( \__( 'Hey, a new comment has been posted!', 'hey-notify' ), $comment );
+		$subject = \sprintf(
+			/* translators: %s: Name of the site */
+			\__( 'Hey, a new comment has been posted on %s!', 'hey-notify' ),
+			\get_bloginfo( 'name' )
+		);
+
+		$this->prepare_data( $subject, $comment );
 	}
 
 	/**
@@ -114,10 +120,10 @@ class Comment_Hook extends Hook {
 	 * @return string
 	 */
 	private function format_comment_date( $comment ) {
-		$date_format  = get_option( 'date_format' );
-		$time_format  = get_option( 'time_format' );
-		$comment_date = date_create( $comment->comment_date );
+		$date_format  = \get_option( 'date_format' );
+		$time_format  = \get_option( 'time_format' );
+		$comment_date = \date_create( $comment->comment_date );
 
-		return date_format( $comment_date, $date_format . ' ' . $time_format );
+		return \date_format( $comment_date, $date_format . ' ' . $time_format );
 	}
 }

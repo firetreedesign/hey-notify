@@ -39,7 +39,13 @@ class Post_Hook extends Hook {
 			return;
 		}
 
-		$this->prepare_data( \__( 'Hey, a new post was drafted!', 'hey-notify' ), $post );
+		$subject = \sprintf(
+			/* translators: %s: Name of the site */
+			\__( 'Hey, a new post was drafted on %s!', 'hey-notify' ),
+			\get_bloginfo( 'name' )
+		);
+
+		$this->prepare_data( $subject, $post );
 	}
 
 	/**
@@ -70,7 +76,13 @@ class Post_Hook extends Hook {
 			return;
 		}
 
-		$this->prepare_data( \__( 'Hey, a new post was published!', 'hey-notify' ), $post );
+		$subject = \sprintf(
+			/* translators: %s: Name of the site */
+			\__( 'Hey, a new post was published on %s!', 'hey-notify' ),
+			\get_bloginfo( 'name' )
+		);
+
+		$this->prepare_data( $subject, $post );
 	}
 
 	/**
@@ -100,7 +112,13 @@ class Post_Hook extends Hook {
 			return;
 		}
 
-		$this->prepare_data( \__( 'Hey, a new post was scheduled!', 'hey-notify' ), $post );
+		$subject = \sprintf(
+			/* translators: %s: Name of the site */
+			\__( 'Hey, a new post was scheduled on %s!', 'hey-notify' ),
+			\get_bloginfo( 'name' )
+		);
+
+		$this->prepare_data( $subject, $post );
 	}
 
 	/**
@@ -131,7 +149,13 @@ class Post_Hook extends Hook {
 			return;
 		}
 
-		$this->prepare_data( \__( 'Hey, a new post is pending!', 'hey-notify' ), $post );
+		$subject = \sprintf(
+			/* translators: %s: Name of the site */
+			\__( 'Hey, a new post is pending on %s!', 'hey-notify' ),
+			\get_bloginfo( 'name' )
+		);
+
+		$this->prepare_data( $subject, $post );
 	}
 
 	/**
@@ -152,7 +176,13 @@ class Post_Hook extends Hook {
 			return;
 		}
 
-		$this->prepare_data( \__( 'Hey, a post was updated!', 'hey-notify' ), $post );
+		$subject = \sprintf(
+			/* translators: %s: Name of the site */
+			\__( 'Hey, a post was updated on %s!', 'hey-notify' ),
+			\get_bloginfo( 'name' )
+		);
+
+		$this->prepare_data( $subject, $post );
 	}
 
 	/**
@@ -173,7 +203,13 @@ class Post_Hook extends Hook {
 			return;
 		}
 
-		$this->prepare_data( \__( 'Hey, a post was deleted!', 'hey-notify' ), $post );
+		$subject = \sprintf(
+			/* translators: %s: Name of the site */
+			\__( 'Hey, a post was deleted on %s!', 'hey-notify' ),
+			\get_bloginfo( 'name' )
+		);
+
+		$this->prepare_data( $subject, $post );
 	}
 
 	/**
