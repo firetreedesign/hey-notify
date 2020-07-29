@@ -71,41 +71,30 @@ class Email extends Service {
 	}
 
 	/**
-	 * Send the message
+	 * Get service settings
+	 *
+	 * @param array $data Data.
+	 * @return array
+	 */
+	public function get_settings( $data ) {
+		if ( ! isset( $data['notification'] ) ) {
+			return false;
+		}
+		$settings = array(
+			'service'         => \carbon_get_post_meta( $data['notification']->ID, 'hey_notify_service' ),
+			'email_addresses' => \carbon_get_post_meta( $data['notification']->ID, 'hey_notify_email_addresses' ),
+		);
+		return $settings;
+	}
+
+	/**
+	 * Prepare the message
 	 *
 	 * @param array $message Message.
-	 * @return void
+	 * @param array $settings Settings.
+	 * @return string
 	 */
-	public function send( $message ) {
-
-		$service = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_service' );
-
-		if ( 'email' !== $service ) {
-			return;
-		}
-
-		$email_addresses = \carbon_get_post_meta( $message['notification']->ID, 'hey_notify_email_addresses' );
-		$to_email        = array();
-		if ( $email_addresses ) {
-			foreach ( $email_addresses as $email ) {
-				if ( '' !== trim( $email['email'] ) ) {
-					$to_email[] = $email['email'];
-				}
-			}
-		}
-		if ( 0 === count( $to_email ) ) {
-			return; // No addresses to send to.
-		}
-
-		$from_email = \get_option( 'admin_email' );
-		$from_name  = \__( 'Hey Notify', 'hey-notify' );
-
-		// Subject.
-		if ( isset( $message['subject'] ) && '' !== $message['subject'] ) {
-			$subject = $message['subject'];
-		} else {
-			$subject = __( "Hey, here's your notification!", 'hey-notify' );
-		}
+	private function prepare( $message, $settings ) {
 
 		$body = '';
 
@@ -135,6 +124,51 @@ class Email extends Service {
 		if ( isset( $message['footer'] ) && '' !== $message['footer'] ) {
 			$body .= "{$message['footer']}";
 		}
+
+		return $body;
+	}
+
+	/**
+	 * Send the message
+	 *
+	 * @param array $data Data.
+	 * @return void
+	 */
+	public function send( $data ) {
+
+		$settings = $this->get_settings( $data );
+
+		if ( false === $settings ) {
+			return;
+		}
+
+		if ( ! isset( $settings['service'] ) || 'email' !== $settings['service'] ) {
+			return;
+		}
+
+		$to_email = array();
+		if ( $settings['email_addresses'] ) {
+			foreach ( $settings['email_addresses'] as $email ) {
+				if ( '' !== trim( $email['email'] ) ) {
+					$to_email[] = $email['email'];
+				}
+			}
+		}
+		if ( 0 === count( $to_email ) ) {
+			return; // No addresses to send to.
+		}
+
+		$from_email = \get_option( 'admin_email' );
+		$from_name  = \__( 'Hey Notify', 'hey-notify' );
+
+		// Subject.
+		if ( isset( $data['message']['subject'] ) && '' !== $data['message']['subject'] ) {
+			$subject = $data['message']['subject'];
+		} else {
+			$subject = __( "Hey, here's your notification!", 'hey-notify' );
+		}
+
+		$body = $this->prepare( $data['message'], $settings );
 
 		$headers = array(
 			"From: {$from_name} <{$from_email}>",

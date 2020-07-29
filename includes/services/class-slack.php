@@ -247,9 +247,13 @@ class Slack extends Service {
 		}
 
 		if ( '' !== $settings['icon'] ) {
-			$icon_url = \wp_get_attachment_image_url( $settings['icon'], array( 250, 250 ) );
-			if ( false !== $icon_url ) {
-				$body['icon_url'] = $icon_url;
+			if ( filter_var( $settings['icon'], FILTER_VALIDATE_URL ) ) {
+				$body['icon_url'] = $settings['icon'];
+			} else {
+				$icon_url = \wp_get_attachment_image_url( $settings['icon'], array( 250, 250 ) );
+				if ( false !== $icon_url ) {
+					$body['icon_url'] = $icon_url;
+				}
 			}
 		}
 
@@ -270,9 +274,7 @@ class Slack extends Service {
 			return;
 		}
 
-		if (
-			! isset( $settings['service'] )
-			|| 'slack' !== $settings['service'] ) {
+		if ( ! isset( $settings['service'] ) || 'slack' !== $settings['service'] ) {
 			return;
 		}
 
