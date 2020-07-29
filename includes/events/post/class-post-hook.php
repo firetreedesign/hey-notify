@@ -20,30 +20,35 @@ class Post_Hook extends Hook {
 	/**
 	 * When a post enters a DRAFT state.
 	 *
-	 * @param string $new_status New status.
-	 * @param string $old_status Old status.
 	 * @param object $post Post object.
 	 * @return void
 	 */
-	public function post_draft( $new_status, $old_status, $post ) {
+	public function post_draft( $post ) {
+
+		if ( empty( $post ) || ! is_object( $post ) ) {
+			return;
+		}
 
 		if ( 'post' !== $post->post_type ) {
 			return;
 		}
 
-		if ( 'draft' === $old_status ) {
-			return;
-		}
+		$current_user = \wp_get_current_user();
 
-		if ( 'draft' !== $new_status ) {
-			return;
+		if ( 0 === $current_user ) {
+			$subject = \sprintf(
+				/* translators: %s: Name of the site */
+				\__( 'Hey, a new post was drafted on %s!', 'hey-notify' ),
+				\get_bloginfo( 'name' )
+			);
+		} else {
+			$subject = \sprintf(
+				/* translators: 1: Name of the user 2: Name of the site */
+				\__( 'Hey, a new post was drafted by %1$s on %2$s!', 'hey-notify' ),
+				\esc_html( $current_user->display_name ),
+				\get_bloginfo( 'name' )
+			);
 		}
-
-		$subject = \sprintf(
-			/* translators: %s: Name of the site */
-			\__( 'Hey, a new post was drafted on %s!', 'hey-notify' ),
-			\get_bloginfo( 'name' )
-		);
 
 		$this->prepare_data( $subject, $post );
 	}
@@ -51,36 +56,35 @@ class Post_Hook extends Hook {
 	/**
 	 * When a post enters the PUBLISH state.
 	 *
-	 * @param string $new_status New status.
-	 * @param string $old_status Old status.
 	 * @param object $post Post object.
 	 * @return void
 	 */
-	public function post_published( $new_status, $old_status, $post ) {
+	public function post_published( $post ) {
+
+		if ( empty( $post ) || ! is_object( $post ) ) {
+			return;
+		}
 
 		if ( 'post' !== $post->post_type ) {
 			return;
 		}
 
-		$valid = false;
-		switch ( $old_status ) {
-			case 'new':
-			case 'draft':
-			case 'auto-draft':
-			case 'pending':
-				$valid = true;
-				break;
-		}
+		$current_user = \wp_get_current_user();
 
-		if ( false === $valid || 'publish' !== $new_status ) {
-			return;
+		if ( 0 === $current_user ) {
+			$subject = \sprintf(
+				/* translators: %s: Name of the site */
+				\__( 'Hey, a new post was published on %s!', 'hey-notify' ),
+				\get_bloginfo( 'name' )
+			);
+		} else {
+			$subject = \sprintf(
+				/* translators: 1: Name of the user 2: Name of the site */
+				\__( 'Hey, a new post was published by %1$s on %2$s!', 'hey-notify' ),
+				\esc_html( $current_user->display_name ),
+				\get_bloginfo( 'name' )
+			);
 		}
-
-		$subject = \sprintf(
-			/* translators: %s: Name of the site */
-			\__( 'Hey, a new post was published on %s!', 'hey-notify' ),
-			\get_bloginfo( 'name' )
-		);
 
 		$this->prepare_data( $subject, $post );
 	}
@@ -88,35 +92,35 @@ class Post_Hook extends Hook {
 	/**
 	 * When a post enters the FUTURE state.
 	 *
-	 * @param string $new_status New status.
-	 * @param string $old_status Old status.
 	 * @param object $post Post object.
 	 * @return void
 	 */
-	public function post_scheduled( $new_status, $old_status, $post ) {
+	public function post_scheduled( $post ) {
+
+		if ( empty( $post ) || ! is_object( $post ) ) {
+			return;
+		}
 
 		if ( 'post' !== $post->post_type ) {
 			return;
 		}
 
-		$valid = false;
-		switch ( $old_status ) {
-			case 'new':
-			case 'draft':
-			case 'auto-draft':
-				$valid = true;
-				break;
-		}
+		$current_user = \wp_get_current_user();
 
-		if ( false === $valid || 'future' !== $new_status ) {
-			return;
+		if ( 0 === $current_user ) {
+			$subject = \sprintf(
+				/* translators: %s: Name of the site */
+				\__( 'Hey, a new post was scheduled on %s!', 'hey-notify' ),
+				\get_bloginfo( 'name' )
+			);
+		} else {
+			$subject = \sprintf(
+				/* translators: 1: Name of the user 2: Name of the site */
+				\__( 'Hey, a new post was scheduled by %1$s on %2$s!', 'hey-notify' ),
+				\esc_html( $current_user->display_name ),
+				\get_bloginfo( 'name' )
+			);
 		}
-
-		$subject = \sprintf(
-			/* translators: %s: Name of the site */
-			\__( 'Hey, a new post was scheduled on %s!', 'hey-notify' ),
-			\get_bloginfo( 'name' )
-		);
 
 		$this->prepare_data( $subject, $post );
 	}
@@ -124,30 +128,11 @@ class Post_Hook extends Hook {
 	/**
 	 * When a post enters the PENDING state.
 	 *
-	 * @param string $new_status New status.
-	 * @param string $old_status Old status.
+	 * @param int    $id Post ID.
 	 * @param object $post Post object.
 	 * @return void
 	 */
-	public function post_pending( $new_status, $old_status, $post ) {
-
-		if ( 'post' !== $post->post_type ) {
-			return;
-		}
-
-		$valid = false;
-		switch ( $old_status ) {
-			case 'new':
-			case 'draft':
-			case 'auto-draft':
-			case 'publish':
-				$valid = true;
-				break;
-		}
-
-		if ( false === $valid || 'pending' !== $new_status ) {
-			return;
-		}
+	public function post_pending( $id, $post ) {
 
 		$subject = \sprintf(
 			/* translators: %s: Name of the site */
@@ -161,26 +146,39 @@ class Post_Hook extends Hook {
 	/**
 	 * When a post is updated.
 	 *
-	 * @param string $new_status New status.
-	 * @param string $old_status Old status.
 	 * @param object $post Post object.
 	 * @return void
 	 */
-	public function post_updated( $new_status, $old_status, $post ) {
+	public function post_updated( $post ) {
+
+		if ( empty( $post ) || ! is_object( $post ) ) {
+			return;
+		}
 
 		if ( 'post' !== $post->post_type ) {
 			return;
 		}
 
-		if ( $old_status !== $new_status ) {
+		if ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST ) {
 			return;
 		}
 
-		$subject = \sprintf(
-			/* translators: %s: Name of the site */
-			\__( 'Hey, a post was updated on %s!', 'hey-notify' ),
-			\get_bloginfo( 'name' )
-		);
+		$current_user = \wp_get_current_user();
+
+		if ( 0 === $current_user ) {
+			$subject = \sprintf(
+				/* translators: %s: Name of the site */
+				\__( 'Hey, a post was updated on %s!', 'hey-notify' ),
+				\get_bloginfo( 'name' )
+			);
+		} else {
+			$subject = \sprintf(
+				/* translators: 1: Name of the user 2: Name of the site */
+				\__( 'Hey, a post was updated by %1$s on %2$s!', 'hey-notify' ),
+				\esc_html( $current_user->display_name ),
+				\get_bloginfo( 'name' )
+			);
+		}
 
 		$this->prepare_data( $subject, $post );
 	}
@@ -188,26 +186,37 @@ class Post_Hook extends Hook {
 	/**
 	 * When a post is trashed.
 	 *
-	 * @param string $new_status New status.
-	 * @param string $old_status Old status.
-	 * @param object $post Post object.
+	 * @param int $id Post ID.
 	 * @return void
 	 */
-	public function post_trashed( $new_status, $old_status, $post ) {
+	public function post_trashed( $id ) {
+
+		$post = get_post( $id );
+
+		if ( is_wp_error( $post ) ) {
+			return;
+		}
 
 		if ( 'post' !== $post->post_type ) {
 			return;
 		}
 
-		if ( 'trash' !== $new_status ) {
-			return;
-		}
+		$current_user = \wp_get_current_user();
 
-		$subject = \sprintf(
-			/* translators: %s: Name of the site */
-			\__( 'Hey, a post was deleted on %s!', 'hey-notify' ),
-			\get_bloginfo( 'name' )
-		);
+		if ( 0 === $current_user ) {
+			$subject = \sprintf(
+				/* translators: %s: Name of the site */
+				\__( 'Hey, a post was deleted on %s!', 'hey-notify' ),
+				\get_bloginfo( 'name' )
+			);
+		} else {
+			$subject = \sprintf(
+				/* translators: 1: Name of the user 2: Name of the site */
+				\__( 'Hey, a post was deleted by %1$s on %2$s!', 'hey-notify' ),
+				\esc_html( $current_user->display_name ),
+				\get_bloginfo( 'name' )
+			);
+		}
 
 		$this->prepare_data( $subject, $post );
 	}

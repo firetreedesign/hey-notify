@@ -77,22 +77,27 @@ class Post_Event extends Event {
 
 		switch ( $event->{$event->type} ) {
 			case 'post_draft':
-				add_action( 'transition_post_status', array( $hook, 'post_draft' ), 10, 3 );
+				add_action( 'auto-draft_to_draft', array( $hook, 'post_draft' ), 10, 1 );
 				break;
 			case 'post_published':
-				add_action( 'transition_post_status', array( $hook, 'post_published' ), 10, 3 );
+				add_action( 'auto-draft_to_publish', array( $hook, 'post_published' ), 10, 1 );
+				add_action( 'draft_to_publish', array( $hook, 'post_published' ), 10, 1 );
+				add_action( 'future_to_publish', array( $hook, 'post_published' ), 10, 1 );
+				add_action( 'pending_to_publish', array( $hook, 'post_published' ), 10, 1 );
 				break;
 			case 'post_scheduled':
-				add_action( 'transition_post_status', array( $hook, 'post_scheduled' ), 10, 3 );
+				add_action( 'auto-draft_to_future', array( $hook, 'post_scheduled' ), 10, 1 );
+				add_action( 'draft_to_future', array( $hook, 'post_scheduled' ), 10, 1 );
 				break;
 			case 'post_pending':
-				add_action( 'transition_post_status', array( $hook, 'post_pending' ), 10, 3 );
+				add_action( 'auto-draft_to_pending', array( $hook, 'post_pending' ), 10, 1 );
+				add_action( 'draft_to_pending', array( $hook, 'post_pending' ), 10, 1 );
 				break;
 			case 'post_updated':
-				add_action( 'transition_post_status', array( $hook, 'post_updated' ), 10, 3 );
+				add_action( 'publish_to_publish', array( $hook, 'post_updated' ), 10, 1 );
 				break;
 			case 'post_trashed':
-				add_action( 'transition_post_status', array( $hook, 'post_trashed' ), 10, 3 );
+				add_action( 'trashed_post', array( $hook, 'post_trashed' ), 10, 1 );
 				break;
 		}
 	}
