@@ -128,11 +128,10 @@ class Post_Hook extends Hook {
 	/**
 	 * When a post enters the PENDING state.
 	 *
-	 * @param int    $id Post ID.
 	 * @param object $post Post object.
 	 * @return void
 	 */
-	public function post_pending( $id, $post ) {
+	public function post_pending( $post ) {
 
 		$subject = \sprintf(
 			/* translators: %s: Name of the site */

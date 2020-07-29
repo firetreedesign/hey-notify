@@ -76,22 +76,27 @@ class Page_Event extends Event {
 
 		switch ( $event->{$event->type} ) {
 			case 'page_draft':
-				add_action( 'transition_post_status', array( $hook, 'page_draft' ), 10, 3 );
+				add_action( 'auto-draft_to_draft', array( $hook, 'page_draft' ), 10, 1 );
 				break;
 			case 'page_published':
-				add_action( 'transition_post_status', array( $hook, 'page_published' ), 10, 3 );
+				add_action( 'auto-draft_to_publish', array( $hook, 'page_published' ), 10, 1 );
+				add_action( 'draft_to_publish', array( $hook, 'page_published' ), 10, 1 );
+				add_action( 'future_to_publish', array( $hook, 'page_published' ), 10, 1 );
+				add_action( 'pending_to_publish', array( $hook, 'page_published' ), 10, 1 );
 				break;
 			case 'page_scheduled':
-				add_action( 'transition_post_status', array( $hook, 'page_scheduled' ), 10, 3 );
+				add_action( 'auto-draft_to_future', array( $hook, 'page_scheduled' ), 10, 1 );
+				add_action( 'draft_to_future', array( $hook, 'page_scheduled' ), 10, 1 );
 				break;
 			case 'page_pending':
-				add_action( 'transition_post_status', array( $hook, 'page_pending' ), 10, 3 );
+				add_action( 'auto-draft_to_pending', array( $hook, 'page_pending' ), 10, 1 );
+				add_action( 'draft_to_pending', array( $hook, 'page_pending' ), 10, 1 );
 				break;
 			case 'page_updated':
-				add_action( 'transition_post_status', array( $hook, 'page_updated' ), 10, 3 );
+				add_action( 'publish_to_publish', array( $hook, 'page_updated' ), 10, 1 );
 				break;
 			case 'page_trashed':
-				add_action( 'transition_post_status', array( $hook, 'page_trashed' ), 10, 3 );
+				add_action( 'trashed_post', array( $hook, 'page_trashed' ), 10, 1 );
 				break;
 		}
 	}
