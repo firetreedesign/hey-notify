@@ -20,6 +20,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Email extends Service {
 
 	/**
+	 * Class construct
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		parent::__construct();
+
+		\add_action( 'hey_notify_send_message_email', array( $this, 'send' ), 10, 3 );
+		\add_filter( 'hey_notify_email_settings_core', array( $this, 'get_core_settings' ), 10, 1 );
+	}
+
+	/**
+	 * Get service settings
+	 *
+	 * @param object $data Data.
+	 * @return boolean|array
+	 */
+	public function get_core_settings( $data ) {
+
+		if ( ! is_object( $data ) || ! isset( $data->ID ) ) {
+			return false;
+		}
+
+		return array(
+			'email_addresses' => \carbon_get_post_meta( $data->ID, 'hey_notify_email_addresses' ),
+		);
+	}
+
+	/**
 	 * Service options
 	 *
 	 * @param array $services Services.
@@ -71,23 +100,6 @@ class Email extends Service {
 	}
 
 	/**
-	 * Get service settings
-	 *
-	 * @param array $data Data.
-	 * @return array
-	 */
-	public function get_settings( $data ) {
-		if ( ! isset( $data['notification'] ) ) {
-			return false;
-		}
-		$settings = array(
-			'service'         => \carbon_get_post_meta( $data['notification']->ID, 'hey_notify_service' ),
-			'email_addresses' => \carbon_get_post_meta( $data['notification']->ID, 'hey_notify_email_addresses' ),
-		);
-		return $settings;
-	}
-
-	/**
 	 * Prepare the message
 	 *
 	 * @param array $message Message.
@@ -131,18 +143,20 @@ class Email extends Service {
 	/**
 	 * Send the message
 	 *
-	 * @param array $data Data.
+	 * @param array  $message Message.
+	 * @param string $trigger Trigger.
+	 * @param mixed  $data Data.
 	 * @return void
 	 */
-	public function send( $data ) {
+	public function send( $message, $trigger, $data ) {
 
-		$settings = $this->get_settings( $data );
+		$settings = \apply_filters( "hey_notify_email_settings_{$trigger}", $data );
 
 		if ( false === $settings ) {
 			return;
 		}
 
-		if ( ! isset( $settings['service'] ) || 'email' !== $settings['service'] ) {
+		if ( ! is_array( $settings ) || ! isset( $settings['email_addresses'] ) ) {
 			return;
 		}
 
@@ -162,13 +176,13 @@ class Email extends Service {
 		$from_name  = \__( 'Hey Notify', 'hey-notify' );
 
 		// Subject.
-		if ( isset( $data['message']['subject'] ) && '' !== $data['message']['subject'] ) {
-			$subject = $data['message']['subject'];
+		if ( isset( $message['subject'] ) && '' !== $message['subject'] ) {
+			$subject = $message['subject'];
 		} else {
 			$subject = __( "Hey, here's your notification!", 'hey-notify' );
 		}
 
-		$body = $this->prepare( $data['message'], $settings );
+		$body = $this->prepare( $message, $settings );
 
 		$headers = array(
 			"From: {$from_name} <{$from_email}>",
@@ -176,7 +190,16 @@ class Email extends Service {
 
 		$result = wp_mail( $to_email, $subject, $body, $headers );
 
-		do_action( 'hey_notify_message_sent', $body, $result );
+		\do_action(
+			'hey_notify_message_sent',
+			array(
+				'service'  => 'email',
+				'response' => $result,
+				'trigger'  => $trigger,
+				'message'  => $message,
+				'data'     => $data,
+			)
+		);
 	}
 }
 

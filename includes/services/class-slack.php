@@ -27,8 +27,8 @@ class Slack extends Service {
 	public function __construct() {
 		parent::__construct();
 
-		add_action( 'hey_notify_send_message_slack', array( $this, 'send' ), 10, 3 );
-		add_filter( 'hey_notify_slack_settings_core', array( $this, 'get_core_settings' ), 10, 1 );
+		\add_action( 'hey_notify_send_message_slack', array( $this, 'send' ), 10, 3 );
+		\add_filter( 'hey_notify_slack_settings_core', array( $this, 'get_core_settings' ), 10, 1 );
 	}
 
 	/**
@@ -38,6 +38,11 @@ class Slack extends Service {
 	 * @return array
 	 */
 	public function get_core_settings( $data ) {
+
+		if ( ! is_object( $data ) || ! isset( $data->ID ) ) {
+			return false;
+		}
+
 		return array(
 			'webhook_url' => \carbon_get_post_meta( $data->ID, 'hey_notify_slack_webhook' ),
 			'username'    => \carbon_get_post_meta( $data->ID, 'hey_notify_slack_username' ),
@@ -113,6 +118,7 @@ class Slack extends Service {
 		$fields[] = (
 			Field::make( 'color', 'hey_notify_slack_color', __( 'Color', 'hey-notify' ) )
 				->set_help_text( __( 'Select a color to use for the message attachment.', 'hey-notify' ) )
+				->set_default_value( '#009bff' )
 				->set_conditional_logic(
 					array(
 						array(
@@ -133,9 +139,9 @@ class Slack extends Service {
 	 * @return string
 	 */
 	private function sanitize( $string ) {
-		$string = str_replace( '&', '&amp;', $string );
-		$string = str_replace( '<', '&lt;', $string );
-		$string = str_replace( '>', '&gt;', $string );
+		$string = \str_replace( '&', '&amp;', $string );
+		$string = \str_replace( '<', '&lt;', $string );
+		$string = \str_replace( '>', '&gt;', $string );
 		return $string;
 	}
 
@@ -277,7 +283,11 @@ class Slack extends Service {
 	 */
 	public function send( $message, $trigger, $data ) {
 
-		$settings = apply_filters( "hey_notify_slack_settings_{$trigger}", $data );
+		$settings = \apply_filters( "hey_notify_slack_settings_{$trigger}", $data );
+
+		if ( ! is_array( $settings ) || ! isset( $settings['webhook_url'] ) ) {
+			return;
+		}
 
 		$body = $this->prepare( $message, $settings );
 
@@ -292,7 +302,17 @@ class Slack extends Service {
 			)
 		);
 
-		do_action( 'hey_notify_message_sent', $json, $response );
+		\do_action(
+			'hey_notify_message_sent',
+			array(
+				'service'  => 'slack',
+				'json'     => $json,
+				'response' => $response,
+				'trigger'  => $trigger,
+				'message'  => $message,
+				'data'     => $data,
+			)
+		);
 
 		if ( ! \is_wp_error( $response ) ) {
 			if ( 200 !== \wp_remote_retrieve_response_code( $response ) ) {

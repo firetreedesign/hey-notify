@@ -20,6 +20,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Discord extends Service {
 
 	/**
+	 * Class construct
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		parent::__construct();
+
+		\add_action( 'hey_notify_send_message_discord', array( $this, 'send' ), 10, 3 );
+		\add_action( 'hey_notify_discord_settings_core', array( $this, 'get_core_settings' ), 10, 1 );
+	}
+
+	/**
+	 * Get service settings
+	 *
+	 * @param object $data Data.
+	 * @return boolean|array
+	 */
+	public function get_core_settings( $data ) {
+
+		if ( ! is_object( $data ) || ! isset( $data->ID ) ) {
+			return false;
+		}
+
+		return array(
+			'webhook_url' => \carbon_get_post_meta( $data->ID, 'hey_notify_discord_webhook' ),
+			'username'    => \carbon_get_post_meta( $data->ID, 'hey_notify_discord_username' ),
+			'icon'        => \carbon_get_post_meta( $data->ID, 'hey_notify_discord_avatar' ),
+		);
+
+	}
+
+	/**
 	 * Service options
 	 *
 	 * @param array $services Services.
@@ -83,25 +115,6 @@ class Discord extends Service {
 		);
 
 		return $fields;
-	}
-
-	/**
-	 * Get service settings
-	 *
-	 * @param array $data Data.
-	 * @return array
-	 */
-	public function get_settings( $data ) {
-		if ( ! isset( $data['notification'] ) ) {
-			return false;
-		}
-		$settings = array(
-			'service'     => \carbon_get_post_meta( $data['notification']->ID, 'hey_notify_service' ),
-			'webhook_url' => \carbon_get_post_meta( $data['notification']->ID, 'hey_notify_discord_webhook' ),
-			'username'    => \carbon_get_post_meta( $data['notification']->ID, 'hey_notify_discord_username' ),
-			'icon'        => \carbon_get_post_meta( $data['notification']->ID, 'hey_notify_discord_avatar' ),
-		);
-		return $settings;
 	}
 
 	/**
@@ -187,22 +200,20 @@ class Discord extends Service {
 	/**
 	 * Send the message
 	 *
-	 * @param array $data Data.
+	 * @param array  $message Message.
+	 * @param string $trigger Trigger.
+	 * @param mixed  $data Data.
 	 * @return void
 	 */
-	public function send( $data ) {
+	public function send( $message, $trigger, $data ) {
 
-		$settings = $this->get_settings( $data );
+		$settings = \apply_filters( "hey_notify_discord_settings_{$trigger}", $data );
 
-		if ( false === $settings ) {
+		if ( ! is_array( $settings ) || ! isset( $settings['webhook_url'] ) ) {
 			return;
 		}
 
-		if ( ! isset( $settings['service'] ) || 'discord' !== $settings['service'] ) {
-			return;
-		}
-
-		$body = $this->prepare( $data['message'], $settings );
+		$body = $this->prepare( $message, $settings );
 
 		$json     = \wp_json_encode( $body );
 		$response = \wp_remote_post(
@@ -215,7 +226,17 @@ class Discord extends Service {
 			)
 		);
 
-		do_action( 'hey_notify_message_sent', $json, $response );
+		\do_action(
+			'hey_notify_message_sent',
+			array(
+				'service'  => 'discord',
+				'json'     => $json,
+				'response' => $response,
+				'trigger'  => $trigger,
+				'message'  => $message,
+				'data'     => $data,
+			)
+		);
 
 		if ( ! \is_wp_error( $response ) ) {
 			if ( 204 !== \wp_remote_retrieve_response_code( $response ) ) {
