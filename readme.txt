@@ -26,7 +26,7 @@ Get notified when things happen in WordPress.
 * Pages - Status transitions
 * Comments - New comments
 * Users - New users, admin logins, failed admin logins
-* System Events - WordPrewss, plugin, and theme updates
+* System Events - WordPress, plugin, and theme updates
 
 == Installation ==
 
