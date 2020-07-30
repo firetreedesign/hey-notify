@@ -18,11 +18,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Service {
 
 	/**
-	 * Initialize the service
+	 * Class construct
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function __construct() {
 		add_filter( 'hey_notify_service_fields', array( $this, 'fields' ), 10 );
 		add_filter( 'hey_notify_services_options', array( $this, 'services' ), 10 );
 	}

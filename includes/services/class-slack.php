@@ -20,12 +20,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Slack extends Service {
 
 	/**
-	 * Initialize the class
+	 * Class construct
 	 *
 	 * @return void
 	 */
-	public function init() {
-		parent::init();
+	public function __construct() {
+		parent::__construct();
 
 		add_action( 'hey_notify_send_message_slack', array( $this, 'send' ), 10, 3 );
 		add_filter( 'hey_notify_slack_settings_core', array( $this, 'get_core_settings' ), 10, 1 );
@@ -306,5 +306,4 @@ class Slack extends Service {
 
 }
 
-$slack = new Slack();
-$slack->init();
+new Slack();
