@@ -22,11 +22,11 @@ Get notified when things happen in WordPress.
 
 = Notifications for: =
 
-* Posts
-* Pages
-* Comments
-* Users
-* System Events
+* Posts - Status transitions
+* Pages - Status transitions
+* Comments - New comments
+* Users - New users, admin logins, failed admin logins
+* System Events - WordPrewss, plugin, and theme updates
 
 == Installation ==
 

@@ -34,8 +34,8 @@ class Slack extends Service {
 	/**
 	 * Get service settings
 	 *
-	 * @param array $data Data.
-	 * @return array
+	 * @param object $data Data.
+	 * @return boolean|array
 	 */
 	public function get_core_settings( $data ) {
 
@@ -276,9 +276,9 @@ class Slack extends Service {
 	/**
 	 * Send the message
 	 *
-	 * @param array $message Message.
-	 * @param array $trigger Trigger.
-	 * @param array $data Data.
+	 * @param array  $message Message.
+	 * @param string $trigger Trigger.
+	 * @param mixed  $data Data.
 	 * @return void
 	 */
 	public function send( $message, $trigger, $data ) {
