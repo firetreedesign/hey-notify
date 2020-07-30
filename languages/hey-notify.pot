@@ -2,21 +2,21 @@
 # This file is distributed under the same license as the Hey Notify plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Hey Notify 1.0.0\n"
+"Project-Id-Version: Hey Notify 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/hey-notify\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-21T19:21:51+00:00\n"
+"POT-Creation-Date: 2020-07-30T18:02:04+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.1.0\n"
 "X-Domain: hey-notify\n"
 
 #. Plugin Name of the plugin
 #: includes/cpt.php:35
-#: includes/services/class-email.php:99
+#: includes/services/class-email.php:176
 msgid "Hey Notify"
 msgstr ""
 
@@ -97,13 +97,63 @@ msgstr ""
 msgid "Events"
 msgstr ""
 
-#: includes/events/page/class-page-event.php:30
-msgid "Pages"
+#: includes/events/comment/class-comment-event.php:30
+msgid "Comments"
 msgstr ""
 
+#: includes/events/comment/class-comment-event.php:43
 #: includes/events/page/class-page-event.php:43
 #: includes/events/post/class-post-event.php:43
+#: includes/events/system/class-system-event.php:43
+#: includes/events/user/class-user-event.php:43
 msgid "Action"
+msgstr ""
+
+#: includes/events/comment/class-comment-event.php:46
+msgid "New Comment"
+msgstr ""
+
+#. translators: %s: Name of the site
+#: includes/events/comment/class-comment-hook.php:41
+msgid "Hey, a new comment has been posted on %s!"
+msgstr ""
+
+#: includes/events/comment/class-comment-hook.php:59
+#: includes/events/page/class-page-hook.php:234
+#: includes/events/post/class-post-hook.php:234
+msgid "Author"
+msgstr ""
+
+#: includes/events/comment/class-comment-hook.php:64
+#: includes/events/user/class-user-hook.php:120
+#: includes/services/class-email.php:60
+msgid "Email"
+msgstr ""
+
+#: includes/events/comment/class-comment-hook.php:69
+#: includes/events/page/class-page-hook.php:239
+#: includes/events/post/class-post-hook.php:239
+msgid "Date"
+msgstr ""
+
+#: includes/events/comment/class-comment-hook.php:74
+msgid "Status"
+msgstr ""
+
+#: includes/events/comment/class-comment-hook.php:106
+msgid "Approved"
+msgstr ""
+
+#: includes/events/comment/class-comment-hook.php:108
+msgid "Pending"
+msgstr ""
+
+#: includes/events/comment/class-comment-hook.php:110
+msgid "Spam"
+msgstr ""
+
+#: includes/events/page/class-page-event.php:30
+msgid "Pages"
 msgstr ""
 
 #: includes/events/page/class-page-event.php:46
@@ -130,38 +180,59 @@ msgstr ""
 msgid "Page Moved to Trash"
 msgstr ""
 
-#: includes/events/page/class-page-hook.php:42
-msgid "Hey, a new page was drafted!"
+#. translators: %s: Name of the site
+#: includes/events/page/class-page-hook.php:41
+msgid "Hey, a new page was drafted on %s!"
 msgstr ""
 
-#: includes/events/page/class-page-hook.php:73
-msgid "Hey, a new page was published!"
+#. translators: 1: Name of the user 2: Name of the site
+#: includes/events/page/class-page-hook.php:47
+msgid "Hey, a new page was drafted by %1$s on %2$s!"
 msgstr ""
 
-#: includes/events/page/class-page-hook.php:103
-msgid "Hey, a new page was scheduled!"
+#. translators: %s: Name of the site
+#: includes/events/page/class-page-hook.php:77
+msgid "Hey, a new page was published on %s!"
 msgstr ""
 
-#: includes/events/page/class-page-hook.php:134
-msgid "Hey, a new page is pending!"
+#. translators: 1: Name of the user 2: Name of the site
+#: includes/events/page/class-page-hook.php:83
+msgid "Hey, a new page was published by %1$s on %2$s!"
 msgstr ""
 
-#: includes/events/page/class-page-hook.php:155
-msgid "Hey, a page was updated!"
+#. translators: %s: Name of the site
+#: includes/events/page/class-page-hook.php:113
+msgid "Hey, a new page was scheduled on %s!"
 msgstr ""
 
+#. translators: 1: Name of the user 2: Name of the site
+#: includes/events/page/class-page-hook.php:119
+msgid "Hey, a new page was scheduled by %1$s on %2$s!"
+msgstr ""
+
+#. translators: %s: Name of the site
+#: includes/events/page/class-page-hook.php:138
+msgid "Hey, a new page is pending on %s!"
+msgstr ""
+
+#. translators: %s: Name of the site
+#: includes/events/page/class-page-hook.php:170
+msgid "Hey, a page was updated on %s!"
+msgstr ""
+
+#. translators: 1: Name of the user 2: Name of the site
 #: includes/events/page/class-page-hook.php:176
-msgid "Hey, a page was deleted!"
+msgid "Hey, a page was updated by %1$s on %2$s!"
 msgstr ""
 
-#: includes/events/page/class-page-hook.php:190
-#: includes/events/post/class-post-hook.php:190
-msgid "Author"
+#. translators: %s: Name of the site
+#: includes/events/page/class-page-hook.php:208
+msgid "Hey, a page was deleted on %s!"
 msgstr ""
 
-#: includes/events/page/class-page-hook.php:195
-#: includes/events/post/class-post-hook.php:195
-msgid "Date"
+#. translators: 1: Name of the user 2: Name of the site
+#: includes/events/page/class-page-hook.php:214
+msgid "Hey, a page was deleted by %1$s on %2$s!"
 msgstr ""
 
 #: includes/events/post/class-post-event.php:30
@@ -192,36 +263,169 @@ msgstr ""
 msgid "Post Moved to Trash"
 msgstr ""
 
-#: includes/events/post/class-post-hook.php:42
-msgid "Hey, a new post was drafted!"
+#. translators: %s: Name of the site
+#: includes/events/post/class-post-hook.php:41
+msgid "Hey, a new post was drafted on %s!"
 msgstr ""
 
-#: includes/events/post/class-post-hook.php:73
-msgid "Hey, a new post was published!"
+#. translators: 1: Name of the user 2: Name of the site
+#: includes/events/post/class-post-hook.php:47
+msgid "Hey, a new post was drafted by %1$s on %2$s!"
 msgstr ""
 
-#: includes/events/post/class-post-hook.php:103
-msgid "Hey, a new post was scheduled!"
+#. translators: %s: Name of the site
+#: includes/events/post/class-post-hook.php:77
+msgid "Hey, a new post was published on %s!"
 msgstr ""
 
-#: includes/events/post/class-post-hook.php:134
-msgid "Hey, a new post is pending!"
+#. translators: 1: Name of the user 2: Name of the site
+#: includes/events/post/class-post-hook.php:83
+msgid "Hey, a new post was published by %1$s on %2$s!"
 msgstr ""
 
-#: includes/events/post/class-post-hook.php:155
-msgid "Hey, a post was updated!"
+#. translators: %s: Name of the site
+#: includes/events/post/class-post-hook.php:113
+msgid "Hey, a new post was scheduled on %s!"
 msgstr ""
 
+#. translators: 1: Name of the user 2: Name of the site
+#: includes/events/post/class-post-hook.php:119
+msgid "Hey, a new post was scheduled by %1$s on %2$s!"
+msgstr ""
+
+#. translators: %s: Name of the site
+#: includes/events/post/class-post-hook.php:138
+msgid "Hey, a new post is pending on %s!"
+msgstr ""
+
+#. translators: %s: Name of the site
+#: includes/events/post/class-post-hook.php:170
+msgid "Hey, a post was updated on %s!"
+msgstr ""
+
+#. translators: 1: Name of the user 2: Name of the site
 #: includes/events/post/class-post-hook.php:176
-msgid "Hey, a post was deleted!"
+msgid "Hey, a post was updated by %1$s on %2$s!"
 msgstr ""
 
-#: includes/events/post/class-post-hook.php:204
+#. translators: %s: Name of the site
+#: includes/events/post/class-post-hook.php:208
+msgid "Hey, a post was deleted on %s!"
+msgstr ""
+
+#. translators: 1: Name of the user 2: Name of the site
+#: includes/events/post/class-post-hook.php:214
+msgid "Hey, a post was deleted by %1$s on %2$s!"
+msgstr ""
+
+#: includes/events/post/class-post-hook.php:248
 msgid "Categories"
 msgstr ""
 
-#: includes/events/post/class-post-hook.php:213
+#: includes/events/post/class-post-hook.php:257
 msgid "Tags"
+msgstr ""
+
+#: includes/events/system/class-system-event.php:30
+msgid "System"
+msgstr ""
+
+#: includes/events/system/class-system-event.php:46
+msgid "WordPress Update Available"
+msgstr ""
+
+#: includes/events/system/class-system-event.php:47
+msgid "Theme Update Available"
+msgstr ""
+
+#: includes/events/system/class-system-event.php:48
+msgid "Plugin Update Available"
+msgstr ""
+
+#. translators: %s: Name of the site
+#: includes/events/system/class-system-hook.php:67
+msgid "Hey, a new version of WordPress is available on %s!"
+msgstr ""
+
+#: includes/events/system/class-system-hook.php:73
+msgid "Current Version"
+msgstr ""
+
+#: includes/events/system/class-system-hook.php:78
+msgid "New Version"
+msgstr ""
+
+#: includes/events/system/class-system-hook.php:86
+msgid "View the update"
+msgstr ""
+
+#. translators: %s: Name of the site
+#: includes/events/system/class-system-hook.php:153
+msgid "Hey, new theme updates are available on %s!"
+msgstr ""
+
+#: includes/events/system/class-system-hook.php:159
+msgid "View the theme updates"
+msgstr ""
+
+#. translators: %s: Name of the site
+#: includes/events/system/class-system-hook.php:226
+msgid "Hey, new plugin updates are available on %s!"
+msgstr ""
+
+#: includes/events/system/class-system-hook.php:232
+msgid "View the plugin updates"
+msgstr ""
+
+#: includes/events/user/class-user-event.php:30
+msgid "Users"
+msgstr ""
+
+#: includes/events/user/class-user-event.php:46
+msgid "New User Registration"
+msgstr ""
+
+#: includes/events/user/class-user-event.php:47
+msgid "Administrator Login"
+msgstr ""
+
+#: includes/events/user/class-user-event.php:48
+msgid "Administrator Failed Login"
+msgstr ""
+
+#. translators: %s: Name of the site
+#: includes/events/user/class-user-hook.php:36
+msgid "Hey, a new user just registered on %s!"
+msgstr ""
+
+#. translators: %s: Name of the site
+#: includes/events/user/class-user-hook.php:59
+msgid "Hey, an administrator just logged in to %s!"
+msgstr ""
+
+#. translators: %s: Name of the site
+#: includes/events/user/class-user-hook.php:92
+msgid "Hey, an administrator just failed to log in to %s!"
+msgstr ""
+
+#: includes/events/user/class-user-hook.php:110
+msgid "Display Name"
+msgstr ""
+
+#: includes/events/user/class-user-hook.php:115
+msgid "Username"
+msgstr ""
+
+#: includes/events/user/class-user-hook.php:125
+msgid "IP Address"
+msgstr ""
+
+#: includes/events/user/class-user-hook.php:138
+msgid "View user's profile"
+msgstr ""
+
+#: includes/events/user/class-user-hook.php:161
+msgid "Unknown"
 msgstr ""
 
 #: includes/fields.php:66
@@ -272,78 +476,86 @@ msgstr ""
 msgid "Default service:"
 msgstr ""
 
-#: includes/services/class-discord.php:44
-#: includes/services/class-slack.php:44
+#: includes/services/class-discord.php:63
+msgid "Discord"
+msgstr ""
+
+#: includes/services/class-discord.php:78
+#: includes/services/class-slack.php:80
 msgid "Webhook URL"
 msgstr ""
 
-#: includes/services/class-discord.php:46
+#: includes/services/class-discord.php:80
 msgid "The webhook that you created for your Discord channel."
 msgstr ""
 
-#: includes/services/class-discord.php:46
-#: includes/services/class-slack.php:46
+#: includes/services/class-discord.php:80
+#: includes/services/class-slack.php:82
 msgid "Learn More"
 msgstr ""
 
-#: includes/services/class-discord.php:57
+#: includes/services/class-discord.php:91
 msgid "Discord Avatar"
 msgstr ""
 
-#: includes/services/class-discord.php:58
+#: includes/services/class-discord.php:92
 msgid "Override the default avatar of the webhook. Not required."
 msgstr ""
 
-#: includes/services/class-discord.php:70
+#: includes/services/class-discord.php:104
 msgid "Discord Username"
 msgstr ""
 
-#: includes/services/class-discord.php:71
-#: includes/services/class-slack.php:71
+#: includes/services/class-discord.php:105
+#: includes/services/class-slack.php:107
 msgid "Override the default username of the webhook. Not required."
 msgstr ""
 
-#: includes/services/class-email.php:44
+#: includes/services/class-email.php:75
 msgid "Send notifications to"
 msgstr ""
 
-#: includes/services/class-email.php:47
-#: includes/services/class-email.php:53
+#: includes/services/class-email.php:78
+#: includes/services/class-email.php:84
 msgid "Email Address"
 msgstr ""
 
-#: includes/services/class-email.php:52
+#: includes/services/class-email.php:83
 msgid "Email Addresses"
 msgstr ""
 
-#: includes/services/class-email.php:105
+#: includes/services/class-email.php:182
 msgid "Hey, here's your notification!"
 msgstr ""
 
-#: includes/services/class-slack.php:46
+#: includes/services/class-slack.php:64
+msgid "Slack"
+msgstr ""
+
+#: includes/services/class-slack.php:82
 msgid "The webhook that you created for your Slack channel."
 msgstr ""
 
-#: includes/services/class-slack.php:57
+#: includes/services/class-slack.php:93
 msgid "Slack Icon"
 msgstr ""
 
-#: includes/services/class-slack.php:58
+#: includes/services/class-slack.php:94
 msgid "Override the default icon of the webhook. Not required."
 msgstr ""
 
-#: includes/services/class-slack.php:70
+#: includes/services/class-slack.php:106
 msgid "Slack Username"
 msgstr ""
 
-#: includes/services/class-slack.php:83
+#: includes/services/class-slack.php:119
 msgid "Color"
 msgstr ""
 
-#: includes/services/class-slack.php:84
+#: includes/services/class-slack.php:120
 msgid "Select a color to use for the message attachment."
 msgstr ""
 
-#: includes/services/class-slack.php:230
+#: includes/services/class-slack.php:233
 msgid "Attached image"
 msgstr ""
