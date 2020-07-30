@@ -18,12 +18,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Service {
 
 	/**
-	 * Class constructor
+	 * Initialize the service
+	 *
+	 * @return void
 	 */
-	public function __construct() {
+	public function init() {
 		add_filter( 'hey_notify_service_fields', array( $this, 'fields' ), 10 );
 		add_filter( 'hey_notify_services_options', array( $this, 'services' ), 10 );
-		add_action( 'hey_notify_send_message', array( $this, 'send' ), 10, 1 );
 	}
 
 	/**
@@ -44,16 +45,6 @@ class Service {
 	 */
 	public function fields( $fields = array() ) {
 		return $fields;
-	}
-
-	/**
-	 * Send the message
-	 *
-	 * @param array $message Message.
-	 * @return void
-	 */
-	public function send( $message ) {
-		// Do something.
 	}
 
 }

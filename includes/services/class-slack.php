@@ -20,6 +20,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Slack extends Service {
 
 	/**
+	 * Initialize the class
+	 *
+	 * @return void
+	 */
+	public function init() {
+		parent::init();
+
+		add_action( 'hey_notify_send_message_slack', array( $this, 'send' ), 10, 3 );
+		add_filter( 'hey_notify_slack_settings_core', array( $this, 'get_core_settings' ), 10, 1 );
+	}
+
+	/**
+	 * Get service settings
+	 *
+	 * @param array $data Data.
+	 * @return array
+	 */
+	public function get_core_settings( $data ) {
+		return array(
+			'webhook_url' => \carbon_get_post_meta( $data->ID, 'hey_notify_slack_webhook' ),
+			'username'    => \carbon_get_post_meta( $data->ID, 'hey_notify_slack_username' ),
+			'icon'        => \carbon_get_post_meta( $data->ID, 'hey_notify_slack_icon' ),
+			'color'       => \carbon_get_post_meta( $data->ID, 'hey_notify_slack_color' ),
+		);
+	}
+
+	/**
 	 * Add the service
 	 *
 	 * @param array $services Services.
@@ -110,26 +137,6 @@ class Slack extends Service {
 		$string = str_replace( '<', '&lt;', $string );
 		$string = str_replace( '>', '&gt;', $string );
 		return $string;
-	}
-
-	/**
-	 * Get service settings
-	 *
-	 * @param array $data Data.
-	 * @return array
-	 */
-	public function get_settings( $data ) {
-		if ( ! isset( $data['notification'] ) ) {
-			return false;
-		}
-		$settings = array(
-			'service'     => \carbon_get_post_meta( $data['notification']->ID, 'hey_notify_service' ),
-			'webhook_url' => \carbon_get_post_meta( $data['notification']->ID, 'hey_notify_slack_webhook' ),
-			'username'    => \carbon_get_post_meta( $data['notification']->ID, 'hey_notify_slack_username' ),
-			'icon'        => \carbon_get_post_meta( $data['notification']->ID, 'hey_notify_slack_icon' ),
-			'color'       => \carbon_get_post_meta( $data['notification']->ID, 'hey_notify_slack_color' ),
-		);
-		return $settings;
 	}
 
 	/**
@@ -263,22 +270,16 @@ class Slack extends Service {
 	/**
 	 * Send the message
 	 *
+	 * @param array $message Message.
+	 * @param array $trigger Trigger.
 	 * @param array $data Data.
 	 * @return void
 	 */
-	public function send( $data ) {
+	public function send( $message, $trigger, $data ) {
 
-		$settings = $this->get_settings( $data );
+		$settings = apply_filters( "hey_notify_slack_settings_{$trigger}", $data );
 
-		if ( false === $settings ) {
-			return;
-		}
-
-		if ( ! isset( $settings['service'] ) || 'slack' !== $settings['service'] ) {
-			return;
-		}
-
-		$body = $this->prepare( $data['message'], $settings );
+		$body = $this->prepare( $message, $settings );
 
 		$json     = \wp_json_encode( $body );
 		$response = \wp_remote_post(
@@ -305,4 +306,5 @@ class Slack extends Service {
 
 }
 
-new Slack();
+$slack = new Slack();
+$slack->init();

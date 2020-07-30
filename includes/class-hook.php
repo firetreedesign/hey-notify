@@ -55,14 +55,15 @@ class Hook {
 			'footer'  => null,
 		);
 
-		$message = wp_parse_args( $data, $defaults );
+		$message = \wp_parse_args( $data, $defaults );
 
-		do_action(
-			'hey_notify_send_message',
-			array(
-				'message'      => $message,
-				'notification' => $this->notification,
-			)
+		$service = \carbon_get_post_meta( $this->notification->ID, 'hey_notify_service' );
+
+		\do_action(
+			"hey_notify_send_message_{$service}",
+			$message, // Message.
+			'core', // Trigger.
+			$this->notification // Data.
 		);
 	}
 }
