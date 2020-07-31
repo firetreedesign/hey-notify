@@ -63,7 +63,8 @@ function notification_container() {
  * @return void
  */
 function settings() {
-	Container::make( 'theme_options', __( 'Hey Notify Settings', 'hey-notify' ) )
+
+	$settings = Container::make( 'theme_options', __( 'Hey Notify Settings', 'hey-notify' ) )
 		->set_page_parent( 'edit.php?post_type=hey_notify' )
 		->set_page_menu_title( __( 'Settings', 'hey-notify' ) )
 		->set_page_file( 'settings' )
@@ -75,6 +76,8 @@ function settings() {
 			__( 'Uninstall', 'hey-notify' ),
 			apply_filters( 'hey_notify_settings_uninstall', array() )
 		);
+
+	do_action( 'hey_notify_settings_container', $settings );
 }
 
 /**
