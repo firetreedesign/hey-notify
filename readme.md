@@ -1,6 +1,8 @@
-# [Hey Notify](https://heynotifywp.com/)
+# [Hey Notify](https://heynotifywp.com/) :speech_balloon:
 
 ![Plugin Version](https://img.shields.io/wordpress/plugin/v/hey-notify.svg) ![WordPress Compatibility](https://img.shields.io/wordpress/v/hey-notify.svg) ![Total Downloads](https://img.shields.io/wordpress/plugin/dt/hey-notify.svg) ![Deploy to WordPress.org](https://github.com/firetreedesign/hey-notify/workflows/Deploy%20to%20WordPress.org/badge.svg)
+
+[View plugin on WordPress.org](https://wordpress.org/plugins/hey-notify)
 
 Get notified when things happen in WordPress.
 

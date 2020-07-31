@@ -136,7 +136,7 @@ class System_Hook extends Hook {
 
 			$fields[] = array(
 				'name'   => $theme_data->get( 'Name' ),
-				'value'  => "{$theme_data->get( 'Version' )} --> ({$update_data['new_version']})",
+				'value'  => "{$theme_data->get( 'Version' )} --> {$update_data['new_version']}",
 				'inline' => true,
 			);
 
@@ -209,7 +209,7 @@ class System_Hook extends Hook {
 
 			$fields[] = array(
 				'name'   => $plugin_data['Name'],
-				'value'  => "{$plugin_data['Version']} --> ({$update_data->new_version})",
+				'value'  => "{$plugin_data['Version']} --> {$update_data->new_version}",
 				'inline' => false,
 			);
 
