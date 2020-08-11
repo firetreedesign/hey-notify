@@ -127,7 +127,7 @@ class System_Hook extends Hook {
 
 			if (
 				isset( $last_theme_versions[ $theme_directory ] )
-				&& $last_theme_versions[ $theme_directory ] === $update_data->new_version
+				&& $last_theme_versions[ $theme_directory ] === $update_data['new_version']
 			) {
 				continue;
 			}
