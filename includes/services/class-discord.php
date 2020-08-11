@@ -135,8 +135,8 @@ class Discord extends Service {
 		}
 
 		// Title.
-		if ( '' !== $message['subject'] ) {
-			$embed_item['title'] = $message['subject'];
+		if ( '' !== $message['title'] ) {
+			$embed_item['title'] = $message['title'];
 		}
 
 		// URL.
