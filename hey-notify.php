@@ -3,7 +3,7 @@
  * Plugin Name: Hey Notify
  * Plugin URI: https://heynotifywp.com/
  * Description: Get notified when things happen in WordPress.
- * Version: 1.1.2
+ * Version: 1.1.3
  * Author: FireTree Design, LLC <info@firetreedesign.com>
  * Author URI: https://firetreedesign.com/
  * Text Domain: hey-notify
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'HEY_NOTIFY_VERSION', '1.1.2' );
+define( 'HEY_NOTIFY_VERSION', '1.1.3' );
 define( 'HEY_NOTIFY_PLUGIN_FILE', __FILE__ );
 define( 'HEY_NOTIFY_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'HEY_NOTIFY_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
