@@ -178,11 +178,11 @@ class Discord extends Service {
 
 		$body['embeds'] = array( $embed_item );
 
-		if ( '' !== $settings['username'] ) {
+		if ( isset( $settings['username'] ) && '' !== $settings['username'] ) {
 			$body['username'] = $settings['username'];
 		}
 
-		if ( '' !== $settings['avatar'] ) {
+		if ( isset( $settings['avatar'] ) && '' !== $settings['avatar'] ) {
 			if ( filter_var( $settings['avatar'], FILTER_VALIDATE_URL ) ) {
 				$body['avatar_url'] = $settings['avatar'];
 			} else {
