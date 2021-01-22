@@ -2,9 +2,9 @@
 Contributors: firetree,danielmilner
 Tags: notifications, slack, discord, email
 Requires at least: 4.3
-Tested up to: 5.5
+Tested up to: 5.6
 Requires PHP: 5.3
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 License: GPLv2 or later
 License URI: http://ww.gnu.org/licenses/gpl-2.0.html
 
@@ -39,6 +39,9 @@ Get notified when things happen in WordPress.
 1. Notification Settings
 
 == Changelog ==
+
+= 1.1.5 =
+* Fixed an issue where System events could only send notifications to one service.
 
 = 1.1.4 =
 * Fixed an issue with the Discord service.
