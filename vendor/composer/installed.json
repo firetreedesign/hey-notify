@@ -1,137 +1,209 @@
-[
-    {
-        "name": "htmlburger/carbon-fields",
-        "version": "v3.1.20",
-        "version_normalized": "3.1.20.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/htmlburger/carbon-fields.git",
-            "reference": "0688b493efcf97aab9f540d399813e1392fe30cd"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/htmlburger/carbon-fields/zipball/0688b493efcf97aab9f540d399813e1392fe30cd",
-            "reference": "0688b493efcf97aab9f540d399813e1392fe30cd",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3"
-        },
-        "require-dev": {
-            "mockery/mockery": "^0.9.7",
-            "phpunit/phpunit": "~4.8"
-        },
-        "time": "2020-05-18 09:54:56",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Carbon_Fields\\": "core/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0-only"
-        ],
-        "authors": [
-            {
-                "name": "htmlBurger",
+{
+    "packages": [
+        {
+            "name": "htmlburger/carbon-fields",
+            "version": "v3.2.1",
+            "version_normalized": "3.2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/htmlburger/carbon-fields.git",
+                "reference": "cd772f1c6c002207eed71f98a8c54ad9403d5644"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/htmlburger/carbon-fields/zipball/cd772f1c6c002207eed71f98a8c54ad9403d5644",
+                "reference": "cd772f1c6c002207eed71f98a8c54ad9403d5644",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "mockery/mockery": "^0.9.7",
+                "phpunit/phpunit": "~4.8"
+            },
+            "time": "2020-11-05T17:10:48+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Carbon_Fields\\": "core/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "htmlBurger",
+                    "email": "wordpress@htmlburger.com",
+                    "homepage": "https://htmlburger.com/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Miroslav Mitev",
+                    "email": "mmitev.2create@gmail.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Atanas Angelov",
+                    "email": "atanas.angelov.dev@gmail.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Georgi Stoyanov",
+                    "email": "stoyanov.gs@gmail.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Plamen Kostadinov",
+                    "email": "pkostadinov.2create@gmail.com",
+                    "homepage": "http://plasmen.info/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Stanimir Panchev",
+                    "email": "Stan4omir@gmail.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Marin Atanasov",
+                    "email": "contact@marinatanasov.com",
+                    "homepage": "http://marinatanasov.com/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Siyan Panayotov",
+                    "homepage": "http://siyanpanayotov.com/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Peter Petrov",
+                    "email": "peter.petrov89@gmail.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Stanimir Stoyanov",
+                    "email": "stanimir.k.stoyanov@gmail.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Kaloyan Ivanov",
+                    "email": "kaloyanxivanov@gmail.com",
+                    "homepage": "http://vilepixels.com/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Georgi Popov",
+                    "homepage": "http://magadanski.com/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "German Velchev",
+                    "email": "germozy@gmail.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Rashko Petrov",
+                    "email": "brutalenemy666@gmail.com",
+                    "homepage": "http://errorfactory.com/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Alexander Panayotov",
+                    "email": "alexander.panayotov@gmail.com",
+                    "homepage": "http://alexanderpanayotov.com/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Viktor Vasilev",
+                    "email": "liberalcho@gmail.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Georgi Georgiev",
+                    "email": "george.georgiev96@gmail.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Atanas Vasilev",
+                    "email": "atanasvasilev91@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "WordPress developer-friendly custom fields for post types, taxonomy terms, users, comments, widgets, options and more.",
+            "homepage": "http://carbonfields.net/",
+            "support": {
+                "docs": "http://carbonfields.net/docs/",
                 "email": "wordpress@htmlburger.com",
-                "homepage": "https://htmlburger.com/",
-                "role": "Developer"
+                "issues": "https://github.com/htmlburger/carbon-fields/issues",
+                "source": "https://github.com/htmlburger/carbon-fields"
             },
-            {
-                "name": "Miroslav Mitev",
-                "email": "mmitev.2create@gmail.com",
-                "role": "Developer"
+            "install-path": "../htmlburger/carbon-fields"
+        },
+        {
+            "name": "squizlabs/php_codesniffer",
+            "version": "3.5.8",
+            "version_normalized": "3.5.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+                "reference": "9d583721a7157ee997f235f327de038e7ea6dac4"
             },
-            {
-                "name": "Atanas Angelov",
-                "email": "atanas.angelov.dev@gmail.com",
-                "role": "Developer"
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/9d583721a7157ee997f235f327de038e7ea6dac4",
+                "reference": "9d583721a7157ee997f235f327de038e7ea6dac4",
+                "shasum": ""
             },
-            {
-                "name": "Georgi Stoyanov",
-                "email": "stoyanov.gs@gmail.com",
-                "role": "Developer"
+            "require": {
+                "ext-simplexml": "*",
+                "ext-tokenizer": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=5.4.0"
             },
-            {
-                "name": "Plamen Kostadinov",
-                "email": "pkostadinov.2create@gmail.com",
-                "homepage": "http://plasmen.info/",
-                "role": "Developer"
+            "require-dev": {
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
             },
-            {
-                "name": "Stanimir Panchev",
-                "email": "Stan4omir@gmail.com",
-                "role": "Developer"
+            "time": "2020-10-23T02:01:07+00:00",
+            "bin": [
+                "bin/phpcs",
+                "bin/phpcbf"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
             },
-            {
-                "name": "Marin Atanasov",
-                "email": "contact@marinatanasov.com",
-                "homepage": "http://marinatanasov.com/",
-                "role": "Developer"
+            "installation-source": "dist",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Sherwood",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+            "homepage": "https://github.com/squizlabs/PHP_CodeSniffer",
+            "keywords": [
+                "phpcs",
+                "standards"
+            ],
+            "support": {
+                "issues": "https://github.com/squizlabs/PHP_CodeSniffer/issues",
+                "source": "https://github.com/squizlabs/PHP_CodeSniffer",
+                "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
-            {
-                "name": "Siyan Panayotov",
-                "homepage": "http://siyanpanayotov.com/",
-                "role": "Developer"
-            },
-            {
-                "name": "Peter Petrov",
-                "email": "peter.petrov89@gmail.com",
-                "role": "Developer"
-            },
-            {
-                "name": "Stanimir Stoyanov",
-                "email": "stanimir.k.stoyanov@gmail.com",
-                "role": "Developer"
-            },
-            {
-                "name": "Kaloyan Ivanov",
-                "email": "kaloyanxivanov@gmail.com",
-                "homepage": "http://vilepixels.com/",
-                "role": "Developer"
-            },
-            {
-                "name": "Georgi Popov",
-                "homepage": "http://magadanski.com/",
-                "role": "Developer"
-            },
-            {
-                "name": "German Velchev",
-                "email": "germozy@gmail.com",
-                "role": "Developer"
-            },
-            {
-                "name": "Rashko Petrov",
-                "email": "brutalenemy666@gmail.com",
-                "homepage": "http://errorfactory.com/",
-                "role": "Developer"
-            },
-            {
-                "name": "Alexander Panayotov",
-                "email": "alexander.panayotov@gmail.com",
-                "homepage": "http://alexanderpanayotov.com/",
-                "role": "Developer"
-            },
-            {
-                "name": "Viktor Vasilev",
-                "email": "liberalcho@gmail.com",
-                "role": "Developer"
-            },
-            {
-                "name": "Georgi Georgiev",
-                "email": "george.georgiev96@gmail.com",
-                "role": "Developer"
-            },
-            {
-                "name": "Atanas Vasilev",
-                "email": "atanasvasilev91@gmail.com",
-                "role": "Developer"
-            }
-        ],
-        "description": "WordPress developer-friendly custom fields for post types, taxonomy terms, users, comments, widgets, options and more.",
-        "homepage": "http://carbonfields.net/"
-    }
-]
+            "install-path": "../squizlabs/php_codesniffer"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": [
+        "squizlabs/php_codesniffer"
+    ]
+}
