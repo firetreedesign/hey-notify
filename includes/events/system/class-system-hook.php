@@ -60,8 +60,6 @@ class System_Hook extends Hook {
 			return;
 		}
 
-		\update_option( 'hey_notify_wordpress_version', $update_core->updates[0]->current );
-
 		$subject = \sprintf(
 			/* translators: %s: Name of the site */
 			\__( 'Hey, a new version of WordPress is available on %s!', 'hey-notify' ),
@@ -92,6 +90,52 @@ class System_Hook extends Hook {
 	}
 
 	/**
+	 * WordPress Update Done
+	 *
+	 * @return void
+	 */
+	public function system_core_update_done() {
+
+		$update_core = \get_site_transient( 'update_core' );
+
+		if ( false === $update_core ) {
+			return;
+		}
+
+		if ( ! is_object( $update_core ) ) {
+			return;
+		}
+
+		if ( ! isset( $update_core->updates ) ) {
+			return;
+		}
+
+		if ( ! isset( $update_core->updates[0] ) ) {
+			return;
+		}
+
+		if ( ! isset( $update_core->updates[0]->response ) ) {
+			return;
+		}
+
+		if ( 'upgrade' !== $update_core->updates[0]->response ) {
+			return;
+		}
+
+		if ( ! isset( $update_core->updates[0]->current ) ) {
+			return;
+		}
+
+		$last_checked_version = \get_option( 'hey_notify_wordpress_version' );
+
+		if ( $last_checked_version === $update_core->updates[0]->current ) {
+			return;
+		}
+
+		\update_option( 'hey_notify_wordpress_version', $update_core->updates[0]->current );
+	}
+
+	/**
 	 * Theme Update Available
 	 *
 	 * @return void
@@ -113,13 +157,9 @@ class System_Hook extends Hook {
 		}
 
 		$last_theme_versions = \get_option( 'hey_notify_theme_versions', array() );
-		$new_theme_versions  = array();
-
-		$fields = array();
+		$fields              = array();
 
 		foreach ( $update_themes->response as $theme_directory => $update_data ) {
-
-			$new_theme_versions[ $theme_directory ] = $update_data['new_version'];
 
 			if ( $update_themes->checked[ $theme_directory ] === $update_data['new_version'] ) {
 				continue;
@@ -142,8 +182,6 @@ class System_Hook extends Hook {
 
 		}
 
-		\update_option( 'hey_notify_theme_versions', $new_theme_versions );
-
 		if ( empty( $fields ) ) {
 			return;
 		}
@@ -162,6 +200,36 @@ class System_Hook extends Hook {
 		);
 
 		$this->send( $data );
+	}
+
+	/**
+	 * Theme Update Done
+	 *
+	 * @return void
+	 */
+	public function system_theme_update_done() {
+
+		$update_themes = \get_site_transient( 'update_themes' );
+
+		if ( false === $update_themes ) {
+			return;
+		}
+
+		if ( ! is_object( $update_themes ) ) {
+			return;
+		}
+
+		if ( ! isset( $update_themes->response ) ) {
+			return;
+		}
+
+		$new_theme_versions = array();
+
+		foreach ( $update_themes->response as $theme_directory => $update_data ) {
+			$new_theme_versions[ $theme_directory ] = $update_data['new_version'];
+		}
+
+		\update_option( 'hey_notify_theme_versions', $new_theme_versions );
 	}
 
 	/**
@@ -186,13 +254,9 @@ class System_Hook extends Hook {
 		}
 
 		$last_plugin_versions = \get_option( 'hey_notify_plugin_versions', array() );
-		$new_plugin_versions  = array();
-
-		$fields = array();
+		$fields               = array();
 
 		foreach ( $update_plugins->response as $plugin_file => $update_data ) {
-
-			$new_plugin_versions[ $plugin_file ] = $update_data->new_version;
 
 			if ( $update_plugins->checked[ $plugin_file ] === $update_data->new_version ) {
 				continue;
@@ -215,8 +279,6 @@ class System_Hook extends Hook {
 
 		}
 
-		\update_option( 'hey_notify_plugin_versions', $new_plugin_versions );
-
 		if ( empty( $fields ) ) {
 			return;
 		}
@@ -235,6 +297,37 @@ class System_Hook extends Hook {
 		);
 
 		$this->send( $data );
+
+	}
+
+	/**
+	 * Plugin Update Done
+	 *
+	 * @return void
+	 */
+	public function system_plugin_update_done() {
+
+		$update_plugins = \get_site_transient( 'update_plugins' );
+
+		if ( false === $update_plugins ) {
+			return;
+		}
+
+		if ( ! is_object( $update_plugins ) ) {
+			return;
+		}
+
+		if ( ! isset( $update_plugins->response ) ) {
+			return;
+		}
+
+		$new_plugin_versions = array();
+
+		foreach ( $update_plugins->response as $plugin_file => $update_data ) {
+			$new_plugin_versions[ $plugin_file ] = $update_data->new_version;
+		}
+
+		\update_option( 'hey_notify_plugin_versions', $new_plugin_versions );
 
 	}
 }
