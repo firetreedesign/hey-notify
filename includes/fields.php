@@ -75,6 +75,10 @@ function settings() {
 		->add_tab(
 			__( 'Uninstall', 'hey-notify' ),
 			apply_filters( 'hey_notify_settings_uninstall', array() )
+		)
+		->add_tab(
+			__( 'Licenses', 'hey-notify' ),
+			apply_filters( 'hey_notify_settings_licenses', array() )
 		);
 
 	do_action( 'hey_notify_settings_container', $settings );
