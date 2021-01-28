@@ -29,6 +29,8 @@ add_action( 'admin_head', __NAMESPACE__ . '\\admin_head' );
  */
 function boot() {
 	\Carbon_Fields\Carbon_Fields::boot();
+	$sidebar_manager = \Carbon_Fields\Carbon_Fields::resolve( 'sidebar_manager' );
+	remove_action( 'admin_enqueue_scripts', array( $sidebar_manager, 'enqueue_scripts' ) );
 }
 
 /**
