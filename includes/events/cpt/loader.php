@@ -83,13 +83,22 @@ function get_post_types_object( $post_type = null ) {
 	);
 
 	$decoded_post_types = \json_decode( $post_types );
+	$show_public        = \get_option( '_hey_notify_show_public_cpt', 'no' );
+
+	if ( 'yes' === $show_public ) {
+		foreach ( $decoded_post_types as $decoded_post_type ) {
+			if ( ! $decoded_post_type->public ) {
+				unset( $decoded_post_types->{$decoded_post_type->name} );
+			}
+		}
+	}
 
 	if ( null === $post_type ) {
 		return $decoded_post_types;
 	}
 
 	// Remove the "cpt_" prefix.
-	$post_type = substr( $post_type, 4 );
+	$post_type = \substr( $post_type, 4 );
 
 	return $decoded_post_types->{$post_type};
 }

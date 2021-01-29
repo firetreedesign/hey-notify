@@ -76,7 +76,7 @@ function settings_uninstall_fields( $fields = array() ) {
 		Field::make( 'html', 'hey_notify_uninstall_heading' )
 			->set_html(
 				sprintf(
-					'<p>%1s</p>',
+					'<h2>%1s</h2>',
 					__( 'Upon deletion of the plugin, you can optionally remove all custom data, settings, etc.', 'hey-notify' )
 				)
 			)
@@ -98,14 +98,28 @@ function settings_general_fields( $fields = array() ) {
 		Field::make( 'html', 'hey_notify_services_heading' )
 			->set_html(
 				sprintf(
-					'<p>%1s</p>',
-					__( 'General settings for Hey Notify.', 'hey-notify' )
+					'<h2>%1s</h2>',
+					__( 'General settings for Hey Notify', 'hey-notify' )
 				)
 			)
 	);
 	$fields[] = (
 		Field::make( 'radio_image', 'hey_notify_default_service', __( 'Default service:', 'hey-notify' ) )
 			->set_options( get_service_options() )
+	);
+	$fields[] = (
+		Field::make( 'html', 'hey_notify_services_cpt_heading' )
+			->set_html(
+				sprintf(
+					'<h2>%1s</h2>',
+					__( 'Custom Post Type Settings', 'hey-notify' )
+				)
+			)
+	);
+	$fields[] = (
+		Field::make( 'checkbox', 'hey_notify_show_public_cpt', __( 'Only display public Custom Post Types', 'hey-notify' ) )
+			->set_option_value( 'yes' )
+			->set_default_value( 'yes' )
 	);
 	return $fields;
 }
