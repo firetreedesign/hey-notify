@@ -50,6 +50,8 @@ class Page_Hook extends Hook {
 			);
 		}
 
+		$subject = apply_filters( 'hey_notify_page_draft_subject', $subject, $post );
+
 		$this->prepare_data( $subject, $post );
 	}
 
@@ -85,6 +87,8 @@ class Page_Hook extends Hook {
 				\get_bloginfo( 'name' )
 			);
 		}
+
+		$subject = apply_filters( 'hey_notify_page_published_subject', $subject, $post );
 
 		$this->prepare_data( $subject, $post );
 	}
@@ -122,6 +126,8 @@ class Page_Hook extends Hook {
 			);
 		}
 
+		$subject = apply_filters( 'hey_notify_page_scheduled_subject', $subject, $post );
+
 		$this->prepare_data( $subject, $post );
 	}
 
@@ -133,11 +139,21 @@ class Page_Hook extends Hook {
 	 */
 	public function page_pending( $post ) {
 
+		if ( empty( $post ) || ! is_object( $post ) ) {
+			return;
+		}
+
+		if ( 'page' !== $post->post_type ) {
+			return;
+		}
+
 		$subject = \wp_sprintf(
 			/* translators: %s: Name of the site */
 			\__( 'Hey, a page is pending on %s!', 'hey-notify' ),
 			\get_bloginfo( 'name' )
 		);
+
+		$subject = apply_filters( 'hey_notify_page_pending_subject', $subject, $post );
 
 		$this->prepare_data( $subject, $post );
 	}
@@ -179,6 +195,8 @@ class Page_Hook extends Hook {
 			);
 		}
 
+		$subject = apply_filters( 'hey_notify_page_updated_subject', $subject, $post );
+
 		$this->prepare_data( $subject, $post );
 	}
 
@@ -216,6 +234,8 @@ class Page_Hook extends Hook {
 				\get_bloginfo( 'name' )
 			);
 		}
+
+		$subject = apply_filters( 'hey_notify_page_trashed_subject', $subject, $post );
 
 		$this->prepare_data( $subject, $post );
 	}

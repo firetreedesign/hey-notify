@@ -53,6 +53,8 @@ class CPT_Hook extends Hook {
 			);
 		}
 
+		$subject = apply_filters( 'hey_notify_cpt_draft_subject', $subject, $post );
+
 		$this->prepare_data( $subject, $post );
 	}
 
@@ -91,6 +93,8 @@ class CPT_Hook extends Hook {
 				\get_bloginfo( 'name' )
 			);
 		}
+
+		$subject = apply_filters( 'hey_notify_cpt_published_subject', $subject, $post );
 
 		$this->prepare_data( $subject, $post );
 	}
@@ -131,6 +135,8 @@ class CPT_Hook extends Hook {
 			);
 		}
 
+		$subject = apply_filters( 'hey_notify_cpt_scheduled_subject', $subject, $post );
+
 		$this->prepare_data( $subject, $post );
 	}
 
@@ -158,6 +164,8 @@ class CPT_Hook extends Hook {
 			\strtolower( $cpt->labels->singular_name ),
 			\get_bloginfo( 'name' )
 		);
+
+		$subject = apply_filters( 'hey_notify_cpt_pending_subject', $subject, $post );
 
 		$this->prepare_data( $subject, $post );
 	}
@@ -202,6 +210,8 @@ class CPT_Hook extends Hook {
 			);
 		}
 
+		$subject = apply_filters( 'hey_notify_cpt_updated_subject', $subject, $post );
+
 		$this->prepare_data( $subject, $post );
 	}
 
@@ -242,6 +252,8 @@ class CPT_Hook extends Hook {
 				\get_bloginfo( 'name' )
 			);
 		}
+
+		$subject = apply_filters( 'hey_notify_cpt_trashed_subject', $subject, $post );
 
 		$this->prepare_data( $subject, $post );
 	}

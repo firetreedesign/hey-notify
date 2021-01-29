@@ -50,6 +50,8 @@ class Post_Hook extends Hook {
 			);
 		}
 
+		$subject = apply_filters( 'hey_notify_post_draft_subject', $subject, $post );
+
 		$this->prepare_data( $subject, $post );
 	}
 
@@ -85,6 +87,8 @@ class Post_Hook extends Hook {
 				\get_bloginfo( 'name' )
 			);
 		}
+
+		$subject = apply_filters( 'hey_notify_post_published_subject', $subject, $post );
 
 		$this->prepare_data( $subject, $post );
 	}
@@ -122,6 +126,8 @@ class Post_Hook extends Hook {
 			);
 		}
 
+		$subject = apply_filters( 'hey_notify_post_scheduled_subject', $subject, $post );
+
 		$this->prepare_data( $subject, $post );
 	}
 
@@ -133,11 +139,21 @@ class Post_Hook extends Hook {
 	 */
 	public function post_pending( $post ) {
 
+		if ( empty( $post ) || ! is_object( $post ) ) {
+			return;
+		}
+
+		if ( 'post' !== $post->post_type ) {
+			return;
+		}
+
 		$subject = \sprintf(
 			/* translators: %s: Name of the site */
 			\__( 'Hey, a post is pending on %s!', 'hey-notify' ),
 			\get_bloginfo( 'name' )
 		);
+
+		$subject = apply_filters( 'hey_notify_post_pending_subject', $subject, $post );
 
 		$this->prepare_data( $subject, $post );
 	}
@@ -179,6 +195,8 @@ class Post_Hook extends Hook {
 			);
 		}
 
+		$subject = apply_filters( 'hey_notify_post_updated_subject', $subject, $post );
+
 		$this->prepare_data( $subject, $post );
 	}
 
@@ -216,6 +234,8 @@ class Post_Hook extends Hook {
 				\get_bloginfo( 'name' )
 			);
 		}
+
+		$subject = apply_filters( 'hey_notify_post_trashed_subject', $subject, $post );
 
 		$this->prepare_data( $subject, $post );
 	}

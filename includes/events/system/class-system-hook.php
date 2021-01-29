@@ -66,6 +66,8 @@ class System_Hook extends Hook {
 			\get_bloginfo( 'name' )
 		);
 
+		$subject = apply_filters( 'hey_notify_system_core_update_subject', $subject );
+
 		$fields = array(
 			array(
 				'name'   => \esc_html__( 'Current Version', 'hey-notify' ),
@@ -192,6 +194,8 @@ class System_Hook extends Hook {
 			\get_bloginfo( 'name' )
 		);
 
+		$subject = apply_filters( 'hey_notify_system_theme_update_subject', $subject );
+
 		$data = array(
 			'subject' => $subject,
 			'title'   => __( 'View the theme updates', 'hey-notify' ),
@@ -289,6 +293,8 @@ class System_Hook extends Hook {
 			\get_bloginfo( 'name' )
 		);
 
+		$subject = apply_filters( 'hey_notify_system_plugin_update_subject', $subject );
+
 		$data = array(
 			'subject' => $subject,
 			'title'   => __( 'View the plugin updates', 'hey-notify' ),
@@ -360,6 +366,8 @@ class System_Hook extends Hook {
 			\get_bloginfo( 'name' )
 		);
 
+		$subject = apply_filters( 'hey_notify_system_plugin_activated_subject', $subject );
+
 		$data = array(
 			'subject' => $subject,
 			'title'   => __( 'View installed plugins', 'hey-notify' ),
@@ -399,6 +407,8 @@ class System_Hook extends Hook {
 			\get_bloginfo( 'name' )
 		);
 
+		$subject = apply_filters( 'hey_notify_system_plugin_deactivated_subject', $subject );
+
 		$data = array(
 			'subject' => $subject,
 			'title'   => __( 'View installed plugins', 'hey-notify' ),
@@ -429,6 +439,8 @@ class System_Hook extends Hook {
 			\esc_html__( 'Hey, the theme was changed on %s!', 'hey-notify' ),
 			\get_bloginfo( 'name' )
 		);
+
+		$subject = apply_filters( 'hey_notify_system_theme_changed_subject', $subject );
 
 		$data = array(
 			'subject' => $subject,

@@ -37,6 +37,8 @@ class User_Hook extends Hook {
 			\get_bloginfo( 'name' )
 		);
 
+		$subject = apply_filters( 'hey_notify_user_new_subject', $subject, $user );
+
 		$this->prepare_data( $subject, $user );
 
 	}
@@ -59,6 +61,8 @@ class User_Hook extends Hook {
 			\__( 'Hey, an administrator just logged in to %s!', 'hey-notify' ),
 			\get_bloginfo( 'name' )
 		);
+
+		$subject = apply_filters( 'hey_notify_user_admin_login_subject', $subject, $user );
 
 		$this->prepare_data( $subject, $user );
 
@@ -92,6 +96,8 @@ class User_Hook extends Hook {
 			\__( 'Hey, an administrator just failed to log in to %s!', 'hey-notify' ),
 			\get_bloginfo( 'name' )
 		);
+
+		$subject = apply_filters( 'hey_notify_user_admin_login_failed_subject', $subject, $user );
 
 		$this->prepare_data( $subject, $user );
 	}

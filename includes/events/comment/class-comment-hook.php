@@ -42,6 +42,8 @@ class Comment_Hook extends Hook {
 			\get_bloginfo( 'name' )
 		);
 
+		$subject = apply_filters( 'hey_notify_comment_new_subject', $subject, $comment );
+
 		$this->prepare_data( $subject, $comment );
 	}
 
