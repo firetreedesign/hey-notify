@@ -105,7 +105,6 @@ class CPT_Event extends Event {
 		switch ( $event->{$event->type} ) {
 			case "{$this->type}_draft":
 				add_action( 'auto-draft_to_draft', array( $hook, 'draft' ), 10, 1 );
-				add_action( 'draft_to_draft', array( $hook, 'draft' ), 10, 1 );
 				break;
 			case "{$this->type}_published":
 				add_action( 'auto-draft_to_publish', array( $hook, 'published' ), 10, 1 );

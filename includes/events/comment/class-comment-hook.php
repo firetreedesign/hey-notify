@@ -36,7 +36,7 @@ class Comment_Hook extends Hook {
 			return;
 		}
 
-		$subject = \sprintf(
+		$subject = \wp_sprintf(
 			/* translators: %s: Name of the site */
 			\__( 'Hey, a new comment has been posted on %s!', 'hey-notify' ),
 			\get_bloginfo( 'name' )

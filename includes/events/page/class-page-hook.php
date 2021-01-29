@@ -36,15 +36,15 @@ class Page_Hook extends Hook {
 		$current_user = \wp_get_current_user();
 
 		if ( 0 === $current_user ) {
-			$subject = \sprintf(
+			$subject = \wp_sprintf(
 				/* translators: %s: Name of the site */
-				\__( 'Hey, a new page was drafted on %s!', 'hey-notify' ),
+				\__( 'Hey, a page was drafted on %s!', 'hey-notify' ),
 				\get_bloginfo( 'name' )
 			);
 		} else {
-			$subject = \sprintf(
+			$subject = \wp_sprintf(
 				/* translators: 1: Name of the user 2: Name of the site */
-				\__( 'Hey, a new page was drafted by %1$s on %2$s!', 'hey-notify' ),
+				\__( 'Hey, a page was drafted by %1$s on %2$s!', 'hey-notify' ),
 				\esc_html( $current_user->display_name ),
 				\get_bloginfo( 'name' )
 			);
@@ -72,15 +72,15 @@ class Page_Hook extends Hook {
 		$current_user = \wp_get_current_user();
 
 		if ( 0 === $current_user ) {
-			$subject = \sprintf(
+			$subject = \wp_sprintf(
 				/* translators: %s: Name of the site */
-				\__( 'Hey, a new page was published on %s!', 'hey-notify' ),
+				\__( 'Hey, a page was published on %s!', 'hey-notify' ),
 				\get_bloginfo( 'name' )
 			);
 		} else {
-			$subject = \sprintf(
+			$subject = \wp_sprintf(
 				/* translators: 1: Name of the user 2: Name of the site */
-				\__( 'Hey, a new page was published by %1$s on %2$s!', 'hey-notify' ),
+				\__( 'Hey, a page was published by %1$s on %2$s!', 'hey-notify' ),
 				\esc_html( $current_user->display_name ),
 				\get_bloginfo( 'name' )
 			);
@@ -108,15 +108,15 @@ class Page_Hook extends Hook {
 		$current_user = \wp_get_current_user();
 
 		if ( 0 === $current_user ) {
-			$subject = \sprintf(
+			$subject = \wp_sprintf(
 				/* translators: %s: Name of the site */
-				\__( 'Hey, a new page was scheduled on %s!', 'hey-notify' ),
+				\__( 'Hey, a page was scheduled on %s!', 'hey-notify' ),
 				\get_bloginfo( 'name' )
 			);
 		} else {
-			$subject = \sprintf(
+			$subject = \wp_sprintf(
 				/* translators: 1: Name of the user 2: Name of the site */
-				\__( 'Hey, a new page was scheduled by %1$s on %2$s!', 'hey-notify' ),
+				\__( 'Hey, a page was scheduled by %1$s on %2$s!', 'hey-notify' ),
 				\esc_html( $current_user->display_name ),
 				\get_bloginfo( 'name' )
 			);
@@ -133,9 +133,9 @@ class Page_Hook extends Hook {
 	 */
 	public function page_pending( $post ) {
 
-		$subject = \sprintf(
+		$subject = \wp_sprintf(
 			/* translators: %s: Name of the site */
-			\__( 'Hey, a new page is pending on %s!', 'hey-notify' ),
+			\__( 'Hey, a page is pending on %s!', 'hey-notify' ),
 			\get_bloginfo( 'name' )
 		);
 
@@ -165,13 +165,13 @@ class Page_Hook extends Hook {
 		$current_user = \wp_get_current_user();
 
 		if ( 0 === $current_user ) {
-			$subject = \sprintf(
+			$subject = \wp_sprintf(
 				/* translators: %s: Name of the site */
 				\__( 'Hey, a page was updated on %s!', 'hey-notify' ),
 				\get_bloginfo( 'name' )
 			);
 		} else {
-			$subject = \sprintf(
+			$subject = \wp_sprintf(
 				/* translators: 1: Name of the user 2: Name of the site */
 				\__( 'Hey, a page was updated by %1$s on %2$s!', 'hey-notify' ),
 				\esc_html( $current_user->display_name ),
@@ -203,13 +203,13 @@ class Page_Hook extends Hook {
 		$current_user = \wp_get_current_user();
 
 		if ( 0 === $current_user ) {
-			$subject = \sprintf(
+			$subject = \wp_sprintf(
 				/* translators: %s: Name of the site */
 				\__( 'Hey, a page was deleted on %s!', 'hey-notify' ),
 				\get_bloginfo( 'name' )
 			);
 		} else {
-			$subject = \sprintf(
+			$subject = \wp_sprintf(
 				/* translators: 1: Name of the user 2: Name of the site */
 				\__( 'Hey, a page was deleted by %1$s on %2$s!', 'hey-notify' ),
 				\esc_html( $current_user->display_name ),

@@ -31,7 +31,7 @@ class User_Hook extends Hook {
 			return;
 		}
 
-		$subject = \sprintf(
+		$subject = \wp_sprintf(
 			/* translators: %s: Name of the site */
 			\__( 'Hey, a new user just registered on %s!', 'hey-notify' ),
 			\get_bloginfo( 'name' )
@@ -54,7 +54,7 @@ class User_Hook extends Hook {
 			return;
 		}
 
-		$subject = \sprintf(
+		$subject = \wp_sprintf(
 			/* translators: %s: Name of the site */
 			\__( 'Hey, an administrator just logged in to %s!', 'hey-notify' ),
 			\get_bloginfo( 'name' )
@@ -87,7 +87,7 @@ class User_Hook extends Hook {
 			return;
 		}
 
-		$subject = \sprintf(
+		$subject = \wp_sprintf(
 			/* translators: %s: Name of the site */
 			\__( 'Hey, an administrator just failed to log in to %s!', 'hey-notify' ),
 			\get_bloginfo( 'name' )

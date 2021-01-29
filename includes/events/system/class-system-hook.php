@@ -60,7 +60,7 @@ class System_Hook extends Hook {
 			return;
 		}
 
-		$subject = \sprintf(
+		$subject = \wp_sprintf(
 			/* translators: %s: Name of the site */
 			\__( 'Hey, a new version of WordPress is available on %s!', 'hey-notify' ),
 			\get_bloginfo( 'name' )
@@ -186,7 +186,7 @@ class System_Hook extends Hook {
 			return;
 		}
 
-		$subject = \sprintf(
+		$subject = \wp_sprintf(
 			/* translators: %s: Name of the site */
 			\esc_html__( 'Hey, new theme updates are available on %s!', 'hey-notify' ),
 			\get_bloginfo( 'name' )
@@ -283,7 +283,7 @@ class System_Hook extends Hook {
 			return;
 		}
 
-		$subject = \sprintf(
+		$subject = \wp_sprintf(
 			/* translators: %s: Name of the site */
 			\esc_html__( 'Hey, new plugin updates are available on %s!', 'hey-notify' ),
 			\get_bloginfo( 'name' )
