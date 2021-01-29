@@ -38,6 +38,7 @@ require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/events/page/loader.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/events/comment/loader.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/events/user/loader.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/events/system/loader.php';
+require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/events/cpt/loader.php';
 
 // Services.
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/services/class-slack.php';
