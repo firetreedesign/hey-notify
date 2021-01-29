@@ -39,12 +39,20 @@ class Event {
 	public $hook;
 
 	/**
+	 * Type
+	 *
+	 * @var string
+	 */
+	public $type;
+
+	/**
 	 * Class constructor
 	 *
 	 * @param string $type Type.
 	 * @param string $hook Hook.
 	 */
 	public function __construct( $type, $hook ) {
+		$this->type = $type;
 		$this->hook = $hook;
 
 		// Filters.
