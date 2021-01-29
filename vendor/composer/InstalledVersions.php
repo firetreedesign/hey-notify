@@ -24,24 +24,24 @@ class InstalledVersions
 private static $installed = array (
   'root' => 
   array (
-    'pretty_version' => '1.1.5.x-dev',
-    'version' => '1.1.5.9999999-dev',
+    'pretty_version' => '1.2.0.x-dev',
+    'version' => '1.2.0.9999999-dev',
     'aliases' => 
     array (
     ),
-    'reference' => 'b57d1880d1b08fe658c81e7c07c0d97c48816e8c',
+    'reference' => '60ed723ee5f55ddfb49cb97380a05f931f429c64',
     'name' => '__root__',
   ),
   'versions' => 
   array (
     '__root__' => 
     array (
-      'pretty_version' => '1.1.5.x-dev',
-      'version' => '1.1.5.9999999-dev',
+      'pretty_version' => '1.2.0.x-dev',
+      'version' => '1.2.0.9999999-dev',
       'aliases' => 
       array (
       ),
-      'reference' => 'b57d1880d1b08fe658c81e7c07c0d97c48816e8c',
+      'reference' => '60ed723ee5f55ddfb49cb97380a05f931f429c64',
     ),
     'htmlburger/carbon-fields' => 
     array (
