@@ -4,7 +4,7 @@ Tags: notifications, slack, discord, email
 Requires at least: 4.3
 Tested up to: 5.6
 Requires PHP: 5.3
-Stable tag: 1.1.6
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://ww.gnu.org/licenses/gpl-2.0.html
 
@@ -22,11 +22,37 @@ Get notified when things happen in WordPress.
 
 = Notifications for: =
 
-* Posts - Status transitions
-* Pages - Status transitions
-* Comments - New comments
-* Users - New users, admin logins, failed admin logins
-* System Events - WordPress, plugin, and theme updates
+* Posts
+    * Draft
+    * Pending
+    * Scheduled
+    * Published
+    * Trashed
+* Pages
+    * Draft
+    * Pending
+    * Scheduled
+    * Published
+    * Trashed
+* Custom Post Types
+    * Draft
+    * Pending
+    * Scheduled
+    * Published
+    * Trashed
+* Comments
+    * New Comment
+* Users
+    * New User
+    * Administrator Login
+    * Failed Administrator Login
+* System Events
+    * WordPress Updates
+    * Plugin Updates
+    * Plugin Activation
+    * Plugin Deactivation
+    * Theme Updates
+    * Theme Change
 
 == Installation ==
 
@@ -40,27 +66,7 @@ Get notified when things happen in WordPress.
 
 == Changelog ==
 
-= 1.1.6 =
-* Removed some unneeded vendor files from the previous release.
-
-= 1.1.5 =
-* Fixed an issue where System events could only send notifications to one service.
-
-= 1.1.4 =
-* Fixed an issue with the Discord service.
-
-= 1.1.3 =
-* Fixed Discord message titles.
-* Fixed an error with WordPress Core update checks.
-* Added an action for interacting with the Settings container.
-
-= 1.1.2 =
-* Removed parentheses surrounding new version numbers in theme and plugin update notifications.
-
-= 1.1.0 =
-* Added comment notifications.
-* Added user notifications.
-* Added system notifications.
-
-= 1.0.0 =
-* Initial release.
+= 1.2.0 =
+* Added new System notifications for Plugin Activation, Plugin Deactivation, and Theme Changes.
+* Added Custom Post Type notifications.
+* Added filter hooks to the message subjects. 
