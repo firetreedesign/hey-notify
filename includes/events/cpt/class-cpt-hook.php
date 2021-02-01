@@ -1,6 +1,6 @@
 <?php
 /**
- * Post hook
+ * CPT hook
  *
  * @package Hey_Notify
  */
@@ -13,9 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * This handles all of the Post actions.
+ * This handles all of the CPT actions.
  */
-class Post_Hook extends Hook {
+class CPT_Hook extends Hook {
 
 	/**
 	 * When a post enters a DRAFT state.
@@ -23,34 +23,37 @@ class Post_Hook extends Hook {
 	 * @param object $post Post object.
 	 * @return void
 	 */
-	public function post_draft( $post ) {
+	public function draft( $post ) {
 
 		if ( empty( $post ) || ! is_object( $post ) ) {
 			return;
 		}
 
-		if ( 'post' !== $post->post_type ) {
+		if ( substr( $this->event->type, 4 ) !== $post->post_type ) {
 			return;
 		}
 
+		$cpt          = get_post_types_object( $this->event->type );
 		$current_user = \wp_get_current_user();
 
 		if ( 0 === $current_user ) {
 			$subject = \wp_sprintf(
-				/* translators: %s: Name of the site */
-				\__( 'Hey, a post was drafted on %s!', 'hey-notify' ),
+				/* translators: 1: Name of the custom post type 2. Name of the site */
+				\__( 'Hey, a %1$s was drafted on %2$s!', 'hey-notify' ),
+				\strtolower( $cpt->labels->singular_name ),
 				\get_bloginfo( 'name' )
 			);
 		} else {
 			$subject = \wp_sprintf(
-				/* translators: 1: Name of the user 2: Name of the site */
-				\__( 'Hey, a post was drafted by %1$s on %2$s!', 'hey-notify' ),
+				/* translators: 1: Name of the custom post type 2: Name of the user 3: Name of the site */
+				\__( 'Hey, a %1$s was drafted by %2$s on %3$s!', 'hey-notify' ),
+				\strtolower( $cpt->labels->singular_name ),
 				\esc_html( $current_user->display_name ),
 				\get_bloginfo( 'name' )
 			);
 		}
 
-		$subject = apply_filters( 'hey_notify_post_draft_subject', $subject, $post );
+		$subject = apply_filters( 'hey_notify_cpt_draft_subject', $subject, $post );
 
 		$this->prepare_data( $subject, $post );
 	}
@@ -61,34 +64,37 @@ class Post_Hook extends Hook {
 	 * @param object $post Post object.
 	 * @return void
 	 */
-	public function post_published( $post ) {
+	public function published( $post ) {
 
 		if ( empty( $post ) || ! is_object( $post ) ) {
 			return;
 		}
 
-		if ( 'post' !== $post->post_type ) {
+		if ( substr( $this->event->type, 4 ) !== $post->post_type ) {
 			return;
 		}
 
+		$cpt          = get_post_types_object( $this->event->type );
 		$current_user = \wp_get_current_user();
 
 		if ( 0 === $current_user ) {
 			$subject = \wp_sprintf(
-				/* translators: %s: Name of the site */
-				\__( 'Hey, a post was published on %s!', 'hey-notify' ),
+				/* translators: 1: Name of the custom post type 2. Name of the site */
+				\__( 'Hey, a %1$s was published on %2$s!', 'hey-notify' ),
+				\strtolower( $cpt->labels->singular_name ),
 				\get_bloginfo( 'name' )
 			);
 		} else {
 			$subject = \wp_sprintf(
-				/* translators: 1: Name of the user 2: Name of the site */
-				\__( 'Hey, a post was published by %1$s on %2$s!', 'hey-notify' ),
+				/* translators: 1: Name of the custom post type 2: Name of the user 3: Name of the site */
+				\__( 'Hey, a %1$s was published by %2$s on %3$s!', 'hey-notify' ),
+				\strtolower( $cpt->labels->singular_name ),
 				\esc_html( $current_user->display_name ),
 				\get_bloginfo( 'name' )
 			);
 		}
 
-		$subject = apply_filters( 'hey_notify_post_published_subject', $subject, $post );
+		$subject = apply_filters( 'hey_notify_cpt_published_subject', $subject, $post );
 
 		$this->prepare_data( $subject, $post );
 	}
@@ -99,34 +105,37 @@ class Post_Hook extends Hook {
 	 * @param object $post Post object.
 	 * @return void
 	 */
-	public function post_scheduled( $post ) {
+	public function scheduled( $post ) {
 
 		if ( empty( $post ) || ! is_object( $post ) ) {
 			return;
 		}
 
-		if ( 'post' !== $post->post_type ) {
+		if ( substr( $this->event->type, 4 ) !== $post->post_type ) {
 			return;
 		}
 
+		$cpt          = get_post_types_object( $this->event->type );
 		$current_user = \wp_get_current_user();
 
 		if ( 0 === $current_user ) {
 			$subject = \wp_sprintf(
-				/* translators: %s: Name of the site */
-				\__( 'Hey, a post was scheduled on %s!', 'hey-notify' ),
+				/* translators: 1: Name of the custom post type 2. Name of the site */
+				\__( 'Hey, a %1$s was scheduled on %2$s!', 'hey-notify' ),
+				\strtolower( $cpt->labels->singular_name ),
 				\get_bloginfo( 'name' )
 			);
 		} else {
 			$subject = \wp_sprintf(
-				/* translators: 1: Name of the user 2: Name of the site */
-				\__( 'Hey, a post was scheduled by %1$s on %2$s!', 'hey-notify' ),
+				/* translators: 1: Name of the custom post type 2: Name of the user 3: Name of the site */
+				\__( 'Hey, a %1$s was scheduled by %2$s on %3$s!', 'hey-notify' ),
+				\strtolower( $cpt->labels->singular_name ),
 				\esc_html( $current_user->display_name ),
 				\get_bloginfo( 'name' )
 			);
 		}
 
-		$subject = apply_filters( 'hey_notify_post_scheduled_subject', $subject, $post );
+		$subject = apply_filters( 'hey_notify_cpt_scheduled_subject', $subject, $post );
 
 		$this->prepare_data( $subject, $post );
 	}
@@ -137,23 +146,26 @@ class Post_Hook extends Hook {
 	 * @param object $post Post object.
 	 * @return void
 	 */
-	public function post_pending( $post ) {
+	public function pending( $post ) {
 
 		if ( empty( $post ) || ! is_object( $post ) ) {
 			return;
 		}
 
-		if ( 'post' !== $post->post_type ) {
+		if ( substr( $this->event->type, 4 ) !== $post->post_type ) {
 			return;
 		}
 
-		$subject = \sprintf(
-			/* translators: %s: Name of the site */
-			\__( 'Hey, a post is pending on %s!', 'hey-notify' ),
+		$cpt = get_post_types_object( $this->event->type );
+
+		$subject = \wp_sprintf(
+			/* translators: 1: Name of the custom post type 2. Name of the site */
+			\__( 'Hey, a %1$s is pending on %2$s!', 'hey-notify' ),
+			\strtolower( $cpt->labels->singular_name ),
 			\get_bloginfo( 'name' )
 		);
 
-		$subject = apply_filters( 'hey_notify_post_pending_subject', $subject, $post );
+		$subject = apply_filters( 'hey_notify_cpt_pending_subject', $subject, $post );
 
 		$this->prepare_data( $subject, $post );
 	}
@@ -164,13 +176,13 @@ class Post_Hook extends Hook {
 	 * @param object $post Post object.
 	 * @return void
 	 */
-	public function post_updated( $post ) {
+	public function updated( $post ) {
 
 		if ( empty( $post ) || ! is_object( $post ) ) {
 			return;
 		}
 
-		if ( 'post' !== $post->post_type ) {
+		if ( substr( $this->event->type, 4 ) !== $post->post_type ) {
 			return;
 		}
 
@@ -178,24 +190,27 @@ class Post_Hook extends Hook {
 			return;
 		}
 
+		$cpt          = get_post_types_object( $this->event->type );
 		$current_user = \wp_get_current_user();
 
 		if ( 0 === $current_user ) {
 			$subject = \wp_sprintf(
-				/* translators: %s: Name of the site */
-				\__( 'Hey, a post was updated on %s!', 'hey-notify' ),
+				/* translators: 1: Name of the custom post type 2. Name of the site */
+				\__( 'Hey, a %1$s was updated on %2$s!', 'hey-notify' ),
+				\strtolower( $cpt->labels->singular_name ),
 				\get_bloginfo( 'name' )
 			);
 		} else {
 			$subject = \wp_sprintf(
-				/* translators: 1: Name of the user 2: Name of the site */
-				\__( 'Hey, a post was updated by %1$s on %2$s!', 'hey-notify' ),
+				/* translators: 1: Name of the custom post type 2: Name of the user 3: Name of the site */
+				\__( 'Hey, a %1$s was updated by %2$s on %3$s!', 'hey-notify' ),
+				\strtolower( $cpt->labels->singular_name ),
 				\esc_html( $current_user->display_name ),
 				\get_bloginfo( 'name' )
 			);
 		}
 
-		$subject = apply_filters( 'hey_notify_post_updated_subject', $subject, $post );
+		$subject = apply_filters( 'hey_notify_cpt_updated_subject', $subject, $post );
 
 		$this->prepare_data( $subject, $post );
 	}
@@ -206,7 +221,7 @@ class Post_Hook extends Hook {
 	 * @param int $id Post ID.
 	 * @return void
 	 */
-	public function post_trashed( $id ) {
+	public function trashed( $id ) {
 
 		$post = get_post( $id );
 
@@ -214,28 +229,31 @@ class Post_Hook extends Hook {
 			return;
 		}
 
-		if ( 'post' !== $post->post_type ) {
+		if ( substr( $this->event->type, 4 ) !== $post->post_type ) {
 			return;
 		}
 
+		$cpt          = get_post_types_object( $this->event->type );
 		$current_user = \wp_get_current_user();
 
 		if ( 0 === $current_user ) {
 			$subject = \wp_sprintf(
-				/* translators: %s: Name of the site */
-				\__( 'Hey, a post was deleted on %s!', 'hey-notify' ),
+				/* translators: 1: Name of the custom post type 2. Name of the site */
+				\__( 'Hey, a %1$s was deleted on %2$s!', 'hey-notify' ),
+				\strtolower( $cpt->labels->singular_name ),
 				\get_bloginfo( 'name' )
 			);
 		} else {
 			$subject = \wp_sprintf(
-				/* translators: 1: Name of the user 2: Name of the site */
-				\__( 'Hey, a post was deleted by %1$s on %2$s!', 'hey-notify' ),
+				/* translators: 1: Name of the custom post type 2: Name of the user 3: Name of the site */
+				\__( 'Hey, a %1$s was deleted by %2$s on %3$s!', 'hey-notify' ),
+				\strtolower( $cpt->labels->singular_name ),
 				\esc_html( $current_user->display_name ),
 				\get_bloginfo( 'name' )
 			);
 		}
 
-		$subject = apply_filters( 'hey_notify_post_trashed_subject', $subject, $post );
+		$subject = apply_filters( 'hey_notify_cpt_trashed_subject', $subject, $post );
 
 		$this->prepare_data( $subject, $post );
 	}

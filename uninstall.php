@@ -46,9 +46,11 @@ if ( \is_multisite() ) {
 function delete_options() {
 	\delete_option( '_hey_notify_remove_data' );
 	\delete_option( '_hey_notify_default_service' );
+	\delete_option( '_hey_notify_show_public_cpt' );
 	\delete_option( 'hey_notify_wordpress_version' );
 	\delete_option( 'hey_notify_theme_versions' );
 	\delete_option( 'hey_notify_plugin_versions' );
+	\delete_option( 'hey_notify_custom_post_types' );
 }
 
 /**

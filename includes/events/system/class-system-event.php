@@ -43,9 +43,12 @@ class System_Event extends Event {
 			Field::make( 'select', 'system', __( 'Action', 'hey-notify' ) )
 				->set_options(
 					array(
-						'system_core_update'   => __( 'WordPress Update Available', 'hey-notify' ),
-						'system_theme_update'  => __( 'Theme Update Available', 'hey-notify' ),
-						'system_plugin_update' => __( 'Plugin Update Available', 'hey-notify' ),
+						'system_core_update'        => __( 'WordPress Update Available', 'hey-notify' ),
+						'system_plugin_update'      => __( 'Plugin Update Available', 'hey-notify' ),
+						'system_plugin_activated'   => __( 'Plugin Activated', 'hey-notify' ),
+						'system_plugin_deactivated' => __( 'Plugin Deactivated', 'hey-notify' ),
+						'system_theme_update'       => __( 'Theme Update Available', 'hey-notify' ),
+						'system_theme_changed'      => __( 'Theme Changed', 'hey-notify' ),
 					)
 				)
 				->set_conditional_logic(
@@ -73,16 +76,25 @@ class System_Event extends Event {
 
 		switch ( $event->{$event->type} ) {
 			case 'system_core_update':
-				add_action( 'wp_version_check', array( $hook, 'system_core_update' ), 9 );
-				add_action( 'wp_version_check', array( $hook, 'system_core_update_done' ), 10 );
-				break;
-			case 'system_theme_update':
-				add_action( 'wp_update_themes', array( $hook, 'system_theme_update' ), 10 );
-				add_action( 'wp_update_themes', array( $hook, 'system_theme_update_done' ), 11 );
+				\add_action( 'wp_version_check', array( $hook, 'system_core_update' ), 9 );
+				\add_action( 'wp_version_check', array( $hook, 'system_core_update_done' ), 10 );
 				break;
 			case 'system_plugin_update':
-				add_action( 'wp_update_plugins', array( $hook, 'system_plugin_update' ), 10 );
-				add_action( 'wp_update_plugins', array( $hook, 'system_plugin_update_done' ), 11 );
+				\add_action( 'wp_update_plugins', array( $hook, 'system_plugin_update' ), 10 );
+				\add_action( 'wp_update_plugins', array( $hook, 'system_plugin_update_done' ), 11 );
+				break;
+			case 'system_plugin_activated':
+				\add_action( 'activated_plugin', array( $hook, 'system_plugin_activated' ), 10, 2 );
+				break;
+			case 'system_plugin_deactivated':
+				\add_action( 'deactivated_plugin', array( $hook, 'system_plugin_deactivated' ), 10, 2 );
+				break;
+			case 'system_theme_update':
+				\add_action( 'wp_update_themes', array( $hook, 'system_theme_update' ), 10 );
+				\add_action( 'wp_update_themes', array( $hook, 'system_theme_update_done' ), 11 );
+				break;
+			case 'system_theme_changed':
+				\add_action( 'switch_theme', array( $hook, 'system_theme_changed' ), 10 );
 				break;
 		}
 	}

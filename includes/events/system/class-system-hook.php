@@ -60,11 +60,13 @@ class System_Hook extends Hook {
 			return;
 		}
 
-		$subject = \sprintf(
+		$subject = \wp_sprintf(
 			/* translators: %s: Name of the site */
 			\__( 'Hey, a new version of WordPress is available on %s!', 'hey-notify' ),
 			\get_bloginfo( 'name' )
 		);
+
+		$subject = apply_filters( 'hey_notify_system_core_update_subject', $subject );
 
 		$fields = array(
 			array(
@@ -186,11 +188,13 @@ class System_Hook extends Hook {
 			return;
 		}
 
-		$subject = \sprintf(
+		$subject = \wp_sprintf(
 			/* translators: %s: Name of the site */
 			\esc_html__( 'Hey, new theme updates are available on %s!', 'hey-notify' ),
 			\get_bloginfo( 'name' )
 		);
+
+		$subject = apply_filters( 'hey_notify_system_theme_update_subject', $subject );
 
 		$data = array(
 			'subject' => $subject,
@@ -283,11 +287,13 @@ class System_Hook extends Hook {
 			return;
 		}
 
-		$subject = \sprintf(
+		$subject = \wp_sprintf(
 			/* translators: %s: Name of the site */
 			\esc_html__( 'Hey, new plugin updates are available on %s!', 'hey-notify' ),
 			\get_bloginfo( 'name' )
 		);
+
+		$subject = apply_filters( 'hey_notify_system_plugin_update_subject', $subject );
 
 		$data = array(
 			'subject' => $subject,
@@ -329,5 +335,120 @@ class System_Hook extends Hook {
 
 		\update_option( 'hey_notify_plugin_versions', $new_plugin_versions );
 
+	}
+
+	/**
+	 * Plugin Activated
+	 *
+	 * @param object  $plugin Plugin object.
+	 * @param boolean $network_wide Was network activated.
+	 * @return void
+	 */
+	public function system_plugin_activated( $plugin, $network_wide ) {
+		$plugin_data = \get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin, true, false );
+
+		$fields = array(
+			array(
+				'name'   => \esc_html__( 'Name', 'hey-notify' ),
+				'value'  => $plugin_data['Name'],
+				'inline' => true,
+			),
+			array(
+				'name'   => \esc_html__( 'Version', 'hey-notify' ),
+				'value'  => $plugin_data['Version'],
+				'inline' => true,
+			),
+		);
+
+		$subject = \wp_sprintf(
+			/* translators: %s: Name of the site */
+			\esc_html__( 'Hey, a plugin was just activated on %s!', 'hey-notify' ),
+			\get_bloginfo( 'name' )
+		);
+
+		$subject = apply_filters( 'hey_notify_system_plugin_activated_subject', $subject );
+
+		$data = array(
+			'subject' => $subject,
+			'title'   => __( 'View installed plugins', 'hey-notify' ),
+			'url'     => \admin_url( 'plugins.php' ),
+			'fields'  => $fields,
+		);
+
+		$this->send( $data );
+	}
+
+	/**
+	 * Plugin Deactivated
+	 *
+	 * @param object  $plugin Plugin object.
+	 * @param boolean $network_wide Was network activated.
+	 * @return void
+	 */
+	public function system_plugin_deactivated( $plugin, $network_wide ) {
+		$plugin_data = \get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin, true, false );
+
+		$fields = array(
+			array(
+				'name'   => \esc_html__( 'Name', 'hey-notify' ),
+				'value'  => $plugin_data['Name'],
+				'inline' => true,
+			),
+			array(
+				'name'   => \esc_html__( 'Version', 'hey-notify' ),
+				'value'  => $plugin_data['Version'],
+				'inline' => true,
+			),
+		);
+
+		$subject = \wp_sprintf(
+			/* translators: %s: Name of the site */
+			\esc_html__( 'Hey, a plugin was just deactivated on %s!', 'hey-notify' ),
+			\get_bloginfo( 'name' )
+		);
+
+		$subject = apply_filters( 'hey_notify_system_plugin_deactivated_subject', $subject );
+
+		$data = array(
+			'subject' => $subject,
+			'title'   => __( 'View installed plugins', 'hey-notify' ),
+			'url'     => \admin_url( 'plugins.php' ),
+			'fields'  => $fields,
+		);
+
+		$this->send( $data );
+	}
+
+	/**
+	 * Theme changed
+	 *
+	 * @param string $new_name New theme name.
+	 * @return void
+	 */
+	public function system_theme_changed( $new_name ) {
+		$fields = array(
+			array(
+				'name'   => \esc_html__( 'New Theme', 'hey-notify' ),
+				'value'  => $new_name,
+				'inline' => true,
+			),
+		);
+
+		$subject = \wp_sprintf(
+			/* translators: %s: Name of the site */
+			\esc_html__( 'Hey, the theme was changed on %s!', 'hey-notify' ),
+			\get_bloginfo( 'name' )
+		);
+
+		$subject = apply_filters( 'hey_notify_system_theme_changed_subject', $subject );
+
+		$data = array(
+			'subject' => $subject,
+			'title'   => __( 'View themes', 'hey-notify' ),
+			'url'     => \admin_url( 'themes.php' ),
+			'fields'  => $fields,
+		);
+
+		$this->send( $data );
 	}
 }

@@ -6,26 +6,51 @@
 
 Get notified when things happen in WordPress.
 
-__Notifications can be sent to:__
+**Notifications can be sent to:**
 
-* Slack
-* Discord
-* Email
+- Slack
+- Discord
+- Email
 
-__Notifications for:__
+**Notifications for:**
 
-* Posts - Status transitions
-* Pages - Status transitions
-* Comments - New comments
-* Users - New users, admin logins, failed admin logins
-* System Events - WordPress, plugin, and theme updates
-
+- Posts
+  - Draft
+  - Pending
+  - Scheduled
+  - Published
+  - Trashed
+- Pages
+  - Draft
+  - Pending
+  - Scheduled
+  - Published
+  - Trashed
+- Custom Post Types
+  - Draft
+  - Pending
+  - Scheduled
+  - Published
+  - Trashed
+- Comments
+  - New Comment
+- Users
+  - New User
+  - Administrator Login
+  - Failed Administrator Login
+- System Events
+  - WordPress Updates
+  - Plugin Updates
+  - Plugin Activation
+  - Plugin Deactivation
+  - Theme Updates
+  - Theme Change
 
 ## Installation
 
 1. Upload the `hey-notify` folder to the `/wp-content/plugins/` directory.
-2. Activate the __Hey Notify__ plugin through the __Plugins__ menu in WordPress.
-3. Configure the plugin by going to the __Hey Notify__ menu that appears in your WordPress Admin.
+2. Activate the **Hey Notify** plugin through the **Plugins** menu in WordPress.
+3. Configure the plugin by going to the **Hey Notify** menu that appears in your WordPress Admin.
 
 ## Support
 
