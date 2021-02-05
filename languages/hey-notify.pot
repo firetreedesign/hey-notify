@@ -1,17 +1,17 @@
-# Copyright (C) 2020 FireTree Design, LLC <info@firetreedesign.com>
+# Copyright (C) 2021 FireTree Design, LLC <info@firetreedesign.com>
 # This file is distributed under the same license as the Hey Notify plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Hey Notify 1.1.0\n"
+"Project-Id-Version: Hey Notify 1.2.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/hey-notify\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-30T18:02:04+00:00\n"
+"POT-Creation-Date: 2021-02-05T23:12:50+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.1.0\n"
+"X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: hey-notify\n"
 
 #. Plugin Name of the plugin
@@ -87,12 +87,12 @@ msgid "Not found in Trash"
 msgstr ""
 
 #: includes/cpt.php:100
-#: includes/fields.php:40
+#: includes/fields.php:42
 msgid "Service"
 msgstr ""
 
 #: includes/cpt.php:101
-#: includes/fields.php:53
+#: includes/fields.php:55
 #: includes/filters.php:49
 msgid "Events"
 msgstr ""
@@ -102,6 +102,7 @@ msgid "Comments"
 msgstr ""
 
 #: includes/events/comment/class-comment-event.php:43
+#: includes/events/cpt/class-cpt-event.php:46
 #: includes/events/page/class-page-event.php:43
 #: includes/events/post/class-post-event.php:43
 #: includes/events/system/class-system-event.php:43
@@ -118,38 +119,135 @@ msgstr ""
 msgid "Hey, a new comment has been posted on %s!"
 msgstr ""
 
-#: includes/events/comment/class-comment-hook.php:59
-#: includes/events/page/class-page-hook.php:234
-#: includes/events/post/class-post-hook.php:234
+#: includes/events/comment/class-comment-hook.php:61
+#: includes/events/cpt/class-cpt-hook.php:272
+#: includes/events/page/class-page-hook.php:254
+#: includes/events/post/class-post-hook.php:254
 msgid "Author"
 msgstr ""
 
-#: includes/events/comment/class-comment-hook.php:64
-#: includes/events/user/class-user-hook.php:120
+#: includes/events/comment/class-comment-hook.php:66
+#: includes/events/user/class-user-hook.php:126
 #: includes/services/class-email.php:60
 msgid "Email"
 msgstr ""
 
-#: includes/events/comment/class-comment-hook.php:69
-#: includes/events/page/class-page-hook.php:239
-#: includes/events/post/class-post-hook.php:239
+#: includes/events/comment/class-comment-hook.php:71
+#: includes/events/cpt/class-cpt-hook.php:277
+#: includes/events/page/class-page-hook.php:259
+#: includes/events/post/class-post-hook.php:259
 msgid "Date"
 msgstr ""
 
-#: includes/events/comment/class-comment-hook.php:74
+#: includes/events/comment/class-comment-hook.php:76
 msgid "Status"
 msgstr ""
 
-#: includes/events/comment/class-comment-hook.php:106
+#: includes/events/comment/class-comment-hook.php:108
 msgid "Approved"
 msgstr ""
 
-#: includes/events/comment/class-comment-hook.php:108
+#: includes/events/comment/class-comment-hook.php:110
 msgid "Pending"
 msgstr ""
 
-#: includes/events/comment/class-comment-hook.php:110
+#: includes/events/comment/class-comment-hook.php:112
 msgid "Spam"
+msgstr ""
+
+#. translators: %s: Singular name of the custom post type
+#: includes/events/cpt/class-cpt-event.php:51
+msgid "%s Draft"
+msgstr ""
+
+#. translators: %s: Singular name of the custom post type
+#: includes/events/cpt/class-cpt-event.php:56
+msgid "%s Pending"
+msgstr ""
+
+#. translators: %s: Singular name of the custom post type
+#: includes/events/cpt/class-cpt-event.php:61
+msgid "%s Published"
+msgstr ""
+
+#. translators: %s: Singular name of the custom post type
+#: includes/events/cpt/class-cpt-event.php:66
+msgid "%s Scheduled"
+msgstr ""
+
+#. translators: %s: Singular name of the custom post type
+#: includes/events/cpt/class-cpt-event.php:71
+msgid "%s Updated"
+msgstr ""
+
+#. translators: %s: Singular name of the custom post type
+#: includes/events/cpt/class-cpt-event.php:76
+msgid "%s Moved to Trash"
+msgstr ""
+
+#. translators: 1: Name of the custom post type 2. Name of the site
+#: includes/events/cpt/class-cpt-hook.php:42
+msgid "Hey, a %1$s was drafted on %2$s!"
+msgstr ""
+
+#. translators: 1: Name of the custom post type 2: Name of the user 3: Name of the site
+#: includes/events/cpt/class-cpt-hook.php:49
+msgid "Hey, a %1$s was drafted by %2$s on %3$s!"
+msgstr ""
+
+#. translators: 1: Name of the custom post type 2. Name of the site
+#: includes/events/cpt/class-cpt-hook.php:83
+msgid "Hey, a %1$s was published on %2$s!"
+msgstr ""
+
+#. translators: 1: Name of the custom post type 2: Name of the user 3: Name of the site
+#: includes/events/cpt/class-cpt-hook.php:90
+msgid "Hey, a %1$s was published by %2$s on %3$s!"
+msgstr ""
+
+#. translators: 1: Name of the custom post type 2. Name of the site
+#: includes/events/cpt/class-cpt-hook.php:124
+msgid "Hey, a %1$s was scheduled on %2$s!"
+msgstr ""
+
+#. translators: 1: Name of the custom post type 2: Name of the user 3: Name of the site
+#: includes/events/cpt/class-cpt-hook.php:131
+msgid "Hey, a %1$s was scheduled by %2$s on %3$s!"
+msgstr ""
+
+#. translators: 1: Name of the custom post type 2. Name of the site
+#: includes/events/cpt/class-cpt-hook.php:163
+msgid "Hey, a %1$s is pending on %2$s!"
+msgstr ""
+
+#. translators: 1: Name of the custom post type 2. Name of the site
+#: includes/events/cpt/class-cpt-hook.php:199
+msgid "Hey, a %1$s was updated on %2$s!"
+msgstr ""
+
+#. translators: 1: Name of the custom post type 2: Name of the user 3: Name of the site
+#: includes/events/cpt/class-cpt-hook.php:206
+msgid "Hey, a %1$s was updated by %2$s on %3$s!"
+msgstr ""
+
+#. translators: 1: Name of the custom post type 2. Name of the site
+#: includes/events/cpt/class-cpt-hook.php:242
+msgid "Hey, a %1$s was deleted on %2$s!"
+msgstr ""
+
+#. translators: 1: Name of the custom post type 2: Name of the user 3: Name of the site
+#: includes/events/cpt/class-cpt-hook.php:249
+msgid "Hey, a %1$s was deleted by %2$s on %3$s!"
+msgstr ""
+
+#: includes/events/cpt/class-cpt-hook.php:286
+#: includes/events/post/class-post-hook.php:268
+msgid "Categories"
+msgstr ""
+
+#: includes/events/cpt/class-cpt-hook.php:295
+#: includes/events/post/class-post-hook.php:277
+msgid "Tags"
 msgstr ""
 
 #: includes/events/page/class-page-event.php:30
@@ -182,56 +280,56 @@ msgstr ""
 
 #. translators: %s: Name of the site
 #: includes/events/page/class-page-hook.php:41
-msgid "Hey, a new page was drafted on %s!"
+msgid "Hey, a page was drafted on %s!"
 msgstr ""
 
 #. translators: 1: Name of the user 2: Name of the site
 #: includes/events/page/class-page-hook.php:47
-msgid "Hey, a new page was drafted by %1$s on %2$s!"
+msgid "Hey, a page was drafted by %1$s on %2$s!"
 msgstr ""
 
 #. translators: %s: Name of the site
-#: includes/events/page/class-page-hook.php:77
-msgid "Hey, a new page was published on %s!"
+#: includes/events/page/class-page-hook.php:79
+msgid "Hey, a page was published on %s!"
 msgstr ""
 
 #. translators: 1: Name of the user 2: Name of the site
-#: includes/events/page/class-page-hook.php:83
-msgid "Hey, a new page was published by %1$s on %2$s!"
+#: includes/events/page/class-page-hook.php:85
+msgid "Hey, a page was published by %1$s on %2$s!"
 msgstr ""
 
 #. translators: %s: Name of the site
-#: includes/events/page/class-page-hook.php:113
-msgid "Hey, a new page was scheduled on %s!"
+#: includes/events/page/class-page-hook.php:117
+msgid "Hey, a page was scheduled on %s!"
 msgstr ""
 
 #. translators: 1: Name of the user 2: Name of the site
-#: includes/events/page/class-page-hook.php:119
-msgid "Hey, a new page was scheduled by %1$s on %2$s!"
+#: includes/events/page/class-page-hook.php:123
+msgid "Hey, a page was scheduled by %1$s on %2$s!"
 msgstr ""
 
 #. translators: %s: Name of the site
-#: includes/events/page/class-page-hook.php:138
-msgid "Hey, a new page is pending on %s!"
+#: includes/events/page/class-page-hook.php:152
+msgid "Hey, a page is pending on %s!"
 msgstr ""
 
 #. translators: %s: Name of the site
-#: includes/events/page/class-page-hook.php:170
+#: includes/events/page/class-page-hook.php:186
 msgid "Hey, a page was updated on %s!"
 msgstr ""
 
 #. translators: 1: Name of the user 2: Name of the site
-#: includes/events/page/class-page-hook.php:176
+#: includes/events/page/class-page-hook.php:192
 msgid "Hey, a page was updated by %1$s on %2$s!"
 msgstr ""
 
 #. translators: %s: Name of the site
-#: includes/events/page/class-page-hook.php:208
+#: includes/events/page/class-page-hook.php:226
 msgid "Hey, a page was deleted on %s!"
 msgstr ""
 
 #. translators: 1: Name of the user 2: Name of the site
-#: includes/events/page/class-page-hook.php:214
+#: includes/events/page/class-page-hook.php:232
 msgid "Hey, a page was deleted by %1$s on %2$s!"
 msgstr ""
 
@@ -265,65 +363,57 @@ msgstr ""
 
 #. translators: %s: Name of the site
 #: includes/events/post/class-post-hook.php:41
-msgid "Hey, a new post was drafted on %s!"
+msgid "Hey, a post was drafted on %s!"
 msgstr ""
 
 #. translators: 1: Name of the user 2: Name of the site
 #: includes/events/post/class-post-hook.php:47
-msgid "Hey, a new post was drafted by %1$s on %2$s!"
+msgid "Hey, a post was drafted by %1$s on %2$s!"
 msgstr ""
 
 #. translators: %s: Name of the site
-#: includes/events/post/class-post-hook.php:77
-msgid "Hey, a new post was published on %s!"
+#: includes/events/post/class-post-hook.php:79
+msgid "Hey, a post was published on %s!"
 msgstr ""
 
 #. translators: 1: Name of the user 2: Name of the site
-#: includes/events/post/class-post-hook.php:83
-msgid "Hey, a new post was published by %1$s on %2$s!"
+#: includes/events/post/class-post-hook.php:85
+msgid "Hey, a post was published by %1$s on %2$s!"
 msgstr ""
 
 #. translators: %s: Name of the site
-#: includes/events/post/class-post-hook.php:113
-msgid "Hey, a new post was scheduled on %s!"
+#: includes/events/post/class-post-hook.php:117
+msgid "Hey, a post was scheduled on %s!"
 msgstr ""
 
 #. translators: 1: Name of the user 2: Name of the site
-#: includes/events/post/class-post-hook.php:119
-msgid "Hey, a new post was scheduled by %1$s on %2$s!"
+#: includes/events/post/class-post-hook.php:123
+msgid "Hey, a post was scheduled by %1$s on %2$s!"
 msgstr ""
 
 #. translators: %s: Name of the site
-#: includes/events/post/class-post-hook.php:138
-msgid "Hey, a new post is pending on %s!"
+#: includes/events/post/class-post-hook.php:152
+msgid "Hey, a post is pending on %s!"
 msgstr ""
 
 #. translators: %s: Name of the site
-#: includes/events/post/class-post-hook.php:170
+#: includes/events/post/class-post-hook.php:186
 msgid "Hey, a post was updated on %s!"
 msgstr ""
 
 #. translators: 1: Name of the user 2: Name of the site
-#: includes/events/post/class-post-hook.php:176
+#: includes/events/post/class-post-hook.php:192
 msgid "Hey, a post was updated by %1$s on %2$s!"
 msgstr ""
 
 #. translators: %s: Name of the site
-#: includes/events/post/class-post-hook.php:208
+#: includes/events/post/class-post-hook.php:226
 msgid "Hey, a post was deleted on %s!"
 msgstr ""
 
 #. translators: 1: Name of the user 2: Name of the site
-#: includes/events/post/class-post-hook.php:214
+#: includes/events/post/class-post-hook.php:232
 msgid "Hey, a post was deleted by %1$s on %2$s!"
-msgstr ""
-
-#: includes/events/post/class-post-hook.php:248
-msgid "Categories"
-msgstr ""
-
-#: includes/events/post/class-post-hook.php:257
-msgid "Tags"
 msgstr ""
 
 #: includes/events/system/class-system-event.php:30
@@ -335,15 +425,27 @@ msgid "WordPress Update Available"
 msgstr ""
 
 #: includes/events/system/class-system-event.php:47
-msgid "Theme Update Available"
-msgstr ""
-
-#: includes/events/system/class-system-event.php:48
 msgid "Plugin Update Available"
 msgstr ""
 
+#: includes/events/system/class-system-event.php:48
+msgid "Plugin Activated"
+msgstr ""
+
+#: includes/events/system/class-system-event.php:49
+msgid "Plugin Deactivated"
+msgstr ""
+
+#: includes/events/system/class-system-event.php:50
+msgid "Theme Update Available"
+msgstr ""
+
+#: includes/events/system/class-system-event.php:51
+msgid "Theme Changed"
+msgstr ""
+
 #. translators: %s: Name of the site
-#: includes/events/system/class-system-hook.php:67
+#: includes/events/system/class-system-hook.php:65
 msgid "Hey, a new version of WordPress is available on %s!"
 msgstr ""
 
@@ -360,21 +462,59 @@ msgid "View the update"
 msgstr ""
 
 #. translators: %s: Name of the site
-#: includes/events/system/class-system-hook.php:153
+#: includes/events/system/class-system-hook.php:193
 msgid "Hey, new theme updates are available on %s!"
 msgstr ""
 
-#: includes/events/system/class-system-hook.php:159
+#: includes/events/system/class-system-hook.php:201
 msgid "View the theme updates"
 msgstr ""
 
 #. translators: %s: Name of the site
-#: includes/events/system/class-system-hook.php:226
+#: includes/events/system/class-system-hook.php:292
 msgid "Hey, new plugin updates are available on %s!"
 msgstr ""
 
-#: includes/events/system/class-system-hook.php:232
+#: includes/events/system/class-system-hook.php:300
 msgid "View the plugin updates"
+msgstr ""
+
+#: includes/events/system/class-system-hook.php:352
+#: includes/events/system/class-system-hook.php:393
+msgid "Name"
+msgstr ""
+
+#: includes/events/system/class-system-hook.php:357
+#: includes/events/system/class-system-hook.php:398
+msgid "Version"
+msgstr ""
+
+#. translators: %s: Name of the site
+#: includes/events/system/class-system-hook.php:365
+msgid "Hey, a plugin was just activated on %s!"
+msgstr ""
+
+#: includes/events/system/class-system-hook.php:373
+#: includes/events/system/class-system-hook.php:414
+msgid "View installed plugins"
+msgstr ""
+
+#. translators: %s: Name of the site
+#: includes/events/system/class-system-hook.php:406
+msgid "Hey, a plugin was just deactivated on %s!"
+msgstr ""
+
+#: includes/events/system/class-system-hook.php:431
+msgid "New Theme"
+msgstr ""
+
+#. translators: %s: Name of the site
+#: includes/events/system/class-system-hook.php:439
+msgid "Hey, the theme was changed on %s!"
+msgstr ""
+
+#: includes/events/system/class-system-hook.php:447
+msgid "View themes"
 msgstr ""
 
 #: includes/events/user/class-user-event.php:30
@@ -399,49 +539,53 @@ msgid "Hey, a new user just registered on %s!"
 msgstr ""
 
 #. translators: %s: Name of the site
-#: includes/events/user/class-user-hook.php:59
+#: includes/events/user/class-user-hook.php:61
 msgid "Hey, an administrator just logged in to %s!"
 msgstr ""
 
 #. translators: %s: Name of the site
-#: includes/events/user/class-user-hook.php:92
+#: includes/events/user/class-user-hook.php:96
 msgid "Hey, an administrator just failed to log in to %s!"
 msgstr ""
 
-#: includes/events/user/class-user-hook.php:110
+#: includes/events/user/class-user-hook.php:116
 msgid "Display Name"
 msgstr ""
 
-#: includes/events/user/class-user-hook.php:115
+#: includes/events/user/class-user-hook.php:121
 msgid "Username"
 msgstr ""
 
-#: includes/events/user/class-user-hook.php:125
+#: includes/events/user/class-user-hook.php:131
 msgid "IP Address"
 msgstr ""
 
-#: includes/events/user/class-user-hook.php:138
+#: includes/events/user/class-user-hook.php:144
 msgid "View user's profile"
 msgstr ""
 
-#: includes/events/user/class-user-hook.php:161
+#: includes/events/user/class-user-hook.php:167
 msgid "Unknown"
 msgstr ""
 
-#: includes/fields.php:66
+#: includes/fields.php:69
 msgid "Hey Notify Settings"
 msgstr ""
 
-#: includes/fields.php:68
+#: includes/fields.php:71
 msgid "Settings"
 msgstr ""
 
-#: includes/fields.php:71
+#: includes/fields.php:74
 msgid "General"
 msgstr ""
 
-#: includes/fields.php:75
+#: includes/fields.php:78
 msgid "Uninstall"
+msgstr ""
+
+#: includes/fields.php:82
+msgid "Licenses"
 msgstr ""
 
 #: includes/filters.php:31
@@ -469,11 +613,19 @@ msgid "Remove all data when Hey Notify is deleted."
 msgstr ""
 
 #: includes/filters.php:102
-msgid "General settings for Hey Notify."
+msgid "General settings for Hey Notify"
 msgstr ""
 
 #: includes/filters.php:107
 msgid "Default service:"
+msgstr ""
+
+#: includes/filters.php:115
+msgid "Custom Post Type Settings"
+msgstr ""
+
+#: includes/filters.php:120
+msgid "Only display public Custom Post Types"
 msgstr ""
 
 #: includes/services/class-discord.php:63
