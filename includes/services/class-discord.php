@@ -129,9 +129,15 @@ class Discord extends Service {
 		$body       = array();
 		$embed_item = array();
 
+		// @mention Setup.
+		$at_mention_pattern       = '/@+([a-zA-Z0-9_]+)/';
+		$body['allowed_mentions'] = json_decode( "{'parse': [ 'roles', 'users', 'everyone' ]}" );
+
 		// Subject.
 		if ( isset( $message['subject'] ) && '' !== $message['subject'] ) {
 			$body['content'] = $message['subject'];
+			// Format @mentions.
+			$body['content'] = preg_replace( $at_mention_pattern, '<@$1>', $body['content'] );
 		}
 
 		// Title.

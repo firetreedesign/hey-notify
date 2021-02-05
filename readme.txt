@@ -4,7 +4,7 @@ Tags: notifications, slack, discord, email
 Requires at least: 4.3
 Tested up to: 5.6
 Requires PHP: 5.3
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://ww.gnu.org/licenses/gpl-2.0.html
 
@@ -65,6 +65,10 @@ Get notified when things happen in WordPress.
 1. Notification Settings
 
 == Changelog ==
+
+= 1.2.2 =
+* Fixed ability to @mention Discord users.
+* Updated translation file.
 
 = 1.2.1 =
 * Automatically detect available Custom Post Types.
