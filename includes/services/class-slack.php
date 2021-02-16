@@ -338,16 +338,17 @@ class Slack extends Service {
 		$settings->add_tab(
 			__( 'Slack', 'hey-notify' ),
 			array(
-				Field::make( 'text', 'hey_notify_default_slack_webhook', __( 'Default Webhook URL', 'hey-notify' ) )
+				Field::make( 'separator', 'hey_notify_slack_separator', __( 'Default settings for Slack', 'hey-notify' ) ),
+				Field::make( 'text', 'hey_notify_default_slack_webhook', __( 'Webhook URL', 'hey-notify' ) )
 					->set_attribute( 'type', 'url' )
 					->set_help_text( sprintf( '%1s <a href="%2s">%3s</a>', __( 'The webhook that you created for your Slack channel.', 'hey-notify' ), 'https://api.slack.com/messaging/webhooks', __( 'Learn More', 'hey-notify' ) ) ),
-				Field::make( 'image', 'hey_notify_default_slack_icon', __( 'Default Slack Icon', 'hey-notify' ) )
+				Field::make( 'image', 'hey_notify_default_slack_icon', __( 'Slack Icon', 'hey-notify' ) )
 					->set_help_text( __( 'Override the default icon of the webhook. Not required.', 'hey-notify' ) )
 					->set_width( 33 ),
-				Field::make( 'text', 'hey_notify_default_slack_username', __( 'Default Slack Username', 'hey-notify' ) )
+				Field::make( 'text', 'hey_notify_default_slack_username', __( 'Slack Username', 'hey-notify' ) )
 					->set_help_text( __( 'Override the default username of the webhook. Not required.', 'hey-notify' ) )
 					->set_width( 33 ),
-				Field::make( 'color', 'hey_notify_default_slack_color', __( 'Default Color', 'hey-notify' ) )
+				Field::make( 'color', 'hey_notify_default_slack_color', __( 'Color', 'hey-notify' ) )
 					->set_help_text( __( 'Select a color to use for the message attachment.', 'hey-notify' ) )
 					->set_default_value( '#009bff' )
 					->set_width( 33 ),
