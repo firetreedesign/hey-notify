@@ -2,6 +2,18 @@
 
 This is an archive of older changelog entries. Most recent entries are maintained in readme.txt
 
+= 1.2.2 =
+* Fixed ability to @mention Discord users.
+* Updated translation file.
+
+= 1.2.1 =
+* Automatically detect available Custom Post Types.
+
+= 1.2.0 =
+* Added new System notification for Plugin Activation, Plugin Deactivation, and Theme Changes.
+* Added Custom Post Type notifications.
+* For developers: Added filter hooks to the message subjects.
+
 = 1.1.6 =
 * Removed some unneeded vendor files from the previous release.
 
