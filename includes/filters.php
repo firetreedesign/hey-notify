@@ -121,6 +121,15 @@ function settings_general_fields( $fields = array() ) {
 			->set_option_value( 'yes' )
 			->set_default_value( 'yes' )
 	);
+	$fields[] = (
+		Field::make( 'html', 'hey_notify_cpt_refresh' )
+			->set_html(
+				sprintf(
+					'<a class="button" id="hey-notify-cpt-refresh">%s</a><span id="hey-notify-cpt-refresh-status"></span>',
+					__( 'Refresh Custom Post Types', 'hey-notify' )
+				)
+			)
+	);
 	return $fields;
 }
 

@@ -32,6 +32,8 @@ require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/notifications.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/class-hook.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/class-event.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/class-service.php';
+require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/scripts.php';
+require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/rest-api.php';
 
 // Events.
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/events/post/loader.php';
