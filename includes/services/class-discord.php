@@ -269,7 +269,7 @@ class Discord extends Service {
 		$settings->add_tab(
 			__( 'Discord', 'hey-notify' ),
 			array(
-				Field::make( 'separator', 'hey_notify_discord_separator', __( 'Default settings for Discord', 'hey-notify' ) ),
+				Field::make( 'separator', 'hey_notify_discord_separator', __( 'Default Settings for Discord', 'hey-notify' ) ),
 				Field::make( 'text', 'hey_notify_default_discord_webhook', __( 'Webhook URL', 'hey-notify' ) )
 					->set_attribute( 'type', 'url' )
 					->set_help_text( sprintf( '%1s <a href="%2s">%3s</a>', __( 'The webhook that you created for your Discord channel.', 'hey-notify' ), 'https://support.discord.com/hc/en-us/articles/228383668', __( 'Learn More', 'hey-notify' ) ) ),

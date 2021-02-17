@@ -73,7 +73,7 @@ function event_fields( $fields = array() ) {
  */
 function settings_uninstall_fields( $fields = array() ) {
 	$fields[] = (
-		Field::make( 'separator', 'hey_notify_uninstall_separator', __( 'Upon deletion of the plugin, you can optionally remove all custom data, settings, etc.', 'hey-notify' ) )
+		Field::make( 'separator', 'hey_notify_uninstall_separator', __( 'Uninstall Settings', 'hey-notify' ) )
 	);
 	$fields[] = (
 		Field::make( 'checkbox', 'hey_notify_remove_data', __( 'Remove all data when Hey Notify is deleted.', 'hey-notify' ) )
@@ -89,7 +89,7 @@ function settings_uninstall_fields( $fields = array() ) {
  */
 function settings_general_fields( $fields = array() ) {
 	$fields[] = (
-		Field::make( 'separator', 'hey_notify_general_separator', __( 'General settings', 'hey-notify' ) )
+		Field::make( 'separator', 'hey_notify_general_separator', __( 'General Settings', 'hey-notify' ) )
 	);
 	$fields[] = (
 		Field::make( 'radio_image', 'hey_notify_default_service', __( 'Default service:', 'hey-notify' ) )

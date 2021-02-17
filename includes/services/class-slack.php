@@ -338,7 +338,7 @@ class Slack extends Service {
 		$settings->add_tab(
 			__( 'Slack', 'hey-notify' ),
 			array(
-				Field::make( 'separator', 'hey_notify_slack_separator', __( 'Default settings for Slack', 'hey-notify' ) ),
+				Field::make( 'separator', 'hey_notify_slack_separator', __( 'Default Settings for Slack', 'hey-notify' ) ),
 				Field::make( 'text', 'hey_notify_default_slack_webhook', __( 'Webhook URL', 'hey-notify' ) )
 					->set_attribute( 'type', 'url' )
 					->set_help_text( sprintf( '%1s <a href="%2s">%3s</a>', __( 'The webhook that you created for your Slack channel.', 'hey-notify' ), 'https://api.slack.com/messaging/webhooks', __( 'Learn More', 'hey-notify' ) ) ),
