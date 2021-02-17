@@ -29,6 +29,7 @@ class Discord extends Service {
 
 		\add_action( 'hey_notify_send_message_discord', array( $this, 'send' ), 10, 3 );
 		\add_action( 'hey_notify_discord_settings_core', array( $this, 'get_core_settings' ), 10, 1 );
+		\add_action( 'hey_notify_settings_container', array( $this, 'default_settings' ), 10, 1 );
 	}
 
 	/**
@@ -78,6 +79,7 @@ class Discord extends Service {
 			Field::make( 'text', 'hey_notify_discord_webhook', __( 'Webhook URL', 'hey-notify' ) )
 				->set_attribute( 'type', 'url' )
 				->set_help_text( sprintf( '%1s <a href="%2s">%3s</a>', __( 'The webhook that you created for your Discord channel.', 'hey-notify' ), 'https://support.discord.com/hc/en-us/articles/228383668', __( 'Learn More', 'hey-notify' ) ) )
+				->set_default_value( \get_option( '_hey_notify_default_discord_webhook', '' ) )
 				->set_conditional_logic(
 					array(
 						array(
@@ -90,6 +92,7 @@ class Discord extends Service {
 		$fields[] = (
 			Field::make( 'image', 'hey_notify_discord_avatar', __( 'Discord Avatar', 'hey-notify' ) )
 				->set_help_text( __( 'Override the default avatar of the webhook. Not required.', 'hey-notify' ) )
+				->set_default_value( \get_option( '_hey_notify_default_discord_avatar', '' ) )
 				->set_conditional_logic(
 					array(
 						array(
@@ -103,6 +106,7 @@ class Discord extends Service {
 		$fields[] = (
 			Field::make( 'text', 'hey_notify_discord_username', __( 'Discord Username', 'hey-notify' ) )
 				->set_help_text( __( 'Override the default username of the webhook. Not required.', 'hey-notify' ) )
+				->set_default_value( \get_option( '_hey_notify_default_discord_username', '' ) )
 				->set_conditional_logic(
 					array(
 						array(
@@ -253,6 +257,30 @@ class Discord extends Service {
 			// There was an error making the request.
 			$error_message = $response->get_error_message();
 		}
+	}
+
+	/**
+	 * Default settings.
+	 *
+	 * @param object $settings Settings object.
+	 * @return void
+	 */
+	public function default_settings( $settings ) {
+		$settings->add_tab(
+			__( 'Discord', 'hey-notify' ),
+			array(
+				Field::make( 'separator', 'hey_notify_discord_separator', __( 'Default Settings for Discord', 'hey-notify' ) ),
+				Field::make( 'text', 'hey_notify_default_discord_webhook', __( 'Webhook URL', 'hey-notify' ) )
+					->set_attribute( 'type', 'url' )
+					->set_help_text( sprintf( '%1s <a href="%2s">%3s</a>', __( 'The webhook that you created for your Discord channel.', 'hey-notify' ), 'https://support.discord.com/hc/en-us/articles/228383668', __( 'Learn More', 'hey-notify' ) ) ),
+				Field::make( 'image', 'hey_notify_default_discord_avatar', __( 'Discord Avatar', 'hey-notify' ) )
+					->set_help_text( __( 'Override the default avatar of the webhook. Not required.', 'hey-notify' ) )
+					->set_width( 50 ),
+				Field::make( 'text', 'hey_notify_default_discord_username', __( 'Discord Username', 'hey-notify' ) )
+					->set_help_text( __( 'Override the default username of the webhook. Not required.', 'hey-notify' ) )
+					->set_width( 50 ),
+			)
+		);
 	}
 }
 

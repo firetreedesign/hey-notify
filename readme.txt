@@ -1,10 +1,10 @@
 === Hey Notify ===
 Contributors: firetree, danielmilner
-Tags: notifications, slack, discord, email
+Tags: notifications, slack, discord, email, ninja forms, gravity forms
 Requires at least: 4.3
 Tested up to: 5.6
 Requires PHP: 5.3
-Stable tag: 1.2.2
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://ww.gnu.org/licenses/gpl-2.0.html
 
@@ -54,6 +54,13 @@ Get notified when things happen in WordPress.
     * Theme Updates
     * Theme Change
 
+= Hey Notify Add-ons =
+
+Premium add-ons are available to extend the capabilities of Hey Notify.
+
+* [Gravity Forms](https://heynotifywp.com/add-ons/gravity-forms/)
+* [Ninja Forms](https://heynotifywp.com/add-ons/ninja-forms/)
+
 == Installation ==
 
 1. Upload the `hey-notify` folder to the `/wp-content/plugins/` directory.
@@ -66,14 +73,7 @@ Get notified when things happen in WordPress.
 
 == Changelog ==
 
-= 1.2.2 =
-* Fixed ability to @mention Discord users.
-* Updated translation file.
-
-= 1.2.1 =
-* Automatically detect available Custom Post Types.
-
-= 1.2.0 =
-* Added new System notification for Plugin Activation, Plugin Deactivation, and Theme Changes.
-* Added Custom Post Type notifications.
-* For developers: Added filter hooks to the message subjects.
+= 1.3.0 =
+* Added default settings for Slack and Discord.
+* Added a button to manually refresh the list of Custom Post Types.
+* Added a page for viewing the available Add-ons.

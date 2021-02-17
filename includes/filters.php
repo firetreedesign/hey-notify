@@ -73,13 +73,7 @@ function event_fields( $fields = array() ) {
  */
 function settings_uninstall_fields( $fields = array() ) {
 	$fields[] = (
-		Field::make( 'html', 'hey_notify_uninstall_heading' )
-			->set_html(
-				sprintf(
-					'<h2>%1s</h2>',
-					__( 'Upon deletion of the plugin, you can optionally remove all custom data, settings, etc.', 'hey-notify' )
-				)
-			)
+		Field::make( 'separator', 'hey_notify_uninstall_separator', __( 'Uninstall Settings', 'hey-notify' ) )
 	);
 	$fields[] = (
 		Field::make( 'checkbox', 'hey_notify_remove_data', __( 'Remove all data when Hey Notify is deleted.', 'hey-notify' ) )
@@ -95,31 +89,28 @@ function settings_uninstall_fields( $fields = array() ) {
  */
 function settings_general_fields( $fields = array() ) {
 	$fields[] = (
-		Field::make( 'html', 'hey_notify_services_heading' )
-			->set_html(
-				sprintf(
-					'<h2>%1s</h2>',
-					__( 'General settings for Hey Notify', 'hey-notify' )
-				)
-			)
+		Field::make( 'separator', 'hey_notify_general_separator', __( 'General Settings', 'hey-notify' ) )
 	);
 	$fields[] = (
 		Field::make( 'radio_image', 'hey_notify_default_service', __( 'Default service:', 'hey-notify' ) )
 			->set_options( get_service_options() )
 	);
 	$fields[] = (
-		Field::make( 'html', 'hey_notify_services_cpt_heading' )
-			->set_html(
-				sprintf(
-					'<h2>%1s</h2>',
-					__( 'Custom Post Type Settings', 'hey-notify' )
-				)
-			)
+		Field::make( 'separator', 'hey_notify_cpt_separator', __( 'Custom Post Type Settings', 'hey-notify' ) )
 	);
 	$fields[] = (
 		Field::make( 'checkbox', 'hey_notify_show_public_cpt', __( 'Only display public Custom Post Types', 'hey-notify' ) )
 			->set_option_value( 'yes' )
 			->set_default_value( 'yes' )
+	);
+	$fields[] = (
+		Field::make( 'html', 'hey_notify_cpt_refresh' )
+			->set_html(
+				sprintf(
+					'<a class="button" id="hey-notify-cpt-refresh">%s</a><span id="hey-notify-cpt-refresh-status"></span>',
+					__( 'Refresh Custom Post Types', 'hey-notify' )
+				)
+			)
 	);
 	return $fields;
 }

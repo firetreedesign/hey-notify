@@ -12,30 +12,10 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-if ( \is_multisite() ) {
-	$sites = \get_sites(
-		array(
-			'number' => 99999,
-			'fields' => 'ids',
-		)
-	);
-	if ( $sites ) {
-		foreach ( $sites as $site ) {
-			\switch_to_blog( $site->blog_id );
-			$remove_data = \get_option( '_hey_notify_remove_data' );
-			if ( 'yes' === $remove_data ) {
-				delete_options();
-				delete_posts();
-			}
-			\restore_current_blog();
-		}
-	}
-} else {
-	$remove_data = \get_option( '_hey_notify_remove_data' );
-	if ( 'yes' === $remove_data ) {
-		delete_options();
-		delete_posts();
-	}
+$remove_data = \get_option( '_hey_notify_remove_data' );
+if ( 'yes' === $remove_data ) {
+	delete_options();
+	delete_posts();
 }
 
 /**
