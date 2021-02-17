@@ -1,6 +1,6 @@
 === Hey Notify ===
 Contributors: firetree, danielmilner
-Tags: notifications, slack, discord, email
+Tags: notifications, slack, discord, email, ninja forms, gravity forms
 Requires at least: 4.3
 Tested up to: 5.6
 Requires PHP: 5.3
@@ -53,6 +53,13 @@ Get notified when things happen in WordPress.
     * Plugin Deactivation
     * Theme Updates
     * Theme Change
+
+= Hey Notify Add-ons =
+
+Premium add-ons are available to extend the capabilities of Hey Notify.
+
+* [Gravity Forms](https://heynotifywp.com/add-ons/gravity-forms/)
+* [Ninja Forms](https://heynotifywp.com/add-ons/ninja-forms/)
 
 == Installation ==
 
