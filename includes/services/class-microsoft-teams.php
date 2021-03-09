@@ -91,6 +91,19 @@ class Microsoft_Teams extends Service {
 					)
 				)
 		);
+		$fields[] = (
+			Field::make( 'color', 'hey_notify_microsoft_teams_color', __( 'Color', 'hey-notify' ) )
+				->set_help_text( __( 'Select a color to use for the message attachment.', 'hey-notify' ) )
+				->set_default_value( \get_option( '_hey_notify_default_microsoft_teams_color', '' ) )
+				->set_conditional_logic(
+					array(
+						array(
+							'field' => 'hey_notify_service',
+							'value' => 'microsoft_teams',
+						),
+					)
+				)
+		);
 		return $fields;
 	}
 
@@ -111,101 +124,82 @@ class Microsoft_Teams extends Service {
 		$url     = $message['url'];
 
 		// Create the card.
-		$card              = new stdClass();
-		$card->type        = 'message';
-		$card->attachments = array();
+		$card                      = new stdClass();
+		$card->{'@type'}           = 'MessageCard';
+		$card->{'@context'}        = 'http://schema.org/extensions';
+		$card->sections            = array();
+		$card->{'potentialAction'} = array();
+		$card->{'themeColor'}      = ( '' !== $settings['color'] && null !== $settings['color'] ) ? str_replace( '#', '', $settings['color'] ) : '009bff';
 
-		// Create the attachment.
-		$attachment                  = new stdClass();
-		$attachment->{'contentType'} = 'application/vmd.microsoft.card.adaptive';
-		$attachment->{'contentUrl'}  = null;
-
-		// Create the content.
-		$content              = new stdClass();
-		$content->type        = 'AdaptiveCard';
-		$content->{'$schema'} = 'http://adaptivecards.io/schemas/adaptive-card.json';
-		$content->version     = '1.2';
-		$content->body        = array();
+		$card_section           = new stdClass();
+		$card_section->markdown = true;
 
 		// Subject.
 		if ( isset( $subject ) && '' !== $subject ) {
-			$subject_body         = new stdClass();
-			$subject_body->type   = 'TextBlock';
-			$subject_body->size   = 'Medium';
-			$subject_body->weight = 'Bolder';
-			$subject_body->text   = $subject;
-			// Add it to the body.
-			$content->body[] = $subject_body;
+			$card->title   = $subject;
+			$card->summary = $subject;
+		} else {
+			$card->title   = __( 'Notification from Hey Notify', 'hey-notify' );
+			$card->summary = __( 'Notification from Hey Notify', 'hey-notify' );
 		}
 
 		// Image.
 		if ( isset( $image ) && '' !== $image ) {
-			$image_body       = new stdClass();
-			$image_body->type = 'Image';
-			$image_body->url  = $image;
-			// Add it to the body.
-			$content->body[] = $image_body;
+			$card_images        = new stdClass();
+			$card_images->image = $image;
+			$card_images->title = '' !== $subject ? $subject : __( 'Notification from Hey Notify', 'hey-notify' );
+
+			$card_section->images = array(
+				$card_images,
+			);
 		}
 
 		// Content.
 		if ( isset( $content ) && '' !== $content ) {
-			$content_body       = new stdClass();
-			$content_body->type = 'TextBlock';
-			$content_body->text = $content;
-			$content_body->wrap = true;
-			// Add it to the body.
-			$content->body[] = $content_body;
+			$card->text = $content;
 		}
 
 		// Fields.
 		if ( isset( $message['fields'] ) && is_array( $message['fields'] ) ) {
-			$fields_body        = new stdClass();
-			$fields_body->type  = 'FactSet';
-			$fields_body->facts = array();
+			$card_section->facts = array();
 
 			foreach ( $message['fields'] as $field ) {
 				$fact        = new stdClass();
-				$fact->title = $field['name'];
+				$fact->name  = $field['name'];
 				$fact->value = $field['value'];
 				// Add it to the facts.
-				$section->facts[] = $fact;
+				$card_section->facts[] = $fact;
 			}
-
-			// Add it to the body.
-			$content->body[] = $fields_body;
 		}
+
+		// Add the main section to the card.
+		$card->sections[] = $card_section;
 
 		// Footer.
 		if ( isset( $footer ) && '' !== $footer ) {
-			$footer_body       = new stdClass();
-			$footer_body->type = 'TextBlock';
-			$footer_body->text = $footer;
-			$footer_body->wrap = true;
-			// Add it to the body.
-			$content->body[] = $footer_body;
+			$card_footer           = new stdClass();
+			$card_footer->text     = $footer;
+			$card_footer->markdown = true;
+			// Add it to the sections.
+			$card->sections[] = $card_footer;
 		}
 
 		// URL.
 		if ( isset( $url ) && '' !== $url ) {
-			$url_body          = new stdClass();
-			$url_body->type    = 'ActionSet';
-			$url_body->actions = array();
-			// Setup the action.
-			$action        = new stdClass();
-			$action->type  = 'Action.OpenUrl';
-			$action->title = ( isset( $title ) && '' !== $title ) ? $title : __( 'View', 'hey-notify' );
-			$action->url   = $url;
+			$card_url            = new stdClass();
+			$card_url->{'@type'} = 'OpenUri';
+			$card_url->name      = ( isset( $title ) && '' !== $title ) ? $title : __( 'View', 'hey-notify' );
+			$card_url->targets   = array();
+
+			$target      = new stdClass();
+			$target->os  = 'default';
+			$target->uri = $url;
+
 			// Add it to the actions.
-			$url_body->actions[] = $action;
+			$card_url->targets[] = $target;
 			// Add it to the body.
-			$content->body[] = $url_body;
+			$card->{'potentialAction'}[] = $card_url;
 		}
-
-		// Add the content to the attachment.
-		$attachment->content = $content;
-
-		// Add the attachment to the card.
-		$card->attachments[] = $attachment;
 
 		return $card;
 	}
@@ -227,8 +221,8 @@ class Microsoft_Teams extends Service {
 		}
 
 		$body = $this->prepare( $message, $settings );
+		$json     = \wp_json_encode( $body );
 
-		$json     = \wp_json_encode( $body, JSON_FORCE_OBJECT );
 		$response = \wp_remote_post(
 			$settings['webhook_url'],
 			array(
@@ -274,7 +268,10 @@ class Microsoft_Teams extends Service {
 				Field::make( 'separator', 'hey_notify_microsoft_teams_separator', __( 'Default Settings for Microsoft Teams', 'hey-notify' ) ),
 				Field::make( 'text', 'hey_notify_default_microsoft_teams_webhook', __( 'Webhook URL', 'hey-notify' ) )
 					->set_attribute( 'type', 'url' )
-					->set_help_text( sprintf( '%1s <a href="%2s">%3s</a>', __( 'The webhook that you created for your Microsoft Teams channel.', 'hey-notify' ), 'https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook#add-an-incoming-webhook-to-a-teams-channel', __( 'Learn More', 'hey-notify' ) ) )
+					->set_help_text( sprintf( '%1s <a href="%2s">%3s</a>', __( 'The webhook that you created for your Microsoft Teams channel.', 'hey-notify' ), 'https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook#add-an-incoming-webhook-to-a-teams-channel', __( 'Learn More', 'hey-notify' ) ) ),
+				Field::make( 'color', 'hey_notify_default_microsoft_teams_color', __( 'Color', 'hey-notify' ) )
+					->set_help_text( __( 'Select a color to use for the message attachment.', 'hey-notify' ) )
+					->set_default_value( '#009bff' ),
 			)
 		);
 	}
