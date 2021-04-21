@@ -186,6 +186,11 @@ function admin_menu() {
 	);
 }
 
+/**
+ * Render the add-ons page
+ *
+ * @return void
+ */
 function addons_page() {
 	?>
 		<style>

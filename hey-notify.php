@@ -7,6 +7,7 @@
  * Author: FireTree Design, LLC <info@firetreedesign.com>
  * Author URI: https://firetreedesign.com/
  * Text Domain: hey-notify
+ * Domain Path: /languages
  * License:     GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *
@@ -34,6 +35,7 @@ require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/class-event.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/class-service.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/scripts.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/rest-api.php';
+require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/languages.php';
 
 // Events.
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/events/post/loader.php';
