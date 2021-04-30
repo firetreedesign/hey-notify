@@ -78,20 +78,35 @@ class Post_Event extends Event {
 		switch ( $event->{$event->type} ) {
 			case 'post_draft':
 				add_action( 'auto-draft_to_draft', array( $hook, 'post_draft' ), 10, 1 );
+				add_action( 'future_to_draft', array( $hook, 'post_draft' ), 10, 1 );
+				add_action( 'pending_to_draft', array( $hook, 'post_draft' ), 10, 1 );
+				add_action( 'private_to_draft', array( $hook, 'post_draft' ), 10, 1 );
+				add_action( 'publish_to_draft', array( $hook, 'post_draft' ), 10, 1 );
+				add_action( 'trash_to_draft', array( $hook, 'post_draft' ), 10, 1 );
 				break;
 			case 'post_published':
 				add_action( 'auto-draft_to_publish', array( $hook, 'post_published' ), 10, 1 );
 				add_action( 'draft_to_publish', array( $hook, 'post_published' ), 10, 1 );
 				add_action( 'future_to_publish', array( $hook, 'post_published' ), 10, 1 );
 				add_action( 'pending_to_publish', array( $hook, 'post_published' ), 10, 1 );
+				add_action( 'private_to_publish', array( $hook, 'post_published' ), 10, 1 );
+				add_action( 'trash_to_publish', array( $hook, 'post_published' ), 10, 1 );
 				break;
 			case 'post_scheduled':
 				add_action( 'auto-draft_to_future', array( $hook, 'post_scheduled' ), 10, 1 );
 				add_action( 'draft_to_future', array( $hook, 'post_scheduled' ), 10, 1 );
+				add_action( 'pending_to_future', array( $hook, 'post_scheduled' ), 10, 1 );
+				add_action( 'private_to_future', array( $hook, 'post_scheduled' ), 10, 1 );
+				add_action( 'publish_to_future', array( $hook, 'post_scheduled' ), 10, 1 );
+				add_action( 'trash_to_future', array( $hook, 'post_scheduled' ), 10, 1 );
 				break;
 			case 'post_pending':
 				add_action( 'auto-draft_to_pending', array( $hook, 'post_pending' ), 10, 1 );
 				add_action( 'draft_to_pending', array( $hook, 'post_pending' ), 10, 1 );
+				add_action( 'future_to_pending', array( $hook, 'post_pending' ), 10, 1 );
+				add_action( 'private_to_pending', array( $hook, 'post_pending' ), 10, 1 );
+				add_action( 'publish_to_pending', array( $hook, 'post_pending' ), 10, 1 );
+				add_action( 'trash_to_pending', array( $hook, 'post_pending' ), 10, 1 );
 				break;
 			case 'post_updated':
 				add_action( 'publish_to_publish', array( $hook, 'post_updated' ), 10, 1 );
