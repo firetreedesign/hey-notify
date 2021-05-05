@@ -77,6 +77,7 @@ Premium add-ons are available to extend the capabilities of Hey Notify.
 = 1.4.0 =
 * Added support for Microsoft Teams.
 * Improved the type of status changes than can be detected for Posts, Pages, and Custom Post Types.
+* Reorganized the Settings page.
 
 = 1.3.0 =
 * Added default settings for Slack and Discord.
