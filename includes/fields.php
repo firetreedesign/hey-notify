@@ -75,12 +75,8 @@ function settings() {
 			apply_filters( 'hey_notify_settings_general', array() )
 		)
 		->add_tab(
-			__( 'Uninstall', 'hey-notify' ),
-			apply_filters( 'hey_notify_settings_uninstall', array() )
-		)
-		->add_tab(
-			__( 'Licenses', 'hey-notify' ),
-			apply_filters( 'hey_notify_settings_licenses', array() )
+			__( 'Custom Post Types', 'hey-notify' ),
+			apply_filters( 'hey_notify_settings_cpt', array() )
 		);
 
 	do_action( 'hey_notify_settings_container', $settings );

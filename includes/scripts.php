@@ -51,8 +51,8 @@ function admin_enqueue_scripts() {
 		'heynotify',
 		array(
 			'messages' => array(
-				'done'    => __( 'Done Refreshing Custom Post Types', 'hey-notify' ),
-				'running' => __( 'Refreshing Custom Post Types...', 'hey-notify' ),
+				'done'    => __( 'Done refreshing custom post types', 'hey-notify' ),
+				'running' => __( 'Refreshing custom post types...', 'hey-notify' ),
 				'error'   => __( 'Oops, there was an error', 'hey-notify' ),
 			),
 		)

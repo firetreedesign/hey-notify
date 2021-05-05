@@ -82,7 +82,7 @@ function settings_uninstall_fields( $fields = array() ) {
 }
 
 /**
- * Settings - Services fields
+ * Settings - General fields
  *
  * @param array $fields Fields.
  * @return array
@@ -95,6 +95,30 @@ function settings_general_fields( $fields = array() ) {
 		Field::make( 'radio_image', 'hey_notify_default_service', __( 'Default service:', 'hey-notify' ) )
 			->set_options( get_service_options() )
 	);
+
+	$fields = settings_cpt_fields( $fields );
+
+	if ( has_filter( 'hey_notify_settings_uninstall' ) ) {
+		$fields = array_merge( $fields, apply_filters( 'hey_notify_settings_uninstall', array() ) );
+	}
+
+	if ( has_filter( 'hey_notify_settings_licenses' ) ) {
+		$fields[] = (
+			Field::make( 'separator', 'hey_notify_licenses_separator', __( 'License Keys', 'hey-notify' ) )
+		);
+
+		$fields = array_merge( $fields, apply_filters( 'hey_notify_settings_licenses', array() ) );
+	}
+	return $fields;
+}
+
+/**
+ * Settings - Custom Post Type fields
+ *
+ * @param array $fields Fields.
+ * @return array
+ */
+function settings_cpt_fields( $fields = array() ) {
 	$fields[] = (
 		Field::make( 'separator', 'hey_notify_cpt_separator', __( 'Custom Post Type Settings', 'hey-notify' ) )
 	);
@@ -108,7 +132,7 @@ function settings_general_fields( $fields = array() ) {
 			->set_html(
 				sprintf(
 					'<a class="button" id="hey-notify-cpt-refresh">%s</a><span id="hey-notify-cpt-refresh-status"></span>',
-					__( 'Refresh Custom Post Types', 'hey-notify' )
+					__( 'Refresh custom post types', 'hey-notify' )
 				)
 			)
 	);

@@ -77,20 +77,39 @@ class Page_Event extends Event {
 		switch ( $event->{$event->type} ) {
 			case 'page_draft':
 				add_action( 'auto-draft_to_draft', array( $hook, 'page_draft' ), 10, 1 );
+				add_action( 'future_to_draft', array( $hook, 'page_draft' ), 10, 1 );
+				add_action( 'new_to_draft', array( $hook, 'page_draft' ), 10, 1 );
+				add_action( 'pending_to_draft', array( $hook, 'page_draft' ), 10, 1 );
+				add_action( 'private_to_draft', array( $hook, 'page_draft' ), 10, 1 );
+				add_action( 'publish_to_draft', array( $hook, 'page_draft' ), 10, 1 );
+				add_action( 'trash_to_draft', array( $hook, 'page_draft' ), 10, 1 );
 				break;
 			case 'page_published':
 				add_action( 'auto-draft_to_publish', array( $hook, 'page_published' ), 10, 1 );
 				add_action( 'draft_to_publish', array( $hook, 'page_published' ), 10, 1 );
 				add_action( 'future_to_publish', array( $hook, 'page_published' ), 10, 1 );
+				add_action( 'new_to_publish', array( $hook, 'page_published' ), 10, 1 );
 				add_action( 'pending_to_publish', array( $hook, 'page_published' ), 10, 1 );
+				add_action( 'private_to_publish', array( $hook, 'page_published' ), 10, 1 );
+				add_action( 'trash_to_publish', array( $hook, 'page_published' ), 10, 1 );
 				break;
 			case 'page_scheduled':
 				add_action( 'auto-draft_to_future', array( $hook, 'page_scheduled' ), 10, 1 );
 				add_action( 'draft_to_future', array( $hook, 'page_scheduled' ), 10, 1 );
+				add_action( 'new_to_future', array( $hook, 'page_scheduled' ), 10, 1 );
+				add_action( 'pending_to_future', array( $hook, 'page_scheduled' ), 10, 1 );
+				add_action( 'private_to_future', array( $hook, 'page_scheduled' ), 10, 1 );
+				add_action( 'publish_to_future', array( $hook, 'page_scheduled' ), 10, 1 );
+				add_action( 'trash_to_future', array( $hook, 'page_scheduled' ), 10, 1 );
 				break;
 			case 'page_pending':
 				add_action( 'auto-draft_to_pending', array( $hook, 'page_pending' ), 10, 1 );
 				add_action( 'draft_to_pending', array( $hook, 'page_pending' ), 10, 1 );
+				add_action( 'future_to_pending', array( $hook, 'page_pending' ), 10, 1 );
+				add_action( 'new_to_pending', array( $hook, 'page_pending' ), 10, 1 );
+				add_action( 'private_to_pending', array( $hook, 'page_pending' ), 10, 1 );
+				add_action( 'publish_to_pending', array( $hook, 'page_pending' ), 10, 1 );
+				add_action( 'trash_to_pending', array( $hook, 'page_pending' ), 10, 1 );
 				break;
 			case 'page_updated':
 				add_action( 'publish_to_publish', array( $hook, 'page_updated' ), 10, 1 );
