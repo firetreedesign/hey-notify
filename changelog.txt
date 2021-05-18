@@ -2,6 +2,11 @@
 
 This is an archive of older changelog entries. Most recent entries are maintained in readme.txt
 
+= 1.3.0 =
+* Added default settings for Slack and Discord.
+* Added a button to manually refresh the list of Custom Post Types.
+* Added a page for viewing the available Add-ons.
+
 = 1.2.2 =
 * Fixed ability to @mention Discord users.
 * Updated translation file.
