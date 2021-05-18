@@ -1,10 +1,10 @@
 === Hey Notify ===
 Contributors: firetree, danielmilner
-Tags: notifications, slack, discord, email, ninja forms, gravity forms
+Tags: notifications, alert, slack, discord, email, microsoft teams, ninja forms, gravity forms
 Requires at least: 4.3
 Tested up to: 5.7
 Requires PHP: 5.3
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://ww.gnu.org/licenses/gpl-2.0.html
 
@@ -74,12 +74,10 @@ Premium add-ons are available to extend the capabilities of Hey Notify.
 
 == Changelog ==
 
+= 1.4.1 =
+* Fixed a reference to a function that did not exist.
+
 = 1.4.0 =
 * Added support for Microsoft Teams.
 * Improved the type of status changes than can be detected for Posts, Pages, and Custom Post Types.
 * Reorganized the Settings page.
-
-= 1.3.0 =
-* Added default settings for Slack and Discord.
-* Added a button to manually refresh the list of Custom Post Types.
-* Added a page for viewing the available Add-ons.
