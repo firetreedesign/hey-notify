@@ -2,9 +2,9 @@
 Contributors: firetree, danielmilner
 Tags: notifications, alert, slack, discord, email, microsoft teams, ninja forms, gravity forms
 Requires at least: 4.3
-Tested up to: 5.7
+Tested up to: 5.8
 Requires PHP: 5.3
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 License: GPLv2 or later
 License URI: http://ww.gnu.org/licenses/gpl-2.0.html
 
@@ -73,6 +73,9 @@ Premium add-ons are available to extend the capabilities of Hey Notify.
 1. Notification Settings
 
 == Changelog ==
+
+= 1.4.2 =
+* Fixed an issue with Post/Page/CPT Updated notifications being triggered.
 
 = 1.4.1 =
 * Fixed a reference to a function that did not exist.
