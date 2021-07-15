@@ -186,10 +186,6 @@ class CPT_Hook extends Hook {
 			return;
 		}
 
-		if ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST ) {
-			return;
-		}
-
 		$cpt          = get_post_types_object( $this->event->type );
 		$current_user = \wp_get_current_user();
 
