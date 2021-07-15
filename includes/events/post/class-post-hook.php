@@ -174,10 +174,6 @@ class Post_Hook extends Hook {
 			return;
 		}
 
-		if ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST ) {
-			return;
-		}
-
 		$current_user = \wp_get_current_user();
 
 		if ( 0 === $current_user ) {
