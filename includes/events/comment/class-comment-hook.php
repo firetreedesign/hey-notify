@@ -26,7 +26,7 @@ class Comment_Hook extends Hook {
 	 */
 	public function comment_new( $comment_id, $approved ) {
 
-		if ( 'spam' === $approved ) {
+		if ( 'spam' === $approved || 'trash' === $approved ) {
 			return;
 		}
 
