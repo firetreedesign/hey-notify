@@ -1,8 +1,14 @@
 {
-    "require": {
-        "htmlburger/carbon-fields": "^3.1"
-	},
-	"require-dev": {
-        "squizlabs/php_codesniffer": "^3.5"
+  "require": {
+    "htmlburger/carbon-fields": "^3.1"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.5",
+    "wp-coding-standards/wpcs": "dev-develop"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
+  }
 }

@@ -122,19 +122,18 @@ function column_titles( $defaults ) {
 function column_content( $column_name, $post_id ) {
 	switch ( $column_name ) {
 		case 'service':
-			$services_array = \apply_filters( 'hey_notify_services_options', array() );
-			$service        = \carbon_get_post_meta( $post_id, 'hey_notify_service' );
-			foreach ( $services_array as $services ) {
-				if ( $service === $services['value'] ) {
-					echo "<img src='" . esc_attr( $services['image'] ) . "' style='width: 100px; height: auto;' />";
-				}
-			}
+			$service = \get_post_meta( $post_id, '_hey_notify_service', true );
+			$service = ucwords( str_replace( '_', ' ', $service ) );
+			echo '<strong>' . esc_html( $service ) . '</strong>';
 			break;
 		case 'events':
-			$events = \carbon_get_post_meta( $post_id, 'hey_notify_events' );
+			$events = \json_decode( \get_post_meta( $post_id, '_hey_notify_events', true ) );
 			if ( $events ) {
 				foreach ( $events as $event ) {
-					echo '<span class="wp-ui-primary hey-notify-tag">' . esc_html( ucwords( str_replace( '_', ' ', $event[ $event['type'] ] ) ) ) . '</span>';
+					if ( ! isset( $event->type ) ) {
+						continue;
+					}
+					echo '<span class="wp-ui-highlight hey-notify-tag">' . esc_html( ucwords( str_replace( '_', ' ', $event->{$event->type} ) ) ) . '</span>';
 				}
 			}
 			break;
@@ -164,7 +163,7 @@ function admin_head() {
 	}
 	?>
 	<style>
-		.hey-notify-tag { border-radius: 3px; display: inline-block; margin-bottom: 4px; padding: 3px 6px; font-size: 12px; }
+		.hey-notify-tag { border-radius: 3px; display: inline-block; margin-bottom: 4px; padding: 2px 4px; font-size: 11px; }
 		.hey-notify-tag:not(:last-of-type) { margin-right: 4px; }
 	</style>
 	<?php
@@ -274,7 +273,6 @@ function get_addons_data() {
 	usort( $data, __NAMESPACE__ . '\\sort_addons_data' );
 
 	return $data;
-
 }
 
 /**

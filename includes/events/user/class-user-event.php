@@ -33,12 +33,45 @@ class User_Event extends Event {
 	}
 
 	/**
-	 * User events
+	 * Page events
 	 *
 	 * @param array $fields Action fields.
 	 * @return array
 	 */
 	public function actions( $fields = array() ) {
+		array_push(
+			$fields,
+			array(
+				'field_type'        => 'select',
+				'field_name'        => 'user',
+				'field_label'       => __( 'Action', 'hey-notify' ),
+				'choices'           => array(
+					'user_new'                => __( 'New User Registration', 'hey-notify' ),
+					'user_admin_login'        => __( 'Administrator Login', 'hey-notify' ),
+					'user_admin_login_failed' => __( 'Administrator Failed Login', 'hey-notify' ),
+				),
+				'width'             => '50%',
+				'conditional_logic' => array(
+					array(
+						array(
+							'field' => 'type',
+							'value' => 'user',
+						),
+					),
+				),
+			)
+		);
+
+		return $fields;
+	}
+
+	/**
+	 * User events
+	 *
+	 * @param array $fields Action fields.
+	 * @return array
+	 */
+	public function actions_carbon( $fields = array() ) {
 		$fields[] = (
 			Field::make( 'select', 'user', __( 'Action', 'hey-notify' ) )
 				->set_options(
@@ -83,7 +116,6 @@ class User_Event extends Event {
 				break;
 		}
 	}
-
 }
 
 new User_Event( 'user', '\Hey_Notify\User_Hook' );

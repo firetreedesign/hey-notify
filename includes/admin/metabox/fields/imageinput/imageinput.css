@@ -1,0 +1,58 @@
+/* Image Input Field */
+.hey-notify-imageinput-field-container {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    border: 1px solid #c0c0c0;
+    overflow: hidden;
+}
+.hey-notify-imageinput-field-container.empty {
+    border: 1px dashed #c0c0c0;
+}
+.hey-notify-imageinput-field-container .dashicons {
+    z-index: 100;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+    cursor: pointer;
+}
+.hey-notify-imageinput-field-container .dashicons.hidden {
+    display: none;
+}
+.hey-notify-imageinput-field-container .dashicons:hover {
+    color: #000000;
+}
+.hey-notify-imageinput-field-container input[type="button"] {
+    z-index: 100;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+.hey-notify-imageinput-field-container:has(.hey-notify-imageinput-field-preview:empty) input[type="button"],
+.hey-notify-imageinput-field-container:hover input[type="button"] {
+    display: block;
+}
+.hey-notify-imageinput-field-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+.hey-notify-imageinput-field-preview img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+}

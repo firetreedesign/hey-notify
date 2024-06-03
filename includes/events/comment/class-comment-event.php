@@ -33,12 +33,43 @@ class Comment_Event extends Event {
 	}
 
 	/**
-	 * Comment events
+	 * Page events
 	 *
 	 * @param array $fields Action fields.
 	 * @return array
 	 */
 	public function actions( $fields = array() ) {
+		array_push(
+			$fields,
+			array(
+				'field_type'        => 'select',
+				'field_name'        => 'comment',
+				'field_label'       => __( 'Action', 'hey-notify' ),
+				'choices'           => array(
+					'comment_post' => __( 'New Comment', 'hey-notify' ),
+				),
+				'width'             => '50%',
+				'conditional_logic' => array(
+					array(
+						array(
+							'field' => 'type',
+							'value' => 'comment',
+						),
+					),
+				),
+			)
+		);
+
+		return $fields;
+	}
+
+	/**
+	 * Comment events
+	 *
+	 * @param array $fields Action fields.
+	 * @return array
+	 */
+	public function actions_carbon( $fields = array() ) {
 		$fields[] = (
 			Field::make( 'select', 'comment', __( 'Action', 'hey-notify' ) )
 				->set_options(
@@ -75,7 +106,6 @@ class Comment_Event extends Event {
 				break;
 		}
 	}
-
 }
 
 new Comment_Event( 'comment', '\Hey_Notify\Comment_Hook' );

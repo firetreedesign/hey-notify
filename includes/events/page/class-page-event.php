@@ -39,6 +39,42 @@ class Page_Event extends Event {
 	 * @return array
 	 */
 	public function actions( $fields = array() ) {
+		array_push(
+			$fields,
+			array(
+				'field_type'        => 'select',
+				'field_name'        => 'page',
+				'field_label'       => __( 'Action', 'hey-notify' ),
+				'choices'           => array(
+					'page_draft'     => __( 'Page Draft', 'hey-notify' ),
+					'page_pending'   => __( 'Page Pending', 'hey-notify' ),
+					'page_published' => __( 'Page Published', 'hey-notify' ),
+					'page_scheduled' => __( 'Page Scheduled', 'hey-notify' ),
+					'page_updated'   => __( 'Page Updated', 'hey-notify' ),
+					'page_trashed'   => __( 'Page Moved to Trash', 'hey-notify' ),
+				),
+				'width'             => '50%',
+				'conditional_logic' => array(
+					array(
+						array(
+							'field' => 'type',
+							'value' => 'page',
+						),
+					),
+				),
+			)
+		);
+
+		return $fields;
+	}
+
+	/**
+	 * Page events
+	 *
+	 * @param array $fields Action fields.
+	 * @return array
+	 */
+	public function actions_carbon( $fields = array() ) {
 		$fields[] = (
 			Field::make( 'select', 'page', __( 'Action', 'hey-notify' ) )
 				->set_options(
@@ -119,7 +155,6 @@ class Page_Event extends Event {
 				break;
 		}
 	}
-
 }
 
 new Page_Event( 'page', '\Hey_Notify\Page_Hook' );

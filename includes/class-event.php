@@ -58,9 +58,10 @@ class Event {
 		// Filters.
 		add_filter( 'hey_notify_event_types', array( $this, 'types' ) );
 		add_filter( 'hey_notify_event_actions', array( $this, 'actions' ) );
+		add_filter( 'hey_notify_event_actions_carbon', array( $this, 'actions_carbon' ) );
 
 		// Actions.
-		add_action( "hey_notify_add_action_${type}", array( $this, 'watch' ), 10, 2 );
+		add_action( "hey_notify_add_action_{$type}", array( $this, 'watch' ), 10, 2 );
 	}
 
 	/**
@@ -93,5 +94,4 @@ class Event {
 	public function watch( $notification, $event ) {
 		$hook = new $this->hook( $notification, $event );
 	}
-
 }

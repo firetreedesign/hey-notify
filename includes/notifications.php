@@ -27,7 +27,7 @@ function setup() {
 	if ( \is_object( $query ) && $query->have_posts() ) {
 		$notifications = $query->get_posts();
 		foreach ( $notifications as $notification ) {
-			$events = \json_decode( \get_post_meta( $notification->ID, '_hey_notify_events_json', true ) );
+			$events = \json_decode( \get_post_meta( $notification->ID, '_hey_notify_events', true ) );
 			if ( $events ) {
 				foreach ( $events as $event ) {
 					\do_action( "hey_notify_add_action_{$event->type}", $notification, $event );

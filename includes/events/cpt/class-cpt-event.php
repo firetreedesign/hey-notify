@@ -34,12 +34,74 @@ class CPT_Event extends Event {
 	}
 
 	/**
-	 * Custom Post Type events
+	 * Page events
 	 *
 	 * @param array $fields Action fields.
 	 * @return array
 	 */
 	public function actions( $fields = array() ) {
+		$post_type = get_post_types_object( $this->type );
+
+		array_push(
+			$fields,
+			array(
+				'field_type'        => 'select',
+				'field_name'        => $this->type,
+				'field_label'       => __( 'Action', 'hey-notify' ),
+				'choices'           => array(
+					"{$this->type}_draft"     => \wp_sprintf(
+						/* translators: %s: Singular name of the custom post type */
+						\__( '%s Draft', 'hey-notify' ),
+						$post_type->labels->singular_name
+					),
+					"{$this->type}_pending"   => \wp_sprintf(
+						/* translators: %s: Singular name of the custom post type */
+						\__( '%s Pending', 'hey-notify' ),
+						$post_type->labels->singular_name
+					),
+					"{$this->type}_published" => \wp_sprintf(
+						/* translators: %s: Singular name of the custom post type */
+						\__( '%s Published', 'hey-notify' ),
+						$post_type->labels->singular_name
+					),
+					"{$this->type}_scheduled" => \wp_sprintf(
+						/* translators: %s: Singular name of the custom post type */
+						\__( '%s Scheduled', 'hey-notify' ),
+						$post_type->labels->singular_name
+					),
+					"{$this->type}_updated"   => \wp_sprintf(
+						/* translators: %s: Singular name of the custom post type */
+						\__( '%s Updated', 'hey-notify' ),
+						$post_type->labels->singular_name
+					),
+					"{$this->type}_trashed"   => \wp_sprintf(
+						/* translators: %s: Singular name of the custom post type */
+						\__( '%s Moved to Trash', 'hey-notify' ),
+						$post_type->labels->singular_name
+					),
+				),
+				'width'             => '50%',
+				'conditional_logic' => array(
+					array(
+						array(
+							'field' => 'type',
+							'value' => $this->type,
+						),
+					),
+				),
+			)
+		);
+
+		return $fields;
+	}
+
+	/**
+	 * Custom Post Type events
+	 *
+	 * @param array $fields Action fields.
+	 * @return array
+	 */
+	public function actions_carbon( $fields = array() ) {
 		$post_type = get_post_types_object( $this->type );
 
 		$fields[] = (

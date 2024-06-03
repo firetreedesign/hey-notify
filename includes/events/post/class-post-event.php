@@ -33,12 +33,48 @@ class Post_Event extends Event {
 	}
 
 	/**
-	 * Post events
+	 * Page events
 	 *
 	 * @param array $fields Action fields.
 	 * @return array
 	 */
 	public function actions( $fields = array() ) {
+		array_push(
+			$fields,
+			array(
+				'field_type'        => 'select',
+				'field_name'        => 'post',
+				'field_label'       => __( 'Action', 'hey-notify' ),
+				'choices'           => array(
+					'post_draft'     => __( 'Post Draft', 'hey-notify' ),
+					'post_pending'   => __( 'Post Pending', 'hey-notify' ),
+					'post_published' => __( 'Post Published', 'hey-notify' ),
+					'post_scheduled' => __( 'Post Scheduled', 'hey-notify' ),
+					'post_updated'   => __( 'Post Updated', 'hey-notify' ),
+					'post_trashed'   => __( 'Post Moved to Trash', 'hey-notify' ),
+				),
+				'width'             => '50%',
+				'conditional_logic' => array(
+					array(
+						array(
+							'field' => 'type',
+							'value' => 'post',
+						),
+					),
+				),
+			)
+		);
+
+		return $fields;
+	}
+
+	/**
+	 * Post events
+	 *
+	 * @param array $fields Action fields.
+	 * @return array
+	 */
+	public function actions_carbon( $fields = array() ) {
 		$fields[] = (
 			Field::make( 'select', 'post', __( 'Action', 'hey-notify' ) )
 				->set_options(
@@ -120,7 +156,6 @@ class Post_Event extends Event {
 				break;
 		}
 	}
-
 }
 
 new Post_Event( 'post', '\Hey_Notify\Post_Hook' );

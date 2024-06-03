@@ -7,7 +7,7 @@
 
 namespace Hey_Notify\Fields;
 
-use Carbon_Fields\Container;
+// use Carbon_Fields\Container;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -16,10 +16,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Actions.
 add_action( 'plugins_loaded', __NAMESPACE__ . '\\boot' );
-add_action( 'carbon_fields_register_fields', __NAMESPACE__ . '\\service_container' );
-add_action( 'carbon_fields_register_fields', __NAMESPACE__ . '\\notification_container' );
-add_action( 'carbon_fields_register_fields', __NAMESPACE__ . '\\settings' );
-add_action( 'carbon_fields_post_meta_container_saved', __NAMESPACE__ . '\\save_events_meta' );
+// add_action( 'carbon_fields_register_fields', __NAMESPACE__ . '\\service_container' );
+// add_action( 'carbon_fields_register_fields', __NAMESPACE__ . '\\notification_container' );
+// add_action( 'carbon_fields_register_fields', __NAMESPACE__ . '\\settings' );
+// add_action( 'carbon_fields_post_meta_container_saved', __NAMESPACE__ . '\\save_events_meta' );
 add_action( 'admin_head', __NAMESPACE__ . '\\admin_head' );
 
 /**
@@ -43,7 +43,7 @@ function service_container() {
 		->where( 'post_type', '=', 'hey_notify' )
 		->set_context( 'normal' )
 		->set_priority( 'default' )
-		->add_fields( apply_filters( 'hey_notify_service_fields', array() ) );
+		->add_fields( apply_filters( 'hey_notify_service_fields_carbon', array() ) );
 }
 
 /**
@@ -56,7 +56,7 @@ function notification_container() {
 		->where( 'post_type', '=', 'hey_notify' )
 		->set_context( 'normal' )
 		->set_priority( 'default' )
-		->add_fields( apply_filters( 'hey_notify_event_fields', array() ) );
+		->add_fields( apply_filters( 'hey_notify_event_fields_carbon', array() ) );
 }
 
 /**
@@ -68,8 +68,8 @@ function settings() {
 
 	$settings = Container::make( 'theme_options', __( 'Hey Notify Settings', 'hey-notify' ) )
 		->set_page_parent( 'edit.php?post_type=hey_notify' )
-		->set_page_menu_title( __( 'Settings', 'hey-notify' ) )
-		->set_page_file( 'settings' )
+		->set_page_menu_title( __( 'Options', 'hey-notify' ) )
+		->set_page_file( 'options' )
 		->add_tab(
 			__( 'General', 'hey-notify' ),
 			apply_filters( 'hey_notify_settings_general', array() )

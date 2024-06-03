@@ -33,12 +33,48 @@ class System_Event extends Event {
 	}
 
 	/**
-	 * System events
+	 * Page events
 	 *
 	 * @param array $fields Action fields.
 	 * @return array
 	 */
 	public function actions( $fields = array() ) {
+		array_push(
+			$fields,
+			array(
+				'field_type'        => 'select',
+				'field_name'        => 'system',
+				'field_label'       => __( 'Action', 'hey-notify' ),
+				'choices'           => array(
+					'system_core_update'        => __( 'WordPress Update Available', 'hey-notify' ),
+					'system_plugin_update'      => __( 'Plugin Update Available', 'hey-notify' ),
+					'system_plugin_activated'   => __( 'Plugin Activated', 'hey-notify' ),
+					'system_plugin_deactivated' => __( 'Plugin Deactivated', 'hey-notify' ),
+					'system_theme_update'       => __( 'Theme Update Available', 'hey-notify' ),
+					'system_theme_changed'      => __( 'Theme Changed', 'hey-notify' ),
+				),
+				'width'             => '50%',
+				'conditional_logic' => array(
+					array(
+						array(
+							'field' => 'type',
+							'value' => 'system',
+						),
+					),
+				),
+			)
+		);
+
+		return $fields;
+	}
+
+	/**
+	 * System events
+	 *
+	 * @param array $fields Action fields.
+	 * @return array
+	 */
+	public function actions_carbon( $fields = array() ) {
 		$fields[] = (
 			Field::make( 'select', 'system', __( 'Action', 'hey-notify' ) )
 				->set_options(
@@ -98,7 +134,6 @@ class System_Event extends Event {
 				break;
 		}
 	}
-
 }
 
 new System_Event( 'system', '\Hey_Notify\System_Hook' );

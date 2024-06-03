@@ -15,7 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Filters.
-add_filter( 'hey_notify_service_fields', __NAMESPACE__ . '\\service_fields', 5 );
+add_filter( 'hey_notify_service_fields_carbon', __NAMESPACE__ . '\\service_fields_carbon', 5 );
+add_filter( 'hey_notify_event_fields_carbon', __NAMESPACE__ . '\\event_fields_carbon', 5 );
 add_filter( 'hey_notify_event_fields', __NAMESPACE__ . '\\event_fields', 5 );
 add_filter( 'hey_notify_settings_uninstall', __NAMESPACE__ . '\\settings_uninstall_fields', 5 );
 add_filter( 'hey_notify_settings_general', __NAMESPACE__ . '\\settings_general_fields', 5 );
@@ -26,7 +27,7 @@ add_filter( 'hey_notify_settings_general', __NAMESPACE__ . '\\settings_general_f
  * @param array $fields Fields.
  * @return array
  */
-function service_fields( $fields = array() ) {
+function service_fields_carbon( $fields = array() ) {
 	$fields[] = (
 		Field::make( 'radio_image', 'hey_notify_service', __( 'Select a service', 'hey-notify' ) )
 			->set_options( get_service_options() )
@@ -42,6 +43,36 @@ function service_fields( $fields = array() ) {
  * @return array
  */
 function event_fields( $fields = array() ) {
+	$fields[] = array(
+		'field_name'          => '_hey_notify_events',
+		'field_label'         => __( 'Notification Events', 'hey-notify' ),
+		'field_type'          => 'repeater',
+		'insert_button_label' => __( 'Add Event', 'hey-notify' ),
+		'placeholder_label'   => __( 'There are no events yet.', 'hey-notify' ),
+		'fields'              => apply_filters(
+			'hey_notify_event_actions',
+			array(
+				array(
+					'field_type'  => 'select',
+					'field_name'  => 'type',
+					'field_label' => __( 'Event Type', 'hey-notify' ),
+					'choices'     => apply_filters( 'hey_notify_event_types', array() ),
+					'width'       => '50%',
+				),
+			),
+		),
+	);
+
+	return $fields;
+}
+
+/**
+ * Event fields
+ *
+ * @param array $fields Fields.
+ * @return array
+ */
+function event_fields_carbon( $fields = array() ) {
 	$fields[] = (
 		Field::make( 'complex', 'hey_notify_events', __( 'Notification Events', 'hey-notify' ) )
 			->setup_labels(
@@ -57,7 +88,7 @@ function event_fields( $fields = array() ) {
 							->set_options( apply_filters( 'hey_notify_event_types', array() ) )
 							->set_width( 50 ),
 					),
-					apply_filters( 'hey_notify_event_actions', array() )
+					apply_filters( 'hey_notify_event_actions_carbon', array() )
 				)
 			)
 			->set_header_template( 'Event: <%- type %>' )
