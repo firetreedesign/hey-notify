@@ -3,7 +3,7 @@
  * Plugin Name: Hey Notify
  * Plugin URI: https://heynotifywp.com/
  * Description: Get notified when things happen in WordPress.
- * Version: 1.5.0
+ * Version: 2.0.0
  * Author: FireTree Design, LLC <info@firetreedesign.com>
  * Author URI: https://firetreedesign.com/
  * Text Domain: hey-notify
@@ -19,16 +19,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'HEY_NOTIFY_VERSION', '1.5.0' );
+define( 'HEY_NOTIFY_VERSION', '2.0.0' );
 define( 'HEY_NOTIFY_PLUGIN_FILE', __FILE__ );
 define( 'HEY_NOTIFY_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'HEY_NOTIFY_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
-// require_once HEY_NOTIFY_PLUGIN_DIR . 'vendor/autoload.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/upgrades.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/cpt.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/filters.php';
-// require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/fields.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/notifications.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/class-hook.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/class-event.php';
@@ -38,6 +36,7 @@ require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/rest-api.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/languages.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/helpers.php';
 
+// Admin.
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/admin/class-page-tabs.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/admin/class-settings.php';
 require_once HEY_NOTIFY_PLUGIN_DIR . 'includes/admin/class-pages.php';
