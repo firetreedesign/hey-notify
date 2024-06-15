@@ -40,9 +40,9 @@ function version_check() {
 		v1_2_1_upgrade();
 	}
 
-	// Version is before 1.5.0.
-	if ( version_compare( $version, '1.5.0', '<' ) ) {
-		v1_5_0_upgrade();
+	// Version is before 2.0.0.
+	if ( version_compare( $version, '2.0.0', '<' ) ) {
+		v2_0_0_upgrade();
 	}
 
 	update_option( 'hey_notify_version', HEY_NOTIFY_VERSION );
@@ -68,11 +68,11 @@ function v1_2_1_upgrade() {
 }
 
 /**
- * Version 1.5.0 upgrade
+ * Version 2.0.0 upgrade
  *
  * @return void
  */
-function v1_5_0_upgrade() {
+function v2_0_0_upgrade() {
 	/**
 	 * General settings
 	 */
@@ -149,4 +149,19 @@ function v1_5_0_upgrade() {
 		$events = \get_post_meta( $notification->ID, '_hey_notify_events_json', true );
 		\update_post_meta( $notification->ID, '_hey_notify_events', $events );
 	}
+
+	/**
+	 * License keys
+	 */
+	$old_license_keys = \get_option( 'cf_edd_license_data', '{}' );
+	$old_license_keys = \json_decode( $old_license_keys, true );
+
+	$license_keys = array();
+	if ( json_last_error() === JSON_ERROR_NONE ) {
+		foreach ( $old_license_keys as $key => $value ) {
+			$license_keys[ substr( $key, 1 ) ] = $value['license'];
+		}
+	}
+
+	\update_option( 'hey_notify_settings_licenses', $license_keys );
 }
