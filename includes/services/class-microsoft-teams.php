@@ -39,10 +39,6 @@ class Microsoft_Teams extends Service {
 		\add_filter( 'hey_notify_settings_page_tabs', array( $this, 'settings_page_tabs' ) );
 		\add_filter( 'hey_notify_services_select', array( $this, 'services_select' ), 10, 1 );
 		\add_filter( 'hey_notify_service_fields', array( $this, 'get_metabox_fields' ), 10, 2 );
-
-		// Carbon fields.
-		\add_filter( 'hey_notify_microsoft_teams_settings_core', array( $this, 'get_core_settings' ), 10, 1 );
-		\add_action( 'hey_notify_settings_container', array( $this, 'default_settings' ), 10, 1 );
 	}
 
 	/**
@@ -211,25 +207,6 @@ class Microsoft_Teams extends Service {
 	}
 
 	/**
-	 * Get service settings
-	 *
-	 * @param object $data Data.
-	 * @return boolean|array
-	 */
-	public function get_core_settings( $data ) {
-
-		if ( ! is_object( $data ) || ! isset( $data->ID ) ) {
-			return false;
-		}
-
-		return array(
-			'webhook_url' => \carbon_get_post_meta( $data->ID, 'hey_notify_microsoft_teams_webhook' ),
-			'icon'        => \carbon_get_post_meta( $data->ID, 'hey_notify_microsoft_teams_icon' ),
-			'color'       => \carbon_get_post_meta( $data->ID, 'hey_notify_microsoft_teams_color' ),
-		);
-	}
-
-	/**
 	 * Add the service
 	 *
 	 * @param array $services Services.
@@ -244,44 +221,6 @@ class Microsoft_Teams extends Service {
 		);
 
 		return $services;
-	}
-
-	/**
-	 * Add the fields specific to this service
-	 *
-	 * @param array $fields Fields.
-	 * @return array
-	 */
-	public function fields_carbon( $fields = array() ) {
-
-		$fields[] = (
-			Field::make( 'text', 'hey_notify_microsoft_teams_webhook', __( 'Webhook URL', 'hey-notify' ) )
-				->set_attribute( 'type', 'url' )
-				->set_help_text( sprintf( '%1s <a href="%2s">%3s</a>', __( 'The webhook that you created for your Microsoft Teams channel.', 'hey-notify' ), 'https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook', __( 'Learn More', 'hey-notify' ) ) )
-				->set_default_value( \get_option( '_hey_notify_default_microsoft_teams_webhook', '' ) )
-				->set_conditional_logic(
-					array(
-						array(
-							'field' => 'hey_notify_service',
-							'value' => 'microsoft_teams',
-						),
-					)
-				)
-		);
-		$fields[] = (
-			Field::make( 'color', 'hey_notify_microsoft_teams_color', __( 'Color', 'hey-notify' ) )
-				->set_help_text( __( 'Select a color to use for the message attachment.', 'hey-notify' ) )
-				->set_default_value( \get_option( '_hey_notify_default_microsoft_teams_color', '' ) )
-				->set_conditional_logic(
-					array(
-						array(
-							'field' => 'hey_notify_service',
-							'value' => 'microsoft_teams',
-						),
-					)
-				)
-		);
-		return $fields;
 	}
 
 	/**
@@ -430,27 +369,6 @@ class Microsoft_Teams extends Service {
 			// There was an error making the request.
 			$error_message = $response->get_error_message();
 		}
-	}
-
-	/**
-	 * Default settings.
-	 *
-	 * @param object $settings Settings object.
-	 * @return void
-	 */
-	public function default_settings( $settings ) {
-		$settings->add_tab(
-			__( 'Microsoft Teams', 'hey-notify' ),
-			array(
-				Field::make( 'separator', 'hey_notify_microsoft_teams_separator', __( 'Default Settings for Microsoft Teams', 'hey-notify' ) ),
-				Field::make( 'text', 'hey_notify_default_microsoft_teams_webhook', __( 'Webhook URL', 'hey-notify' ) )
-					->set_attribute( 'type', 'url' )
-					->set_help_text( sprintf( '%1s <a href="%2s">%3s</a>', __( 'The webhook that you created for your Microsoft Teams channel.', 'hey-notify' ), 'https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook#add-an-incoming-webhook-to-a-teams-channel', __( 'Learn More', 'hey-notify' ) ) ),
-				Field::make( 'color', 'hey_notify_default_microsoft_teams_color', __( 'Color', 'hey-notify' ) )
-					->set_help_text( __( 'Select a color to use for the message attachment.', 'hey-notify' ) )
-					->set_default_value( '#009bff' ),
-			)
-		);
 	}
 }
 

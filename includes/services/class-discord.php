@@ -7,7 +7,6 @@
 
 namespace Hey_Notify\Services;
 
-use Carbon_Fields\Field;
 use Hey_Notify\Service;
 use Hey_Notify\Admin\Settings;
 
@@ -45,9 +44,6 @@ class Discord extends Service {
 		\add_filter( 'hey_notify_settings_page_tabs', array( $this, 'settings_page_tabs' ) );
 		\add_filter( 'hey_notify_services_select', array( $this, 'services_select' ), 10, 1 );
 		\add_filter( 'hey_notify_service_fields', array( $this, 'get_metabox_fields' ), 10, 2 );
-
-		// Carbon fields.
-		\add_action( 'hey_notify_settings_container', array( $this, 'default_settings_carbon' ), 10, 1 );
 	}
 
 	/**
@@ -285,58 +281,6 @@ class Discord extends Service {
 		return $services;
 	}
 
-	/**
-	 * Service fields
-	 *
-	 * @param array $fields Service fields.
-	 * @return array
-	 */
-	public function fields_carbon( $fields = array() ) {
-		$fields[] = (
-			Field::make( 'text', 'hey_notify_discord_webhook', __( 'Webhook URL', 'hey-notify' ) )
-				->set_attribute( 'type', 'url' )
-				->set_help_text( sprintf( '%1s <a href="%2s">%3s</a>', __( 'The webhook that you created for your Discord channel.', 'hey-notify' ), 'https://support.discord.com/hc/en-us/articles/228383668', __( 'Learn More', 'hey-notify' ) ) )
-				->set_default_value( \get_option( '_hey_notify_default_discord_webhook', '' ) )
-				->set_conditional_logic(
-					array(
-						array(
-							'field' => 'hey_notify_service',
-							'value' => 'discord',
-						),
-					)
-				)
-		);
-		$fields[] = (
-			Field::make( 'image', 'hey_notify_discord_avatar', __( 'Discord Avatar', 'hey-notify' ) )
-				->set_help_text( __( 'Override the default avatar of the webhook. Not required.', 'hey-notify' ) )
-				->set_default_value( \get_option( '_hey_notify_default_discord_avatar', '' ) )
-				->set_conditional_logic(
-					array(
-						array(
-							'field' => 'hey_notify_service',
-							'value' => 'discord',
-						),
-					)
-				)
-				->set_width( 50 )
-		);
-		$fields[] = (
-			Field::make( 'text', 'hey_notify_discord_username', __( 'Discord Username', 'hey-notify' ) )
-				->set_help_text( __( 'Override the default username of the webhook. Not required.', 'hey-notify' ) )
-				->set_default_value( \get_option( '_hey_notify_default_discord_username', '' ) )
-				->set_conditional_logic(
-					array(
-						array(
-							'field' => 'hey_notify_service',
-							'value' => 'discord',
-						),
-					)
-				)
-				->set_width( 50 )
-		);
-
-		return $fields;
-	}
 
 	/**
 	 * Prepare the message
