@@ -37,10 +37,6 @@ class Slack extends Service {
 		\add_filter( 'hey_notify_settings_page_tabs', array( $this, 'settings_page_tabs' ) );
 		\add_filter( 'hey_notify_services_select', array( $this, 'services_select' ), 10, 1 );
 		\add_filter( 'hey_notify_service_fields', array( $this, 'get_metabox_fields' ), 10, 2 );
-
-		// Carbon Fields.
-		\add_filter( 'hey_notify_slack_settings_core', array( $this, 'get_core_settings' ), 10, 1 );
-		\add_action( 'hey_notify_settings_container', array( $this, 'default_settings' ), 10, 1 );
 	}
 
 	/**
@@ -72,55 +68,6 @@ class Slack extends Service {
 					'input_type'        => 'text',
 					'width'             => '100%',
 					'default_value'     => \Hey_Notify\Helpers\get_option( 'hey_notify_settings_slack', 'default_webhook' ),
-					'conditional_logic' => array(
-						array(
-							array(
-								'field' => '_hey_notify_service',
-								'value' => 'slack',
-							),
-						),
-					),
-				),
-				array(
-					'field_name'        => '_hey_notify_slack_icon',
-					'field_label'       => __( 'Slack Icon', 'hey-notify' ),
-					'instructions'      => __( 'Override the default icon of the webhook. Not required.', 'hey-notify' ),
-					'field_type'        => 'imageinput',
-					'width'             => '33%',
-					'default_value'     => \Hey_Notify\Helpers\get_option( 'hey_notify_settings_slack', 'default_icon' ),
-					'conditional_logic' => array(
-						array(
-							array(
-								'field' => '_hey_notify_service',
-								'value' => 'slack',
-							),
-						),
-					),
-				),
-				array(
-					'field_name'        => '_hey_notify_slack_username',
-					'field_label'       => __( 'Slack Username', 'hey-notify' ),
-					'instructions'      => __( 'Override the default username of the webhook. Not required.', 'hey-notify' ),
-					'field_type'        => 'textinput',
-					'input_type'        => 'text',
-					'width'             => '33%',
-					'default_value'     => \Hey_Notify\Helpers\get_option( 'hey_notify_settings_slack', 'default_username' ),
-					'conditional_logic' => array(
-						array(
-							array(
-								'field' => '_hey_notify_service',
-								'value' => 'slack',
-							),
-						),
-					),
-				),
-				array(
-					'field_name'        => '_hey_notify_slack_color',
-					'field_label'       => __( 'Color', 'hey-notify' ),
-					'instructions'      => __( 'Select a color to use for the message attachment.', 'hey-notify' ),
-					'field_type'        => 'colorpicker',
-					'width'             => '33%',
-					'default_value'     => \Hey_Notify\Helpers\get_option( 'hey_notify_settings_slack', 'default_color' ),
 					'conditional_logic' => array(
 						array(
 							array(
@@ -190,56 +137,6 @@ class Slack extends Service {
 			)
 		);
 
-		/**
-		 * Default Slack Icon field
-		 */
-		\add_settings_field(
-			'default_icon',
-			'<strong>' . __( 'Slack Icon', 'hey-notify' ) . '</strong>',
-			array( new Settings(), 'media_callback' ),
-			'hey_notify_settings_slack',
-			'hey_notify_settings_slack_section',
-			array(
-				'field_id' => 'default_icon',
-				'page_id'  => 'hey_notify_settings_slack',
-				'label'    => __( 'Override the default icon of the webhook. Not required.', 'hey-notify' ),
-			)
-		);
-
-		/**
-		 * Default Username field
-		 */
-		\add_settings_field(
-			'default_username',
-			'<strong>' . __( 'Slack Username', 'hey-notify' ) . '</strong>',
-			array( new Settings(), 'input_callback' ),
-			'hey_notify_settings_slack',
-			'hey_notify_settings_slack_section',
-			array(
-				'field_id' => 'default_username',
-				'page_id'  => 'hey_notify_settings_slack',
-				'size'     => 'regular',
-				'label'    => __( 'Override the default username of the webhook. Not required.', 'hey-notify' ),
-			)
-		);
-
-		/**
-		 * Default Color field
-		 */
-		\add_settings_field(
-			'default_color',
-			'<strong>' . __( 'Color', 'hey-notify' ) . '</strong>',
-			array( new Settings(), 'color_picker_callback' ),
-			'hey_notify_settings_slack',
-			'hey_notify_settings_slack_section',
-			array(
-				'field_id'      => 'default_color',
-				'page_id'       => 'hey_notify_settings_slack',
-				'label'         => __( 'Select a color to use for the message attachment.', 'hey-notify' ),
-				'default_value' => '#009bff',
-			)
-		);
-
 		// Finally, we register the fields with WordPress.
 		register_setting(
 			'hey_notify_settings_slack', // The group name of the settings being registered.
@@ -274,26 +171,6 @@ class Slack extends Service {
 	}
 
 	/**
-	 * Get service settings
-	 *
-	 * @param object $data Data.
-	 * @return boolean|array
-	 */
-	public function get_core_settings( $data ) {
-
-		if ( ! is_object( $data ) || ! isset( $data->ID ) ) {
-			return false;
-		}
-
-		return array(
-			'webhook_url' => \carbon_get_post_meta( $data->ID, 'hey_notify_slack_webhook' ),
-			'username'    => \carbon_get_post_meta( $data->ID, 'hey_notify_slack_username' ),
-			'icon'        => \carbon_get_post_meta( $data->ID, 'hey_notify_slack_icon' ),
-			'color'       => \carbon_get_post_meta( $data->ID, 'hey_notify_slack_color' ),
-		);
-	}
-
-	/**
 	 * Add the service
 	 *
 	 * @param array $services Services.
@@ -308,73 +185,6 @@ class Slack extends Service {
 		);
 
 		return $services;
-	}
-
-	/**
-	 * Add the fields specific to this service
-	 *
-	 * @param array $fields Fields.
-	 * @return array
-	 */
-	public function fields_carbon( $fields = array() ) {
-
-		$fields[] = (
-			Field::make( 'text', 'hey_notify_slack_webhook', __( 'Webhook URL', 'hey-notify' ) )
-				->set_attribute( 'type', 'url' )
-				->set_help_text( sprintf( '%1s <a href="%2s">%3s</a>', __( 'The webhook that you created for your Slack channel.', 'hey-notify' ), 'https://api.slack.com/messaging/webhooks', __( 'Learn More', 'hey-notify' ) ) )
-				->set_default_value( \get_option( '_hey_notify_default_slack_webhook', '' ) )
-				->set_conditional_logic(
-					array(
-						array(
-							'field' => 'hey_notify_service',
-							'value' => 'slack',
-						),
-					)
-				)
-		);
-		$fields[] = (
-			Field::make( 'image', 'hey_notify_slack_icon', __( 'Slack Icon', 'hey-notify' ) )
-				->set_help_text( __( 'Override the default icon of the webhook. Not required.', 'hey-notify' ) )
-				->set_default_value( \get_option( '_hey_notify_default_slack_icon', '' ) )
-				->set_conditional_logic(
-					array(
-						array(
-							'field' => 'hey_notify_service',
-							'value' => 'slack',
-						),
-					)
-				)
-				->set_width( 33 )
-		);
-		$fields[] = (
-			Field::make( 'text', 'hey_notify_slack_username', __( 'Slack Username', 'hey-notify' ) )
-				->set_help_text( __( 'Override the default username of the webhook. Not required.', 'hey-notify' ) )
-				->set_default_value( \get_option( '_hey_notify_default_slack_username', '' ) )
-				->set_conditional_logic(
-					array(
-						array(
-							'field' => 'hey_notify_service',
-							'value' => 'slack',
-						),
-					)
-				)
-				->set_width( 33 )
-		);
-		$fields[] = (
-			Field::make( 'color', 'hey_notify_slack_color', __( 'Color', 'hey-notify' ) )
-				->set_help_text( __( 'Select a color to use for the message attachment.', 'hey-notify' ) )
-				->set_default_value( \get_option( '_hey_notify_default_slack_color', '' ) )
-				->set_conditional_logic(
-					array(
-						array(
-							'field' => 'hey_notify_service',
-							'value' => 'slack',
-						),
-					)
-				)
-				->set_width( 33 )
-		);
-		return $fields;
 	}
 
 	/**
@@ -567,34 +377,6 @@ class Slack extends Service {
 			// There was an error making the request.
 			$error_message = $response->get_error_message();
 		}
-	}
-
-	/**
-	 * Default settings.
-	 *
-	 * @param object $settings Settings object.
-	 * @return void
-	 */
-	public function default_settings( $settings ) {
-		$settings->add_tab(
-			__( 'Slack', 'hey-notify' ),
-			array(
-				Field::make( 'separator', 'hey_notify_slack_separator', __( 'Default Settings for Slack', 'hey-notify' ) ),
-				Field::make( 'text', 'hey_notify_default_slack_webhook', __( 'Webhook URL', 'hey-notify' ) )
-					->set_attribute( 'type', 'url' )
-					->set_help_text( sprintf( '%1s <a href="%2s">%3s</a>', __( 'The webhook that you created for your Slack channel.', 'hey-notify' ), 'https://api.slack.com/messaging/webhooks', __( 'Learn More', 'hey-notify' ) ) ),
-				Field::make( 'image', 'hey_notify_default_slack_icon', __( 'Slack Icon', 'hey-notify' ) )
-					->set_help_text( __( 'Override the default icon of the webhook. Not required.', 'hey-notify' ) )
-					->set_width( 33 ),
-				Field::make( 'text', 'hey_notify_default_slack_username', __( 'Slack Username', 'hey-notify' ) )
-					->set_help_text( __( 'Override the default username of the webhook. Not required.', 'hey-notify' ) )
-					->set_width( 33 ),
-				Field::make( 'color', 'hey_notify_default_slack_color', __( 'Color', 'hey-notify' ) )
-					->set_help_text( __( 'Select a color to use for the message attachment.', 'hey-notify' ) )
-					->set_default_value( '#009bff' )
-					->set_width( 33 ),
-			)
-		);
 	}
 }
 
