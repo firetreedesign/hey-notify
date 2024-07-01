@@ -59,7 +59,7 @@ class Page_Tabs {
 	 */
 	public function settings_page_tabs_late( $tabs ) {
 
-		if ( has_filter( 'hey_notify_settings_licenses' ) ) {
+		if ( has_filter( 'hey_notify_license_keys' ) ) {
 			$tabs[] = array(
 				'tab_id'      => 'licenses',
 				'settings_id' => 'hey_notify_settings_licenses',
