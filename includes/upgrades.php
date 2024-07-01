@@ -100,6 +100,12 @@ function v2_0_0_upgrade() {
 	$slack['default_color']    = \get_option( '_hey_notify_default_slack_color', '' );
 	\update_option( 'hey_notify_settings_slack', $slack );
 
+	// Delete the old options.
+	\delete_option( '_hey_notify_default_slack_webhook' );
+	\delete_option( '_hey_notify_default_slack_icon' );
+	\delete_option( '_hey_notify_default_slack_username' );
+	\delete_option( '_hey_notify_default_slack_color' );
+
 	/**
 	 * Discord settings
 	 */
@@ -112,6 +118,11 @@ function v2_0_0_upgrade() {
 	$discord['default_username'] = \get_option( '_hey_notify_default_discord_username', '' );
 	\update_option( 'hey_notify_settings_discord', $discord );
 
+	// Delete the old options.
+	\delete_option( '_hey_notify_default_discord_webhook' );
+	\delete_option( '_hey_notify_default_discord_avatar' );
+	\delete_option( '_hey_notify_default_discord_username' );
+
 	/**
 	 * Microsoft Teams settings
 	 */
@@ -122,6 +133,10 @@ function v2_0_0_upgrade() {
 	$microsoft_teams['default_webhook'] = \get_option( '_hey_notify_default_microsoft_teams_webhook', '' );
 	$microsoft_teams['default_color']   = \get_option( '_hey_notify_default_microsoft_teams_color', '' );
 	\update_option( 'hey_notify_settings_microsoft_teams', $microsoft_teams );
+
+	// Delete the old options.
+	\delete_option( '_hey_notify_default_microsoft_teams_webhook' );
+	\delete_option( '_hey_notify_default_microsoft_teams_color' );
 
 	/**
 	 * Uninstall settings
@@ -164,4 +179,7 @@ function v2_0_0_upgrade() {
 	}
 
 	\update_option( 'hey_notify_settings_licenses', $license_keys );
+
+	// Delete the old options.
+	\delete_option( 'cf_edd_license_data' );
 }
