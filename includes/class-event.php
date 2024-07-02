@@ -46,6 +46,13 @@ class Event {
 	public $type;
 
 	/**
+	 * Event name array
+	 *
+	 * @var array
+	 */
+	public $event_name_array = array();
+
+	/**
 	 * Class constructor
 	 *
 	 * @param string $type Type.
@@ -55,13 +62,40 @@ class Event {
 		$this->type = $type;
 		$this->hook = $hook;
 
+		$this->set_event_names( $type );
+
 		// Filters.
 		add_filter( 'hey_notify_event_types', array( $this, 'types' ) );
 		add_filter( 'hey_notify_event_actions', array( $this, 'actions' ) );
-		add_filter( 'hey_notify_event_actions_carbon', array( $this, 'actions_carbon' ) );
+		add_filter( 'hey_notify_event_names', array( $this, 'event_names' ) );
 
 		// Actions.
 		add_action( "hey_notify_add_action_{$type}", array( $this, 'watch' ), 10, 2 );
+	}
+
+	/**
+	 * Sets the event names array.
+	 *
+	 * This function initializes the event_name_array property of the class
+	 * with an empty array.
+	 *
+	 * @param string $type Event type.
+	 * @return void
+	 */
+	// phpcs:ignore
+	public function set_event_names( $type ) {
+		$this->event_name_array = array();
+	}
+
+	/**
+	 * Merge the event names.
+	 *
+	 * @hook hey_notify_event_names
+	 * @param array $event_names Event names array.
+	 * @return array
+	 */
+	public function event_names( $event_names = array() ) {
+		return array_merge( $event_names, $this->event_name_array );
 	}
 
 	/**

@@ -20,6 +20,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Page_Event extends Event {
 
 	/**
+	 * Sets the event names for different system events.
+	 *
+	 * @param string $type Event type.
+	 */
+	public function set_event_names( $type ) {
+		$this->event_name_array = array(
+			'page_draft'     => __( 'Page Draft', 'hey-notify' ),
+			'page_pending'   => __( 'Page Pending', 'hey-notify' ),
+			'page_published' => __( 'Page Published', 'hey-notify' ),
+			'page_scheduled' => __( 'Page Scheduled', 'hey-notify' ),
+			'page_updated'   => __( 'Page Updated', 'hey-notify' ),
+			'page_trashed'   => __( 'Page Moved to Trash', 'hey-notify' ),
+		);
+	}
+
+	/**
 	 * Add 'Pages' to the $types array
 	 *
 	 * @param array $types Event types.
@@ -45,14 +61,7 @@ class Page_Event extends Event {
 				'field_type'        => 'select',
 				'field_name'        => 'page',
 				'field_label'       => __( 'Action', 'hey-notify' ),
-				'choices'           => array(
-					'page_draft'     => __( 'Page Draft', 'hey-notify' ),
-					'page_pending'   => __( 'Page Pending', 'hey-notify' ),
-					'page_published' => __( 'Page Published', 'hey-notify' ),
-					'page_scheduled' => __( 'Page Scheduled', 'hey-notify' ),
-					'page_updated'   => __( 'Page Updated', 'hey-notify' ),
-					'page_trashed'   => __( 'Page Moved to Trash', 'hey-notify' ),
-				),
+				'choices'           => $this->event_name_array,
 				'width'             => '50%',
 				'conditional_logic' => array(
 					array(
@@ -65,38 +74,6 @@ class Page_Event extends Event {
 			)
 		);
 
-		return $fields;
-	}
-
-	/**
-	 * Page events
-	 *
-	 * @param array $fields Action fields.
-	 * @return array
-	 */
-	public function actions_carbon( $fields = array() ) {
-		$fields[] = (
-			Field::make( 'select', 'page', __( 'Action', 'hey-notify' ) )
-				->set_options(
-					array(
-						'page_draft'     => __( 'Page Draft', 'hey-notify' ),
-						'page_pending'   => __( 'Page Pending', 'hey-notify' ),
-						'page_published' => __( 'Page Published', 'hey-notify' ),
-						'page_scheduled' => __( 'Page Scheduled', 'hey-notify' ),
-						'page_updated'   => __( 'Page Updated', 'hey-notify' ),
-						'page_trashed'   => __( 'Page Moved to Trash', 'hey-notify' ),
-					)
-				)
-				->set_conditional_logic(
-					array(
-						array(
-							'field' => 'type',
-							'value' => 'page',
-						),
-					)
-				)
-				->set_width( 50 )
-		);
 		return $fields;
 	}
 

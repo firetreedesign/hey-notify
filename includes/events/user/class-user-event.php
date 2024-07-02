@@ -20,6 +20,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 class User_Event extends Event {
 
 	/**
+	 * Sets the event names for different system events.
+	 *
+	 * @param string $type Event type.
+	 */
+	public function set_event_names( $type ) {
+		$this->event_name_array = array(
+			'user_new'                => __( 'New User Registration', 'hey-notify' ),
+			'user_admin_login'        => __( 'Administrator Login', 'hey-notify' ),
+			'user_admin_login_failed' => __( 'Administrator Failed Login', 'hey-notify' ),
+		);
+	}
+
+	/**
 	 * Add 'Users' to the $types array
 	 *
 	 * @param array $types Event types.
@@ -45,11 +58,7 @@ class User_Event extends Event {
 				'field_type'        => 'select',
 				'field_name'        => 'user',
 				'field_label'       => __( 'Action', 'hey-notify' ),
-				'choices'           => array(
-					'user_new'                => __( 'New User Registration', 'hey-notify' ),
-					'user_admin_login'        => __( 'Administrator Login', 'hey-notify' ),
-					'user_admin_login_failed' => __( 'Administrator Failed Login', 'hey-notify' ),
-				),
+				'choices'           => $this->event_name_array,
 				'width'             => '50%',
 				'conditional_logic' => array(
 					array(
@@ -62,35 +71,6 @@ class User_Event extends Event {
 			)
 		);
 
-		return $fields;
-	}
-
-	/**
-	 * User events
-	 *
-	 * @param array $fields Action fields.
-	 * @return array
-	 */
-	public function actions_carbon( $fields = array() ) {
-		$fields[] = (
-			Field::make( 'select', 'user', __( 'Action', 'hey-notify' ) )
-				->set_options(
-					array(
-						'user_new'                => __( 'New User Registration', 'hey-notify' ),
-						'user_admin_login'        => __( 'Administrator Login', 'hey-notify' ),
-						'user_admin_login_failed' => __( 'Administrator Failed Login', 'hey-notify' ),
-					)
-				)
-				->set_conditional_logic(
-					array(
-						array(
-							'field' => 'type',
-							'value' => 'user',
-						),
-					)
-				)
-				->set_width( 50 )
-		);
 		return $fields;
 	}
 

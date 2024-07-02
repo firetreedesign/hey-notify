@@ -20,6 +20,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Comment_Event extends Event {
 
 	/**
+	 * Sets the event names for different system events.
+	 *
+	 * @param string $type Event type.
+	 */
+	public function set_event_names( $type ) {
+		$this->event_name_array = array(
+			'comment_post' => __( 'New Comment', 'hey-notify' ),
+		);
+	}
+
+	/**
 	 * Add 'Comments' to the $types array
 	 *
 	 * @param array $types Event types.
@@ -45,9 +56,7 @@ class Comment_Event extends Event {
 				'field_type'        => 'select',
 				'field_name'        => 'comment',
 				'field_label'       => __( 'Action', 'hey-notify' ),
-				'choices'           => array(
-					'comment_post' => __( 'New Comment', 'hey-notify' ),
-				),
+				'choices'           => $this->event_name_array,
 				'width'             => '50%',
 				'conditional_logic' => array(
 					array(
@@ -60,33 +69,6 @@ class Comment_Event extends Event {
 			)
 		);
 
-		return $fields;
-	}
-
-	/**
-	 * Comment events
-	 *
-	 * @param array $fields Action fields.
-	 * @return array
-	 */
-	public function actions_carbon( $fields = array() ) {
-		$fields[] = (
-			Field::make( 'select', 'comment', __( 'Action', 'hey-notify' ) )
-				->set_options(
-					array(
-						'comment_post' => __( 'New Comment', 'hey-notify' ),
-					)
-				)
-				->set_conditional_logic(
-					array(
-						array(
-							'field' => 'type',
-							'value' => 'comment',
-						),
-					)
-				)
-				->set_width( 50 )
-		);
 		return $fields;
 	}
 
