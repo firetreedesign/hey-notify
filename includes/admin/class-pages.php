@@ -66,17 +66,14 @@ class Pages {
 			}
 		}
 		?>
-		<div class="wrap">
-			<h1><?php esc_html_e( 'Settings', 'hey-notify' ); ?></h1>
-			<h1 class="nav-tab-wrapper">
-				<?php foreach ( $all_tabs as $tab ) : ?>
-					<a class="nav-tab<?php echo ( $active_tab === $tab['tab_id'] ? ' nav-tab-active' : '' ); ?>" href="<?php echo esc_url( admin_url( add_query_arg( array( 'tab' => $tab['tab_id'] ), add_query_arg( array( 'page' => 'settings' ), 'edit.php?post_type=hey_notify' ) ) ) ); ?>">
-					<?php echo esc_html( $tab['title'] ); ?>
-					</a>
-				<?php endforeach; ?>
-			</h1>
+		<div style="display: flex; gap: 15px; align-items: center; width: calc(100% - 20px); background-color: #fff; margin-left: -20px; padding: 10px 20px; border-bottom: 1px solid #c0c0c0;">
+			<div style="display: flex; gap: 5px; align-items: center;">
+				<img src="<?php echo esc_url( HEY_NOTIFY_PLUGIN_URL . 'images/logo.png' ); ?>" style="width: 120px; height: auto; margin-top: 4px;" />
+				<?php do_action( 'hey_notify_settings_page_logo' ); ?>
+			</div>
+			<h1 style="margin: 0; font-size: 20px; font-weight: normal;"><?php esc_html_e( 'Settings', 'hey-notify' ); ?></h1>
 			<?php if ( $has_tab_actions ) : ?>
-				<div class="hey-notify-tab-actions">
+				<div style="margin-left: auto;">
 				<?php foreach ( $all_tab_actions as $tab_action ) : ?>
 					<?php if ( isset( $tab_action['tab_id'] ) && $tab_action['tab_id'] === $active_tab ) : ?>
 						<a class="button<?php echo is_null( $tab_action['class'] ) ? esc_attr( '' ) : esc_attr( ' ' . $tab_action['class'] ); ?>" href="<?php echo esc_url( $tab_action['link'] ); ?>"<?php echo ( is_null( $tab_action['target'] ) ) ? '' : ' target="' . esc_attr( $tab_action['target'] ) . '"'; ?>><?php echo esc_html( $tab_action['title'] ); ?></a>
@@ -84,6 +81,15 @@ class Pages {
 				<?php endforeach; ?>
 				</div>
 			<?php endif; ?>
+		</div>
+		<div class="wrap">
+			<h1 class="nav-tab-wrapper">
+				<?php foreach ( $all_tabs as $tab ) : ?>
+					<a class="nav-tab<?php echo ( $active_tab === $tab['tab_id'] ? ' nav-tab-active' : '' ); ?>" href="<?php echo esc_url( admin_url( add_query_arg( array( 'tab' => $tab['tab_id'] ), add_query_arg( array( 'page' => 'settings' ), 'edit.php?post_type=hey_notify' ) ) ) ); ?>">
+					<?php echo esc_html( $tab['title'] ); ?>
+					</a>
+				<?php endforeach; ?>
+			</h1>
 			<div id="hey_notify_tab_container" class="metabox-holder">
 				<div class="postbox">
 					<div class="inside">
