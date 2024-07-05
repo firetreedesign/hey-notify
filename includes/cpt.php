@@ -7,8 +7,6 @@
 
 namespace Hey_Notify\CPT;
 
-use stdClass;
-
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

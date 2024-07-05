@@ -7,8 +7,6 @@
 
 namespace Hey_Notify;
 
-use Carbon_Fields\Field;
-
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -82,8 +80,6 @@ class CPT_Event extends Event {
 	 * @return array
 	 */
 	public function actions( $fields = array() ) {
-		$post_type = get_post_types_object( $this->type );
-
 		array_push(
 			$fields,
 			array(

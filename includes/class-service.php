@@ -32,7 +32,6 @@ class Service {
 	 * @return void
 	 */
 	public function __construct() {
-		\add_filter( 'hey_notify_service_fields_carbon', array( $this, 'fields_carbon' ), 10 );
 		\add_filter( 'hey_notify_services_options', array( $this, 'services' ), 10 );
 		\add_action( "hey_notify_render_service_fields_{$this->service}", array( $this, 'render_metabox_fields' ), 10, 2 );
 	}
@@ -63,15 +62,5 @@ class Service {
 	 */
 	public function services( $services = array() ) {
 		return $services;
-	}
-
-	/**
-	 * Fields - Carbon
-	 *
-	 * @param array $fields Fields.
-	 * @return array
-	 */
-	public function fields_carbon( $fields = array() ) {
-		return $fields;
 	}
 }
