@@ -79,6 +79,13 @@ class Uninstall extends Settings {
 				)
 			);
 		}
+
+		// Finally, we register the fields with WordPress.
+		register_setting(
+			'hey_notify_settings_uninstall', // The group name of the settings being registered.
+			'hey_notify_settings_uninstall', // The name of the set of options being registered.
+			array( $this, 'sanitize_callback' ) // The name of the function responsible for validating the fields.
+		);
 	}
 
 	/**
