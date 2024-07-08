@@ -109,3 +109,100 @@ function get_allowed_tags() {
 
 	return $allowed;
 }
+
+/**
+ * Outputs the admin header HTML content.
+ */
+function admin_header() {
+	$all_tabs        = \apply_filters( 'hey_notify_settings_page_tabs', array() );
+	$active_tab      = isset( $_GET['tab'] ) ? $_GET['tab'] : ( count( $all_tabs ) > 0 ? $all_tabs[0]['tab_id'] : '' ); // phpcs:ignore
+	$all_tab_actions = \apply_filters( 'hey_notify_settings_page_actions', array() );
+	$has_tab_actions = false;
+
+	foreach ( $all_tab_actions as $tab_action ) {
+		if ( isset( $tab_action['tab_id'] ) && $tab_action['tab_id'] === $active_tab ) {
+			$has_tab_actions = true;
+		}
+	}
+
+	// phpcs:ignore
+	$current_page = ! empty( $_GET['page'] ) ? $_GET['page'] : '';
+	$page_title   = __( 'Notifications', 'hey-notify' );
+	switch ( $current_page ) {
+		case 'settings':
+			$page_title = __( 'Settings', 'easy-digital-downloads' );
+			break;
+	}
+	?>
+		<style>
+			.wrap h1.wp-heading-inline {
+				display: none;
+			}
+			.page-title-action {
+				visibility: hidden;
+			}
+			.hey-notify-admin-header-container {
+				background-color: #fff;
+				margin-left: -20px;
+				padding: 10px 20px;
+				border-bottom: 1px solid #c3c4c7;
+			}
+			.hey-notify-admin-header-inner {
+				display: flex;
+				gap: 15px;
+				align-items: center;
+			}
+			@media screen and (max-width: 760px) {
+				.hey-notify-admin-header-inner {
+					flex-direction: column;
+					align-items: flex-start;
+					justify-content: center;
+				}
+				
+			}
+			.hey-notify-admin-logo {
+				display: flex;
+				gap: 5px;
+				align-items: center;
+			}
+			@media screen and (max-width: 760px) {
+				.hey-notify-admin-logo {
+					display: none;
+				}
+			}
+			.hey-notify-admin-header-page-title {
+				margin: 0;
+				font-size: 20px;
+				font-weight: normal;
+				margin: 0;
+			}
+		</style>
+		<script>
+		jQuery(document).ready(function($){
+			const addNew = $( '.page-title-action:visible' );
+
+			if ( addNew.length ) {
+				addNew.appendTo( '.hey-notify-admin-actions' ).addClass( 'button' ).css( 'visibility', 'unset' );
+			}
+		});
+		</script>
+	<div class="hey-notify-admin-header-container">
+		<div class="hey-notify-admin-header-inner">
+			<div class="hey-notify-admin-logo">
+				<img src="<?php echo esc_url( HEY_NOTIFY_PLUGIN_URL . 'images/logo.png' ); ?>" style="width: 120px; height: auto; margin-top: 4px;" />
+				<?php do_action( 'hey_notify_settings_page_logo' ); ?>
+			</div>
+			<h1 class="hey-notify-admin-header-page-title"><?php echo esc_html( $page_title ); ?></h1>
+			<div class="hey-notify-admin-actions">
+				<?php if ( $has_tab_actions ) : ?>
+					<?php foreach ( $all_tab_actions as $tab_action ) : ?>
+						<?php if ( isset( $tab_action['tab_id'] ) && $tab_action['tab_id'] === $active_tab ) : ?>
+							<a class="button<?php echo is_null( $tab_action['class'] ) ? esc_attr( '' ) : esc_attr( ' ' . $tab_action['class'] ); ?>" href="<?php echo esc_url( $tab_action['link'] ); ?>"<?php echo ( is_null( $tab_action['target'] ) ) ? '' : ' target="' . esc_attr( $tab_action['target'] ) . '"'; ?>><?php echo esc_html( $tab_action['title'] ); ?></a>
+						<?php endif; ?>
+					<?php endforeach; ?>
+				<?php endif; ?>
+			</div>
+		</div>
+	</div>
+	<?php
+}

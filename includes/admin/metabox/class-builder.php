@@ -150,8 +150,18 @@ class Builder {
 	 * @return boolean
 	 */
 	private function is_screen() {
-		global $post_type;
-		return in_array( $post_type, $this->screens, true );
+		$screen = \get_current_screen();
+		if ( ! $screen ) {
+			return false;
+		}
+		if ( ! in_array( $screen->post_type, $this->screens, true ) ) {
+			return false;
+		}
+		if ( 'post' !== $screen->base ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**

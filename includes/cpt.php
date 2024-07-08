@@ -17,6 +17,7 @@ add_action( 'init', __NAMESPACE__ . '\\register_post_type' );
 add_action( 'manage_hey_notify_posts_custom_column', __NAMESPACE__ . '\\column_content', 10, 2 );
 add_action( 'admin_head', __NAMESPACE__ . '\\admin_head' );
 add_action( 'admin_menu', __NAMESPACE__ . '\\admin_menu' );
+add_action( 'admin_notices', __NAMESPACE__ . '\\admin_notices', 1 );
 
 // Filters.
 add_filter( 'use_block_editor_for_post_type', __NAMESPACE__ . '\\disable_block_editor', 10, 2 );
@@ -125,8 +126,8 @@ function column_content( $column_name, $post_id ) {
 			echo '<strong>' . esc_html( $service ) . '</strong>';
 			break;
 		case 'events':
-			$event_names = apply_filters( 'hey_notify_event_names', array() );
-			$events      = \json_decode( \get_post_meta( $post_id, '_hey_notify_events', true ) );
+			$event_names = \apply_filters( 'hey_notify_event_names', array() );
+			$events      = json_decode( \get_post_meta( $post_id, '_hey_notify_events', true ) );
 			if ( $events ) {
 				foreach ( $events as $event ) {
 					if ( ! isset( $event->type ) ) {
@@ -182,7 +183,7 @@ function admin_menu() {
 	require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 	if ( ! \is_plugin_active( 'hey-notify-pro/hey-notify-pro.php' ) ) {
-		add_submenu_page(
+		\add_submenu_page(
 			'edit.php?post_type=hey_notify',
 			__( 'Upgrade to Pro', 'hey-notify' ),
 			__( 'Upgrade to Pro', 'hey-notify' ),
@@ -190,4 +191,32 @@ function admin_menu() {
 			'https://heynotifywp.com/pro/'
 		);
 	}
+}
+
+/**
+ * Display admin notices.
+ */
+function admin_notices() {
+	global $pagenow;
+
+	if ( 'edit.php' !== $pagenow ) {
+		return;
+	}
+
+	// phpcs:ignore
+	if ( ! isset( $_GET['post_type'] ) ) {
+		return;
+	}
+
+	// phpcs:ignore
+	if ( 'hey_notify' !== $_GET['post_type'] ) {
+		return;
+	}
+
+	$screen = function_exists( 'get_current_screen' ) ? \get_current_screen() : false;
+	if ( $screen && $screen->is_block_editor() ) {
+		return;
+	}
+
+	\Hey_Notify\Helpers\admin_header();
 }
