@@ -7,11 +7,9 @@
 
 namespace Hey_Notify\Services;
 
-use Carbon_Fields\Field;
 use stdClass;
 use Hey_Notify\Service;
 use Hey_Notify\Admin\Settings;
-use Hey_Notify\Admin\Metabox\Builder;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -176,7 +174,7 @@ class Microsoft_Teams extends Service {
 		);
 
 		// Finally, we register the fields with WordPress.
-		register_setting(
+		\register_setting(
 			'hey_notify_settings_microsoft_teams', // The group name of the settings being registered.
 			'hey_notify_settings_microsoft_teams', // The name of the set of options being registered.
 			array( $this, 'sanitize_settings_callback' ) // The name of the function responsible for validating the fields.
@@ -199,7 +197,7 @@ class Microsoft_Teams extends Service {
 			// Check to see if the current option has a value. If so, process it.
 			if ( isset( $input[ $key ] ) ) {
 				// Strip all HTML and PHP tags and properly handle quoted strings.
-				$output[ $key ] = wp_strip_all_tags( stripslashes( $input[ $key ] ) );
+				$output[ $key ] = \wp_strip_all_tags( stripslashes( $input[ $key ] ) );
 			}
 		}
 		// Return the array.
@@ -217,7 +215,6 @@ class Microsoft_Teams extends Service {
 		$services[] = array(
 			'value' => 'microsoft_teams',
 			'label' => __( 'Microsoft Teams', 'hey-notify' ),
-			'image' => HEY_NOTIFY_PLUGIN_URL . 'images/services/microsoft_teams.png',
 		);
 
 		return $services;
@@ -339,7 +336,7 @@ class Microsoft_Teams extends Service {
 		$body = $this->prepare( $message, $settings );
 		$json = \wp_json_encode( $body );
 
-		$response = \wp_remote_post(
+		$response = \wp_safe_remote_post(
 			$settings['webhook_url'],
 			array(
 				'headers' => array(

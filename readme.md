@@ -47,12 +47,13 @@ Get notified when things happen in WordPress.
   - Theme Updates
   - Theme Change
 
-**Hey Notify Add-ons**
+**Hey Notify Pro**
 
-Premium add-ons are available to extend the capabilities of Hey Notify.
+Stay in the know with [Hey Notify Pro](https://heynotifywp.com/pro/). Premium features to keep you up to date with everything happening on your website.
 
-- [Gravity Forms](https://heynotifywp.com/add-ons/gravity-forms/)
-- [Ninja Forms](https://heynotifywp.com/add-ons/ninja-forms/)
+- Native integration with Gravity Forms.
+- Native integration with Ninja Forms.
+- Sales notifications from Easy Digital Downloads.
 
 ## Installation
 
