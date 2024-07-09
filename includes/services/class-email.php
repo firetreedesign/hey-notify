@@ -7,7 +7,6 @@
 
 namespace Hey_Notify;
 
-use Carbon_Fields\Field;
 use Hey_Notify\Service;
 
 // Exit if accessed directly.
@@ -112,45 +111,9 @@ class Email extends Service {
 		$services[] = array(
 			'value' => 'email',
 			'label' => __( 'Email', 'hey-notify' ),
-			'image' => HEY_NOTIFY_PLUGIN_URL . 'images/services/email.png',
 		);
 
 		return $services;
-	}
-
-	/**
-	 * Service fields
-	 *
-	 * @param array $fields Fields.
-	 * @return array
-	 */
-	public function fields_carbon( $fields = array() ) {
-		$fields[] = (
-			Field::make( 'complex', 'hey_notify_email_addresses', __( 'Send notifications to', 'hey-notify' ) )
-				->add_fields(
-					array(
-						Field::make( 'text', 'email', __( 'Email Address', 'hey-notify' ) ),
-					)
-				)
-				->setup_labels(
-					array(
-						'plural_name'   => __( 'Email Addresses', 'hey-notify' ),
-						'singular_name' => __( 'Email Address', 'hey-notify' ),
-					)
-				)
-				->set_header_template( '<%- email %>' )
-				->set_collapsed( true )
-				->set_conditional_logic(
-					array(
-						array(
-							'field' => 'hey_notify_service',
-							'value' => 'email',
-						),
-					)
-				)
-		);
-
-		return $fields;
 	}
 
 	/**

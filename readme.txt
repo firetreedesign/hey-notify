@@ -76,6 +76,9 @@ Stay in the know with [Hey Notify Pro](https://heynotifywp.com/pro/). Premium fe
 
 == Changelog ==
 
+= 2.0.1 =
+* Changed network requests to use `wp_safe_remote_post`.
+
 = 2.0.0 =
 * BREAKING CHANGES - If you use our Gravity Forms or Ninja Forms add-on, please download our new Pro add-on from your [Account](https://heynotifywp.com/account/) as the individual plugins have been discontinued.
 * Migrated settings from Carbon Fields to our own custom fields.

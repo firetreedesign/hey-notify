@@ -217,7 +217,7 @@ class Discord extends Service {
 		);
 
 		// Finally, we register the fields with WordPress.
-		register_setting(
+		\register_setting(
 			'hey_notify_settings_discord', // The group name of the settings being registered.
 			'hey_notify_settings_discord', // The name of the set of options being registered.
 			array( $this, 'sanitize_settings_callback' ) // The name of the function responsible for validating the fields.
@@ -240,7 +240,7 @@ class Discord extends Service {
 			// Check to see if the current option has a value. If so, process it.
 			if ( isset( $input[ $key ] ) ) {
 				// Strip all HTML and PHP tags and properly handle quoted strings.
-				$output[ $key ] = wp_strip_all_tags( stripslashes( $input[ $key ] ) );
+				$output[ $key ] = \wp_strip_all_tags( stripslashes( $input[ $key ] ) );
 			}
 		}
 		// Return the array.
@@ -386,7 +386,7 @@ class Discord extends Service {
 		$body = $this->prepare( $message, $settings );
 
 		$json     = \wp_json_encode( $body );
-		$response = \wp_remote_post(
+		$response = \wp_safe_remote_post(
 			$settings['webhook_url'],
 			array(
 				'headers' => array(
@@ -417,30 +417,6 @@ class Discord extends Service {
 			// There was an error making the request.
 			$error_message = $response->get_error_message();
 		}
-	}
-
-	/**
-	 * Default settings.
-	 *
-	 * @param object $settings Settings object.
-	 * @return void
-	 */
-	public function default_settings_carbon( $settings ) {
-		$settings->add_tab(
-			__( 'Discord', 'hey-notify' ),
-			array(
-				Field::make( 'separator', 'hey_notify_discord_separator', __( 'Default Settings for Discord', 'hey-notify' ) ),
-				Field::make( 'text', 'hey_notify_default_discord_webhook', __( 'Webhook URL', 'hey-notify' ) )
-					->set_attribute( 'type', 'url' )
-					->set_help_text( sprintf( '%1s <a href="%2s">%3s</a>', __( 'The webhook that you created for your Discord channel.', 'hey-notify' ), 'https://support.discord.com/hc/en-us/articles/228383668', __( 'Learn More', 'hey-notify' ) ) ),
-				Field::make( 'image', 'hey_notify_default_discord_avatar', __( 'Discord Avatar', 'hey-notify' ) )
-					->set_help_text( __( 'Override the default avatar of the webhook. Not required.', 'hey-notify' ) )
-					->set_width( 50 ),
-				Field::make( 'text', 'hey_notify_default_discord_username', __( 'Discord Username', 'hey-notify' ) )
-					->set_help_text( __( 'Override the default username of the webhook. Not required.', 'hey-notify' ) )
-					->set_width( 50 ),
-			)
-		);
 	}
 }
 
