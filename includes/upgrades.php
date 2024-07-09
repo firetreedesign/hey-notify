@@ -40,8 +40,12 @@ function version_check() {
 		v1_2_1_upgrade();
 	}
 
-	update_option( 'hey_notify_version', HEY_NOTIFY_VERSION );
+	// Version is before 2.0.0.
+	if ( version_compare( $version, '2.0.0', '<' ) ) {
+		v2_0_0_upgrade();
+	}
 
+	update_option( 'hey_notify_version', HEY_NOTIFY_VERSION );
 }
 /**
  * Version 1.2.1 upgrade
@@ -61,4 +65,121 @@ function v1_2_1_upgrade() {
 		'hey_notify_custom_post_types',
 		\wp_json_encode( $custom_post_types )
 	);
+}
+
+/**
+ * Version 2.0.0 upgrade
+ *
+ * @return void
+ */
+function v2_0_0_upgrade() {
+	/**
+	 * General settings
+	 */
+	$settings = \get_option( 'hey_notify_settings', array() );
+	if ( ! is_array( $settings ) ) {
+		$settings = array();
+	}
+	$settings['default_service'] = \get_option( '_hey_notify_default_service', 'email' );
+	$show_public_cpt             = \get_option( '_hey_notify_show_public_cpt', 'no' );
+	if ( 'yes' === $show_public_cpt ) {
+		$settings['show_public_cpt'] = 1;
+	}
+	\update_option( 'hey_notify_settings', $settings );
+
+	/**
+	 * Slack settings
+	 */
+	$slack = \get_option( 'hey_notify_settings_slack', array() );
+	if ( ! is_array( $slack ) ) {
+		$slack = array();
+	}
+	$slack['default_webhook']  = \get_option( '_hey_notify_default_slack_webhook', '' );
+	$slack['default_icon']     = \get_option( '_hey_notify_default_slack_icon', '' );
+	$slack['default_username'] = \get_option( '_hey_notify_default_slack_username', '' );
+	$slack['default_color']    = \get_option( '_hey_notify_default_slack_color', '' );
+	\update_option( 'hey_notify_settings_slack', $slack );
+
+	// Delete the old options.
+	\delete_option( '_hey_notify_default_slack_webhook' );
+	\delete_option( '_hey_notify_default_slack_icon' );
+	\delete_option( '_hey_notify_default_slack_username' );
+	\delete_option( '_hey_notify_default_slack_color' );
+
+	/**
+	 * Discord settings
+	 */
+	$discord = \get_option( 'hey_notify_settings_discord', array() );
+	if ( ! is_array( $discord ) ) {
+		$discord = array();
+	}
+	$discord['default_webhook']  = \get_option( '_hey_notify_default_discord_webhook', '' );
+	$discord['default_avatar']   = \get_option( '_hey_notify_default_discord_avatar', '' );
+	$discord['default_username'] = \get_option( '_hey_notify_default_discord_username', '' );
+	\update_option( 'hey_notify_settings_discord', $discord );
+
+	// Delete the old options.
+	\delete_option( '_hey_notify_default_discord_webhook' );
+	\delete_option( '_hey_notify_default_discord_avatar' );
+	\delete_option( '_hey_notify_default_discord_username' );
+
+	/**
+	 * Microsoft Teams settings
+	 */
+	$microsoft_teams = \get_option( 'hey_notify_settings_microsoft_teams', array() );
+	if ( ! is_array( $microsoft_teams ) ) {
+		$microsoft_teams = array();
+	}
+	$microsoft_teams['default_webhook'] = \get_option( '_hey_notify_default_microsoft_teams_webhook', '' );
+	$microsoft_teams['default_color']   = \get_option( '_hey_notify_default_microsoft_teams_color', '' );
+	\update_option( 'hey_notify_settings_microsoft_teams', $microsoft_teams );
+
+	// Delete the old options.
+	\delete_option( '_hey_notify_default_microsoft_teams_webhook' );
+	\delete_option( '_hey_notify_default_microsoft_teams_color' );
+
+	/**
+	 * Uninstall settings
+	 */
+	$uninstall = \get_option( 'hey_notify_settings_uninstall', array() );
+	if ( ! is_array( $uninstall ) ) {
+		$uninstall = array();
+	}
+	$remove_data = \get_option( '_hey_notify_remove_data', 'no' );
+	if ( 'yes' === $remove_data ) {
+		$uninstall['remove_data'] = 1;
+	}
+	\update_option( 'hey_notify_settings_uninstall', $uninstall );
+
+	/**
+	 * Hey Notify CPT metadata
+	 */
+	$notifications = \get_posts(
+		array(
+			'numberposts' => -1,
+			'post_type'   => 'hey_notify',
+		)
+	);
+	foreach ( $notifications as $notification ) {
+		$events = \get_post_meta( $notification->ID, '_hey_notify_events_json', true );
+		\update_post_meta( $notification->ID, '_hey_notify_events', $events );
+	}
+
+	/**
+	 * License keys
+	 */
+	$old_license_keys = \get_option( 'cf_edd_license_data', '{}' );
+	$old_license_keys = \json_decode( $old_license_keys, true );
+
+	$license_keys = array();
+	if ( json_last_error() === JSON_ERROR_NONE ) {
+		foreach ( $old_license_keys as $key => $value ) {
+			$license_keys[ substr( $key, 1 ) ] = $value['license'];
+		}
+	}
+
+	\update_option( 'hey_notify_settings_licenses', $license_keys );
+
+	// Delete the old options.
+	\delete_option( 'cf_edd_license_data' );
 }

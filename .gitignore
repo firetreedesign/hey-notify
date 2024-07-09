@@ -4,3 +4,7 @@
 .vscode
 vendor/squizlabs
 vendor/bin
+vendor/phpcsstandards
+vendor/wp-coding-standards
+vendor/dealerdirect
+*.db

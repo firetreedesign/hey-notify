@@ -1,0 +1,4 @@
+.hey-notify-tab-actions { clear: both; margin-top: 23px; margin-bottom: 10px; padding: 10px; overflow: hidden; background: #fbfbfb; border: 1px solid #e5e5e5; -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .04); box-shadow: 0 1px 1px rgba(0, 0, 0, .04); }
+.hey-notify-tab-actions a { display: inline-block; }
+.hey-notify-tab-actions a:not(:last-of-type) { margin-right: 10px; }
+.hey-notify-tab-actions:after { content: ''; clear: both; }

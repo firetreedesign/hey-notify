@@ -1,42 +1,70 @@
-<?php return array (
-  'root' => 
-  array (
-    'pretty_version' => '1.2.0.x-dev',
-    'version' => '1.2.0.9999999-dev',
-    'aliases' => 
-    array (
+<?php return array(
+    'root' => array(
+        'name' => '__root__',
+        'pretty_version' => '1.5.0.x-dev',
+        'version' => '1.5.0.9999999-dev',
+        'reference' => '897b693510f379b150ed881d36069ec3728431a7',
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => true,
     ),
-    'reference' => '60ed723ee5f55ddfb49cb97380a05f931f429c64',
-    'name' => '__root__',
-  ),
-  'versions' => 
-  array (
-    '__root__' => 
-    array (
-      'pretty_version' => '1.2.0.x-dev',
-      'version' => '1.2.0.9999999-dev',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '60ed723ee5f55ddfb49cb97380a05f931f429c64',
+    'versions' => array(
+        '__root__' => array(
+            'pretty_version' => '1.5.0.x-dev',
+            'version' => '1.5.0.9999999-dev',
+            'reference' => '897b693510f379b150ed881d36069ec3728431a7',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'dealerdirect/phpcodesniffer-composer-installer' => array(
+            'pretty_version' => 'v1.0.0',
+            'version' => '1.0.0.0',
+            'reference' => '4be43904336affa5c2f70744a348312336afd0da',
+            'type' => 'composer-plugin',
+            'install_path' => __DIR__ . '/../dealerdirect/phpcodesniffer-composer-installer',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
+        'phpcsstandards/phpcsextra' => array(
+            'pretty_version' => '1.2.1',
+            'version' => '1.2.1.0',
+            'reference' => '11d387c6642b6e4acaf0bd9bf5203b8cca1ec489',
+            'type' => 'phpcodesniffer-standard',
+            'install_path' => __DIR__ . '/../phpcsstandards/phpcsextra',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
+        'phpcsstandards/phpcsutils' => array(
+            'pretty_version' => '1.0.9',
+            'version' => '1.0.9.0',
+            'reference' => '908247bc65010c7b7541a9551e002db12e9dae70',
+            'type' => 'phpcodesniffer-standard',
+            'install_path' => __DIR__ . '/../phpcsstandards/phpcsutils',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
+        'squizlabs/php_codesniffer' => array(
+            'pretty_version' => '3.9.0',
+            'version' => '3.9.0.0',
+            'reference' => 'd63cee4890a8afaf86a22e51ad4d97c91dd4579b',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../squizlabs/php_codesniffer',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
+        'wp-coding-standards/wpcs' => array(
+            'pretty_version' => 'dev-develop',
+            'version' => 'dev-develop',
+            'reference' => '8b1a52e046668b7dcea1c3c663c5521b4b1c2a9a',
+            'type' => 'phpcodesniffer-standard',
+            'install_path' => __DIR__ . '/../wp-coding-standards/wpcs',
+            'aliases' => array(
+                0 => '9999999-dev',
+            ),
+            'dev_requirement' => true,
+        ),
     ),
-    'htmlburger/carbon-fields' => 
-    array (
-      'pretty_version' => 'v3.2.1',
-      'version' => '3.2.1.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'cd772f1c6c002207eed71f98a8c54ad9403d5644',
-    ),
-    'squizlabs/php_codesniffer' => 
-    array (
-      'pretty_version' => '3.5.8',
-      'version' => '3.5.8.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '9d583721a7157ee997f235f327de038e7ea6dac4',
-    ),
-  ),
 );

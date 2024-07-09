@@ -7,8 +7,6 @@
 
 namespace Hey_Notify;
 
-use Carbon_Fields\Field;
-
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -18,6 +16,22 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Post Event class
  */
 class Post_Event extends Event {
+
+	/**
+	 * Sets the event names for different system events.
+	 *
+	 * @param string $type Event type.
+	 */
+	public function set_event_names( $type ) {
+		$this->event_name_array = array(
+			'post_draft'     => __( 'Post Draft', 'hey-notify' ),
+			'post_pending'   => __( 'Post Pending', 'hey-notify' ),
+			'post_published' => __( 'Post Published', 'hey-notify' ),
+			'post_scheduled' => __( 'Post Scheduled', 'hey-notify' ),
+			'post_updated'   => __( 'Post Updated', 'hey-notify' ),
+			'post_trashed'   => __( 'Post Moved to Trash', 'hey-notify' ),
+		);
+	}
 
 	/**
 	 * Add 'Posts' to the $types array
@@ -33,34 +47,31 @@ class Post_Event extends Event {
 	}
 
 	/**
-	 * Post events
+	 * Page events
 	 *
 	 * @param array $fields Action fields.
 	 * @return array
 	 */
 	public function actions( $fields = array() ) {
-		$fields[] = (
-			Field::make( 'select', 'post', __( 'Action', 'hey-notify' ) )
-				->set_options(
-					array(
-						'post_draft'     => __( 'Post Draft', 'hey-notify' ),
-						'post_pending'   => __( 'Post Pending', 'hey-notify' ),
-						'post_published' => __( 'Post Published', 'hey-notify' ),
-						'post_scheduled' => __( 'Post Scheduled', 'hey-notify' ),
-						'post_updated'   => __( 'Post Updated', 'hey-notify' ),
-						'post_trashed'   => __( 'Post Moved to Trash', 'hey-notify' ),
-					)
-				)
-				->set_conditional_logic(
+		array_push(
+			$fields,
+			array(
+				'field_type'        => 'select',
+				'field_name'        => 'post',
+				'field_label'       => __( 'Action', 'hey-notify' ),
+				'choices'           => $this->event_name_array,
+				'width'             => '50%',
+				'conditional_logic' => array(
 					array(
 						array(
 							'field' => 'type',
 							'value' => 'post',
 						),
-					)
-				)
-				->set_width( 50 )
+					),
+				),
+			)
 		);
+
 		return $fields;
 	}
 
@@ -120,7 +131,6 @@ class Post_Event extends Event {
 				break;
 		}
 	}
-
 }
 
 new Post_Event( 'post', '\Hey_Notify\Post_Hook' );

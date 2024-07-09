@@ -8,6 +8,7 @@
 namespace Hey_Notify;
 
 use Carbon_Fields\Field;
+use Hey_Notify\Service;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,8 +28,61 @@ class Email extends Service {
 	public function __construct() {
 		parent::__construct();
 
+		// Actions.
 		\add_action( 'hey_notify_send_message_email', array( $this, 'send' ), 10, 3 );
 		\add_filter( 'hey_notify_email_settings_core', array( $this, 'get_core_settings' ), 10, 1 );
+
+		// Filters.
+		\add_filter( 'hey_notify_services_select', array( $this, 'services_select' ), 10, 1 );
+		\add_filter( 'hey_notify_service_fields', array( $this, 'get_metabox_fields' ), 10, 2 );
+	}
+
+	/**
+	 * Populate the Services select input
+	 *
+	 * @param array $services Services.
+	 * @return array
+	 */
+	public function services_select( $services ) {
+		$services['email'] = __( 'Email', 'hey-notify' );
+		return $services;
+	}
+
+	/**
+	 * Populate the Metabox fields
+	 *
+	 * @param array $fields Fields.
+	 * @return array
+	 */
+	public function get_metabox_fields( $fields ) {
+		return array_merge(
+			$fields,
+			array(
+				array(
+					'field_name'          => '_hey_notify_email_addresses',
+					'field_label'         => __( 'Send notifications to', 'hey-notify' ),
+					'field_type'          => 'repeater',
+					'insert_button_label' => __( 'Add Email Address', 'hey-notify' ),
+					'placeholder_label'   => __( 'There are email addresses yet.', 'hey-notify' ),
+					'fields'              => array(
+						array(
+							'field_name'  => 'email',
+							'field_label' => __( 'Email Address', 'hey-notify' ),
+							'field_type'  => 'textinput',
+							'input_type'  => 'email',
+						),
+					),
+					'conditional_logic'   => array(
+						array(
+							array(
+								'field' => '_hey_notify_service',
+								'value' => 'email',
+							),
+						),
+					),
+				),
+			)
+		);
 	}
 
 	/**
@@ -44,7 +98,7 @@ class Email extends Service {
 		}
 
 		return array(
-			'email_addresses' => \carbon_get_post_meta( $data->ID, 'hey_notify_email_addresses' ),
+			'email_addresses' => json_decode( \get_post_meta( $data->ID, '_hey_notify_email_addresses', true ) ),
 		);
 	}
 
@@ -70,7 +124,7 @@ class Email extends Service {
 	 * @param array $fields Fields.
 	 * @return array
 	 */
-	public function fields( $fields = array() ) {
+	public function fields_carbon( $fields = array() ) {
 		$fields[] = (
 			Field::make( 'complex', 'hey_notify_email_addresses', __( 'Send notifications to', 'hey-notify' ) )
 				->add_fields(
@@ -149,7 +203,6 @@ class Email extends Service {
 	 * @return void
 	 */
 	public function send( $message, $trigger, $data ) {
-
 		$settings = \apply_filters( "hey_notify_email_settings_{$trigger}", $data );
 
 		if ( false === $settings ) {
@@ -163,8 +216,8 @@ class Email extends Service {
 		$to_email = array();
 		if ( $settings['email_addresses'] ) {
 			foreach ( $settings['email_addresses'] as $email ) {
-				if ( '' !== trim( $email['email'] ) ) {
-					$to_email[] = $email['email'];
+				if ( '' !== trim( $email->email ) ) {
+					$to_email[] = $email->email;
 				}
 			}
 		}
@@ -179,7 +232,7 @@ class Email extends Service {
 		if ( isset( $message['subject'] ) && '' !== $message['subject'] ) {
 			$subject = $message['subject'];
 		} else {
-			$subject = __( "Hey, here's your notification!", 'hey-notify' );
+			$subject = \__( "Hey, here's your notification!", 'hey-notify' );
 		}
 
 		$body = $this->prepare( $message, $settings );
@@ -188,7 +241,7 @@ class Email extends Service {
 			"From: {$from_name} <{$from_email}>",
 		);
 
-		$result = wp_mail( $to_email, $subject, $body, $headers );
+		$result = \wp_mail( $to_email, $subject, $body, $headers );
 
 		\do_action(
 			'hey_notify_message_sent',

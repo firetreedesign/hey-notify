@@ -7,8 +7,6 @@
 
 namespace Hey_Notify;
 
-use Carbon_Fields\Field;
-
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -18,6 +16,19 @@ if ( ! defined( 'ABSPATH' ) ) {
  * User Event class
  */
 class User_Event extends Event {
+
+	/**
+	 * Sets the event names for different system events.
+	 *
+	 * @param string $type Event type.
+	 */
+	public function set_event_names( $type ) {
+		$this->event_name_array = array(
+			'user_new'                => __( 'New User Registration', 'hey-notify' ),
+			'user_admin_login'        => __( 'Administrator Login', 'hey-notify' ),
+			'user_admin_login_failed' => __( 'Administrator Failed Login', 'hey-notify' ),
+		);
+	}
 
 	/**
 	 * Add 'Users' to the $types array
@@ -33,31 +44,31 @@ class User_Event extends Event {
 	}
 
 	/**
-	 * User events
+	 * Page events
 	 *
 	 * @param array $fields Action fields.
 	 * @return array
 	 */
 	public function actions( $fields = array() ) {
-		$fields[] = (
-			Field::make( 'select', 'user', __( 'Action', 'hey-notify' ) )
-				->set_options(
-					array(
-						'user_new'                => __( 'New User Registration', 'hey-notify' ),
-						'user_admin_login'        => __( 'Administrator Login', 'hey-notify' ),
-						'user_admin_login_failed' => __( 'Administrator Failed Login', 'hey-notify' ),
-					)
-				)
-				->set_conditional_logic(
+		array_push(
+			$fields,
+			array(
+				'field_type'        => 'select',
+				'field_name'        => 'user',
+				'field_label'       => __( 'Action', 'hey-notify' ),
+				'choices'           => $this->event_name_array,
+				'width'             => '50%',
+				'conditional_logic' => array(
 					array(
 						array(
 							'field' => 'type',
 							'value' => 'user',
 						),
-					)
-				)
-				->set_width( 50 )
+					),
+				),
+			)
 		);
+
 		return $fields;
 	}
 
@@ -83,7 +94,6 @@ class User_Event extends Event {
 				break;
 		}
 	}
-
 }
 
 new User_Event( 'user', '\Hey_Notify\User_Hook' );

@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", function (e) {
-  document
-    .querySelector("#hey-notify-cpt-refresh")
-    .addEventListener("click", heyNotifyRefreshCPT);
+  var cptRefreshButton = document.querySelector("#hey-notify-cpt-refresh");
+  if (cptRefreshButton) {
+    cptRefreshButton.addEventListener("click", heyNotifyRefreshCPT);
+  }
 });
 
 async function heyNotifyRefreshCPT(e) {

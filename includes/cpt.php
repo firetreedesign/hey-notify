@@ -7,8 +7,6 @@
 
 namespace Hey_Notify\CPT;
 
-use stdClass;
-
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -19,6 +17,7 @@ add_action( 'init', __NAMESPACE__ . '\\register_post_type' );
 add_action( 'manage_hey_notify_posts_custom_column', __NAMESPACE__ . '\\column_content', 10, 2 );
 add_action( 'admin_head', __NAMESPACE__ . '\\admin_head' );
 add_action( 'admin_menu', __NAMESPACE__ . '\\admin_menu' );
+add_action( 'admin_notices', __NAMESPACE__ . '\\admin_notices', 1 );
 
 // Filters.
 add_filter( 'use_block_editor_for_post_type', __NAMESPACE__ . '\\disable_block_editor', 10, 2 );
@@ -122,19 +121,23 @@ function column_titles( $defaults ) {
 function column_content( $column_name, $post_id ) {
 	switch ( $column_name ) {
 		case 'service':
-			$services_array = \apply_filters( 'hey_notify_services_options', array() );
-			$service        = \carbon_get_post_meta( $post_id, 'hey_notify_service' );
-			foreach ( $services_array as $services ) {
-				if ( $service === $services['value'] ) {
-					echo "<img src='" . esc_attr( $services['image'] ) . "' style='width: 100px; height: auto;' />";
-				}
-			}
+			$service = \get_post_meta( $post_id, '_hey_notify_service', true );
+			$service = ucwords( str_replace( '_', ' ', $service ) );
+			echo '<strong>' . esc_html( $service ) . '</strong>';
 			break;
 		case 'events':
-			$events = \carbon_get_post_meta( $post_id, 'hey_notify_events' );
+			$event_names = \apply_filters( 'hey_notify_event_names', array() );
+			$events      = json_decode( \get_post_meta( $post_id, '_hey_notify_events', true ) );
 			if ( $events ) {
 				foreach ( $events as $event ) {
-					echo '<span class="wp-ui-primary hey-notify-tag">' . esc_html( ucwords( str_replace( '_', ' ', $event[ $event['type'] ] ) ) ) . '</span>';
+					if ( ! isset( $event->type ) ) {
+						continue;
+					}
+					if ( isset( $event_names[ $event->{$event->type} ] ) ) {
+						echo '<span class="wp-ui-highlight hey-notify-tag">' . esc_html( $event_names[ $event->{$event->type} ] ) . '</span>';
+					} else {
+						echo '<span class="wp-ui-highlight hey-notify-tag">' . esc_html( ucwords( str_replace( '_', ' ', $event->{$event->type} ) ) ) . '</span>';
+					}
 				}
 			}
 			break;
@@ -164,7 +167,7 @@ function admin_head() {
 	}
 	?>
 	<style>
-		.hey-notify-tag { border-radius: 3px; display: inline-block; margin-bottom: 4px; padding: 3px 6px; font-size: 12px; }
+		.hey-notify-tag { border-radius: 3px; display: inline-block; margin-bottom: 4px; padding: 2px 4px; font-size: 11px; }
 		.hey-notify-tag:not(:last-of-type) { margin-right: 4px; }
 	</style>
 	<?php
@@ -176,114 +179,44 @@ function admin_head() {
  * @return void
  */
 function admin_menu() {
-	add_submenu_page(
-		'edit.php?post_type=hey_notify',
-		__( 'Add-ons', 'hey-notify' ),
-		__( 'Add-ons', 'hey-notify' ),
-		'manage_options',
-		'add-ons',
-		__NAMESPACE__ . '\\addons_page'
-	);
+	// Required for is_plugin_active() to work.
+	require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+	if ( ! \is_plugin_active( 'hey-notify-pro/hey-notify-pro.php' ) ) {
+		\add_submenu_page(
+			'edit.php?post_type=hey_notify',
+			__( 'Upgrade to Pro', 'hey-notify' ),
+			__( 'Upgrade to Pro', 'hey-notify' ),
+			'manage_options',
+			'https://heynotifywp.com/pro/'
+		);
+	}
 }
 
 /**
- * Render the add-ons page
- *
- * @return void
+ * Display admin notices.
  */
-function addons_page() {
-	?>
-		<style>
-		.hey-notify-addons .hey-notify-addon { box-sizing: border-box; background: #fff; border: 1px solid #ccc; float: left; padding: 15px 15px 45px 15px; position: relative; margin: 0 15px 15px 0; width: 350px; min-height: 350px; }
-		.hey-notify-addons .hey-notify-addon .hey-notify-addon-title { margin-top: 0; }
-		.hey-notify-addons .hey-notify-addon > a > img { width: 100%; height: auto; }
-		.hey-notify-addons .hey-notify-addon .button { position: absolute; bottom: 15px; left: 15px; }
-		@media screen and (max-width:720px) {
-			.hey-notify-addons .hey-notify-addon { width: 100%; margin: 0 0 15px 0; }
-		}
-		</style>
-		<div class="wrap hey-notify-addons">
-			<h2><?php esc_html_e( 'Hey Notify Add-ons', 'hey-notify' ); ?></h2>
-			<p>
-				<?php esc_html_e( 'The following are available add-ons to extend Hey Notify functionality.', 'hey-notify' ); ?>
-			</p>
-			<div id="tab_container">
-				<?php
-				$addons = get_addons_data();
-				if ( false !== $addons ) {
-					foreach ( $addons as $addon ) :
-						?>
-						<div class="hey-notify-addon">
-							<h3 class="hey-notify-addon-title"><?php echo esc_html( $addon->title ); ?></h3>
-							<a href="<?php echo esc_attr( $addon->link ); ?>" target="_blank"><img src="<?php echo esc_attr( $addon->thumbnail ); ?>" /></a>
-							<p><?php echo esc_html( $addon->excerpt ); ?></p>
-							<?php if ( is_plugin_active( $addon->plugin_file ) ) : ?>
-								<a href="<?php echo esc_attr( $addon->link ); ?>" class="button" disabled><?php esc_html_e( 'Installed', 'hey-notify' ); ?></a>
-							<?php elseif ( file_exists( trailingslashit( WP_PLUGIN_DIR ) . $addon->plugin_file ) ) : ?>
-								<a href="<?php echo esc_url( wp_nonce_url( admin_url( 'plugins.php?action=activate&plugin=' . $addon->plugin_file ), 'activate-plugin_' . $addon->plugin_file ) ); ?>" class="button"><?php esc_html_e( 'Activate', 'hey-notify' ); ?></a>
-							<?php else : ?>
-								<a href="<?php echo esc_attr( $addon->link ); ?>" target="_blank" class="button"><?php esc_html_e( 'Get this add-on', 'hey-notify' ); ?></a>
-							<?php endif; ?>
-						</div>
-						<?php
-					endforeach;
-				}
-				?>
-			</div><!-- #tab_container-->
-		</div>
-		<?php
-}
+function admin_notices() {
+	global $pagenow;
 
-/**
- * Get the add-on data
- *
- * @return object
- */
-function get_addons_data() {
-
-	$data = get_transient( 'hey-notify-addons' );
-
-	if ( false !== $data ) {
-		$data = json_decode( $data );
-		if ( null === $data ) {
-			$data = json_decode( wp_json_encode( new stdClass() ) );
-		}
-		usort( $data, __NAMESPACE__ . '\\sort_addons_data' );
-		return $data;
+	if ( 'edit.php' !== $pagenow ) {
+		return;
 	}
 
-	$response = wp_remote_get( 'https://heynotifywp.com/wp-json/wp/v2/edd-addons' );
-
-	// Return false if there was an error.
-	if ( is_wp_error( $response ) ) {
-		return false;
+	// phpcs:ignore
+	if ( ! isset( $_GET['post_type'] ) ) {
+		return;
 	}
 
-	// Grab the body from the response.
-	$data = wp_remote_retrieve_body( $response );
-
-	// Free up the memory.
-	unset( $response );
-
-	set_transient( 'hey-notify-addons', $data, 900 );
-
-	$data = json_decode( $data );
-	if ( null === $data ) {
-		$data = json_decode( wp_json_encode( new stdClass() ) );
+	// phpcs:ignore
+	if ( 'hey_notify' !== $_GET['post_type'] ) {
+		return;
 	}
-	usort( $data, __NAMESPACE__ . '\\sort_addons_data' );
 
-	return $data;
+	$screen = function_exists( 'get_current_screen' ) ? \get_current_screen() : false;
+	if ( $screen && $screen->is_block_editor() ) {
+		return;
+	}
 
-}
-
-/**
- * Sort the data
- *
- * @param object $a First item to compare.
- * @param object $b Second item to compare.
- * @return int
- */
-function sort_addons_data( $a, $b ) {
-	return strcmp( $a->title, $b->title );
+	\Hey_Notify\Helpers\admin_header();
 }

@@ -34,9 +34,18 @@ function admin_enqueue_scripts() {
 		return;
 	}
 	// phpcs:ignore
-	if ( 'settings' !== $_GET['page'] ) {
+	if ( 'settings' !== $_GET['page'] && 'options' !== $_GET['page'] ) {
 		return;
 	}
+
+	wp_enqueue_media();
+
+	wp_enqueue_style(
+		'hey-notify-admin',
+		HEY_NOTIFY_PLUGIN_URL . 'assets/css/admin.css',
+		array(),
+		HEY_NOTIFY_VERSION
+	);
 
 	wp_enqueue_script(
 		'hey-notify-admin',

@@ -32,10 +32,30 @@ function init() {
 			'permission_callback' => '__return_true',
 		)
 	);
+
+	register_rest_route(
+		'heynotify/v1',
+		'/service_avatar',
+		array(
+			'methods'             => 'POST',
+			'callback'            => __NAMESPACE__ . '\\service_avatar',
+			'permission_callback' => '__return_true',
+		)
+	);
+
+	register_rest_route(
+		'heynotify/v1',
+		'/metabox/service_change',
+		array(
+			'methods'             => 'POST',
+			'callback'            => '\Hey_Notify\Admin\MetaBox::service_change',
+			'permission_callback' => '__return_true',
+		)
+	);
 }
 
 /**
- * Group Search
+ * Refresh CPT
  *
  * @since 1.2.0
  * @param  WP_REST_Request $request Request object.
@@ -57,4 +77,24 @@ function refresh_cpt( WP_REST_Request $request ) {
 	);
 
 	return new WP_REST_Response( 'true', 200 );
+}
+
+/**
+ * Get service avatar
+ *
+ * @since 1.5.0
+ * @param  WP_REST_Request $request Request object.
+ * @return string
+ */
+function service_avatar( WP_REST_Request $request ) {
+	$id = $request->get_param( 'id' );
+	if ( isset( $id ) ) {
+		$image_url = wp_get_attachment_image( $id, 'thumbnail' );
+		$data      = array(
+			'image_url' => $image_url,
+		);
+		return new WP_REST_Response( $data, 200 );
+	} else {
+		return new WP_REST_Response( 'false', 500 );
+	}
 }

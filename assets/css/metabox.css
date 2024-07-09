@@ -1,0 +1,61 @@
+.hey-notify-metabox {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: row wrap;
+    /* flex-wrap: wrap; */
+    gap: 0px;
+    align-items: stretch;
+}
+
+.hey-notify-metabox * {
+    box-sizing: border-box;
+}
+
+#poststuff:has(.hey-notify-metabox) .inside {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.hey-notify-metabox > div {
+    margin-top: -1px;
+    margin-left: -1px;
+    padding: 12px;
+    flex-grow: 1;
+}
+
+.hey-notify-metabox > div {
+    border-top: 1px solid #e2e4e7;
+    border-left: 1px solid #e2e4e7;
+}
+
+.hey-notify-metabox .hey-notify-label {
+    margin-bottom: 8px;
+}
+
+.hey-notify-metabox .hey-notify-instructions {
+    margin-top: 8px;
+    color: #666666;
+}
+
+.hey-notify-metabox .hey-notify-instructions:empty {
+    display: none;
+}
+
+.hey-notify-metabox .dashicons-editor-help {
+	float: right;
+}
+
+.hey-notify-metabox label {
+    font-weight: bold;
+}
+
+.hey-notify-metabox select {
+    width: 100%;
+}
+
+.hey-notify-metabox input:not([type=button]) {
+	width: 100%;
+}

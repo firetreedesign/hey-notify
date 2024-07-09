@@ -57,7 +57,7 @@ class Hook {
 
 		$message = \wp_parse_args( $data, $defaults );
 
-		$service = \carbon_get_post_meta( $this->notification->ID, 'hey_notify_service' );
+		$service = \get_post_meta( $this->notification->ID, '_hey_notify_service', true );
 
 		\do_action(
 			"hey_notify_send_message_{$service}",

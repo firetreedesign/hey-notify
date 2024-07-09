@@ -7,8 +7,6 @@
 
 namespace Hey_Notify;
 
-use Carbon_Fields\Field;
-
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -18,6 +16,17 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Comment Event class
  */
 class Comment_Event extends Event {
+
+	/**
+	 * Sets the event names for different system events.
+	 *
+	 * @param string $type Event type.
+	 */
+	public function set_event_names( $type ) {
+		$this->event_name_array = array(
+			'comment_post' => __( 'New Comment', 'hey-notify' ),
+		);
+	}
 
 	/**
 	 * Add 'Comments' to the $types array
@@ -33,29 +42,31 @@ class Comment_Event extends Event {
 	}
 
 	/**
-	 * Comment events
+	 * Page events
 	 *
 	 * @param array $fields Action fields.
 	 * @return array
 	 */
 	public function actions( $fields = array() ) {
-		$fields[] = (
-			Field::make( 'select', 'comment', __( 'Action', 'hey-notify' ) )
-				->set_options(
-					array(
-						'comment_post' => __( 'New Comment', 'hey-notify' ),
-					)
-				)
-				->set_conditional_logic(
+		array_push(
+			$fields,
+			array(
+				'field_type'        => 'select',
+				'field_name'        => 'comment',
+				'field_label'       => __( 'Action', 'hey-notify' ),
+				'choices'           => $this->event_name_array,
+				'width'             => '50%',
+				'conditional_logic' => array(
 					array(
 						array(
 							'field' => 'type',
 							'value' => 'comment',
 						),
-					)
-				)
-				->set_width( 50 )
+					),
+				),
+			)
 		);
+
 		return $fields;
 	}
 
@@ -75,7 +86,6 @@ class Comment_Event extends Event {
 				break;
 		}
 	}
-
 }
 
 new Comment_Event( 'comment', '\Hey_Notify\Comment_Hook' );

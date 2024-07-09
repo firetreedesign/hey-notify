@@ -74,7 +74,7 @@ function find_custom_post_types( $plugin, $network_wide ) {
  * Get the Custom Post Types from the Options table
  *
  * @param string $post_type Post type name.
- * @return array
+ * @return object
  */
 function get_post_types_object( $post_type = null ) {
 	$post_types = get_option(

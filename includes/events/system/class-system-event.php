@@ -7,8 +7,6 @@
 
 namespace Hey_Notify;
 
-use Carbon_Fields\Field;
-
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -18,6 +16,22 @@ if ( ! defined( 'ABSPATH' ) ) {
  * System Event class
  */
 class System_Event extends Event {
+
+	/**
+	 * Sets the event names for different system events.
+	 *
+	 * @param string $type Event type.
+	 */
+	public function set_event_names( $type ) {
+		$this->event_name_array = array(
+			'system_core_update'        => __( 'WordPress Update Available', 'hey-notify' ),
+			'system_plugin_update'      => __( 'Plugin Update Available', 'hey-notify' ),
+			'system_plugin_activated'   => __( 'Plugin Activated', 'hey-notify' ),
+			'system_plugin_deactivated' => __( 'Plugin Deactivated', 'hey-notify' ),
+			'system_theme_update'       => __( 'Theme Update Available', 'hey-notify' ),
+			'system_theme_changed'      => __( 'Theme Changed', 'hey-notify' ),
+		);
+	}
 
 	/**
 	 * Add 'System' to the $types array
@@ -33,34 +47,31 @@ class System_Event extends Event {
 	}
 
 	/**
-	 * System events
+	 * Page events
 	 *
 	 * @param array $fields Action fields.
 	 * @return array
 	 */
 	public function actions( $fields = array() ) {
-		$fields[] = (
-			Field::make( 'select', 'system', __( 'Action', 'hey-notify' ) )
-				->set_options(
-					array(
-						'system_core_update'        => __( 'WordPress Update Available', 'hey-notify' ),
-						'system_plugin_update'      => __( 'Plugin Update Available', 'hey-notify' ),
-						'system_plugin_activated'   => __( 'Plugin Activated', 'hey-notify' ),
-						'system_plugin_deactivated' => __( 'Plugin Deactivated', 'hey-notify' ),
-						'system_theme_update'       => __( 'Theme Update Available', 'hey-notify' ),
-						'system_theme_changed'      => __( 'Theme Changed', 'hey-notify' ),
-					)
-				)
-				->set_conditional_logic(
+		array_push(
+			$fields,
+			array(
+				'field_type'        => 'select',
+				'field_name'        => 'system',
+				'field_label'       => __( 'Action', 'hey-notify' ),
+				'choices'           => $this->event_name_array,
+				'width'             => '50%',
+				'conditional_logic' => array(
 					array(
 						array(
 							'field' => 'type',
 							'value' => 'system',
 						),
-					)
-				)
-				->set_width( 50 )
+					),
+				),
+			)
 		);
+
 		return $fields;
 	}
 
@@ -98,7 +109,6 @@ class System_Event extends Event {
 				break;
 		}
 	}
-
 }
 
 new System_Event( 'system', '\Hey_Notify\System_Hook' );
