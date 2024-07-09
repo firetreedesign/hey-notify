@@ -1,6 +1,6 @@
 === Hey Notify ===
 Contributors: firetree, danielmilner
-Tags: notifications, alert, slack, discord, email, microsoft teams, ninja forms, gravity forms
+Tags: notifications, alert, slack, discord, email
 Requires at least: 4.3
 Tested up to: 6.6
 Requires PHP: 7.2
