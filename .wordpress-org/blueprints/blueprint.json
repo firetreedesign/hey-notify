@@ -22,6 +22,16 @@
             "options": {
                 "activate": true
             }
+        },
+        {
+            "step": "installPlugin",
+            "pluginZipFile": {
+                "resource": "wordpress.org\/plugins",
+                "slug": "wp-mail-logging"
+            },
+            "options": {
+                "activate": true
+            }
         }
     ]
 }
