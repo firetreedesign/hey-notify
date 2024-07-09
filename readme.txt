@@ -55,12 +55,13 @@ Get notified when things happen in WordPress.
     * Theme Updates
     * Theme Change
 
-= Hey Notify Add-ons =
+= Hey Notify Pro =
 
-Premium add-ons are available to extend the capabilities of Hey Notify.
+Stay in the know with [Hey Notify Pro](https://heynotifywp.com/pro/). Premium features to keep you up to date with everything happening on your website.
 
-* [Gravity Forms](https://heynotifywp.com/add-ons/gravity-forms/)
-* [Ninja Forms](https://heynotifywp.com/add-ons/ninja-forms/)
+* Native integration with Gravity Forms.
+* Native integration with Ninja Forms.
+* Sales notifications from Easy Digital Downloads.
 
 == Installation ==
 
@@ -71,8 +72,17 @@ Premium add-ons are available to extend the capabilities of Hey Notify.
 == Screenshots ==
 
 1. Notification Settings
+2. Hey Notify Settings Page
 
 == Changelog ==
+
+= 2.0.0 =
+* BREAKING CHANGES - If you use our Gravity Forms or Ninja Forms add-on, please download our new Pro add-on from your [Account](https://heynotifywp.com/account/) as the individual plugins have been discontinued.
+* Migrated settings from Carbon Fields to our own custom fields.
+* Settings page redesign.
+* Notification event tags now show their complete event name.
+* Updated Slack settings to reflect their new webhook API.
+* New Comment notifications are not sent if comment is marked as spam.
 
 = 1.4.2 =
 * Fixed an issue with Post/Page/CPT Updated notifications being triggered.
