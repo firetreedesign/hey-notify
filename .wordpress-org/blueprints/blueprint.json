@@ -31,7 +31,7 @@
             "step": "importWxr",
             "file": {
                 "resource": "url",
-                "url": "https://raw.githubusercontent.com/firetreedesign/hey-notify/master/data/live-preview.xml"
+                "url": "https://raw.githubusercontent.com/firetreedesign/hey-notify/main/data/live-preview.xml"
             }
         },
         {
