@@ -1,14 +1,15 @@
 {
-    "landingPage": "/wp-admin/post-new.php?post_type=hey_notify",
+    "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+    "landingPage": "/wp-admin/edit.php?post_type=hey_notify",
     "preferredVersions": {
-        "php": "7.4",
-        "wp": "5.9"
+        "php": "latest",
+        "wp": "latest"
     },
     "phpExtensionBundles": [
         "kitchen-sink"
     ],
     "features": {
-        "networking": true
+        "networking": false
     },
     "steps": [
         {
@@ -19,7 +20,7 @@
         {
             "step": "installPlugin",
             "pluginZipFile": {
-                "resource": "wordpress.org\/plugins",
+                "resource": "wordpress.org/plugins",
                 "slug": "hey-notify"
             },
             "options": {
@@ -27,23 +28,10 @@
             }
         },
         {
-            "step": "installPlugin",
-            "pluginZipFile": {
-                "resource": "wordpress.org\/plugins",
-                "slug": "wp-mail-logging"
-            },
-            "options": {
-                "activate": true
-            }
-        },
-        {
-            "step": "installPlugin",
-            "pluginZipFile": {
-                "resource": "wordpress.org\/plugins",
-                "slug": "inspect-http-requests"
-            },
-            "options": {
-                "activate": true
+            "step": "importWxr",
+            "file": {
+                "resource": "url",
+                "url": "https://heynotifywp.com/wp-content/uploads/2024/07/hey-notify-live-preview.xml"
             }
         }
     ]
