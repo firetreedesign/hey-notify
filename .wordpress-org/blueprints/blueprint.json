@@ -31,7 +31,14 @@
             "step": "importWxr",
             "file": {
                 "resource": "url",
-                "url": "https://heynotifywp.com/wp-content/uploads/2024/07/hey-notify-live-preview.xml"
+                "url": "https://raw.githubusercontent.com/firetreedesign/hey-notify/master/data/live-preview.xml"
+            }
+        },
+        {
+            "step": "setSiteOptions",
+            "options": {
+                "blogname": "Hey Notify Live Preview",
+                "hey_notify_live_preview": true
             }
         }
     ]
