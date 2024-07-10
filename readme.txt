@@ -4,7 +4,7 @@ Tags: notifications, alert, slack, discord, email
 Requires at least: 4.3
 Tested up to: 6.6
 Requires PHP: 7.2
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://ww.gnu.org/licenses/gpl-2.0.html
 
@@ -75,6 +75,9 @@ Stay in the know with [Hey Notify Pro](https://heynotifywp.com/pro/). Premium fe
 2. Hey Notify Settings Page
 
 == Changelog ==
+
+= 2.0.2 =
+* Fixed version.
 
 = 2.0.1 =
 * Changed network requests to use `wp_safe_remote_post`.
