@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Hey Notify\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-02 05:52+0000\n"
+"POT-Creation-Date: 2024-07-10 21:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -16,16 +16,16 @@ msgstr ""
 "X-Loco-Version: 2.6.10; wp-6.5.5\n"
 "X-Domain: hey-notify"
 
-#: includes/events/page/class-page-event.php:63
-#: includes/events/post/class-post-event.php:63
-#: includes/events/cpt/class-cpt-event.php:92
-#: includes/events/comment/class-comment-event.php:58
-#: includes/events/user/class-user-event.php:60
-#: includes/events/system/class-system-event.php:63
+#: includes/events/page/class-page-event.php:61
+#: includes/events/post/class-post-event.php:61
+#: includes/events/cpt/class-cpt-event.php:88
+#: includes/events/comment/class-comment-event.php:56
+#: includes/events/user/class-user-event.php:58
+#: includes/events/system/class-system-event.php:61
 msgid "Action"
 msgstr ""
 
-#: includes/services/class-email.php:65
+#: includes/services/class-email.php:64
 msgid "Add Email Address"
 msgstr ""
 
@@ -41,11 +41,15 @@ msgstr ""
 msgid "Add New Notification"
 msgstr ""
 
-#: includes/events/user/class-user-event.php:31
+#: includes/helpers.php:140
+msgid "Add Notification"
+msgstr ""
+
+#: includes/events/user/class-user-event.php:29
 msgid "Administrator Failed Login"
 msgstr ""
 
-#: includes/events/user/class-user-event.php:30
+#: includes/events/user/class-user-event.php:28
 msgid "Administrator Login"
 msgstr ""
 
@@ -57,16 +61,16 @@ msgstr ""
 msgid "Approved"
 msgstr ""
 
-#: includes/services/class-slack.php:288
+#: includes/services/class-slack.php:286
 msgid "Attached image"
 msgstr ""
 
-#: includes/services/class-microsoft-teams.php:86
-#: includes/services/class-microsoft-teams.php:166
+#: includes/services/class-microsoft-teams.php:84
+#: includes/services/class-microsoft-teams.php:164
 msgid "Color"
 msgstr ""
 
-#: includes/events/comment/class-comment-event.php:41
+#: includes/events/comment/class-comment-event.php:39
 msgid "Comments"
 msgstr ""
 
@@ -87,34 +91,30 @@ msgid "Default Service"
 msgstr ""
 
 #: includes/services/class-discord.php:164
-#: includes/services/class-discord.php:432
 msgid "Default Settings for Discord"
 msgstr ""
 
-#: includes/services/class-microsoft-teams.php:139
+#: includes/services/class-microsoft-teams.php:137
 msgid "Default Settings for Microsoft Teams"
 msgstr ""
 
-#: includes/services/class-slack.php:118
+#: includes/services/class-slack.php:117
 msgid "Default Settings for Slack"
 msgstr ""
 
 #: includes/services/class-discord.php:56
 #: includes/services/class-discord.php:141
 #: includes/services/class-discord.php:278
-#: includes/services/class-discord.php:430
 msgid "Discord"
 msgstr ""
 
 #: includes/services/class-discord.php:91
 #: includes/services/class-discord.php:191
-#: includes/services/class-discord.php:436
 msgid "Discord Avatar"
 msgstr ""
 
 #: includes/services/class-discord.php:110
 #: includes/services/class-discord.php:207
-#: includes/services/class-discord.php:439
 msgid "Discord Username"
 msgstr ""
 
@@ -122,21 +122,16 @@ msgstr ""
 msgid "Done refreshing custom post types"
 msgstr ""
 
-#: includes/cpt.php:44
+#: includes/cpt.php:44 includes/helpers.php:143
 msgid "Edit Notification"
 msgstr ""
 
-#: includes/services/class-email.php:47 includes/services/class-email.php:114
+#: includes/services/class-email.php:46 includes/services/class-email.php:113
 msgid "Email"
 msgstr ""
 
-#: includes/services/class-email.php:70 includes/services/class-email.php:132
-#: includes/services/class-email.php:138
+#: includes/services/class-email.php:69
 msgid "Email Address"
-msgstr ""
-
-#: includes/services/class-email.php:137
-msgid "Email Addresses"
 msgstr ""
 
 #: includes/licenses.php:29
@@ -180,12 +175,11 @@ msgstr ""
 msgid "https://heynotifywp.com/"
 msgstr ""
 
-#: includes/services/class-slack.php:66 includes/services/class-slack.php:136
+#: includes/services/class-slack.php:65 includes/services/class-slack.php:135
 #: includes/services/class-discord.php:72
 #: includes/services/class-discord.php:182
-#: includes/services/class-discord.php:435
-#: includes/services/class-microsoft-teams.php:67
-#: includes/services/class-microsoft-teams.php:157
+#: includes/services/class-microsoft-teams.php:65
+#: includes/services/class-microsoft-teams.php:155
 msgid "Learn More"
 msgstr ""
 
@@ -194,17 +188,17 @@ msgstr ""
 msgid "Licenses"
 msgstr ""
 
-#: includes/services/class-microsoft-teams.php:51
-#: includes/services/class-microsoft-teams.php:116
-#: includes/services/class-microsoft-teams.php:219
+#: includes/services/class-microsoft-teams.php:49
+#: includes/services/class-microsoft-teams.php:114
+#: includes/services/class-microsoft-teams.php:217
 msgid "Microsoft Teams"
 msgstr ""
 
-#: includes/events/comment/class-comment-event.php:29
+#: includes/events/comment/class-comment-event.php:27
 msgid "New Comment"
 msgstr ""
 
-#: includes/events/user/class-user-event.php:29
+#: includes/events/user/class-user-event.php:27
 msgid "New User Registration"
 msgstr ""
 
@@ -224,10 +218,14 @@ msgstr ""
 msgid "Notification Events"
 msgstr ""
 
-#: includes/services/class-microsoft-teams.php:258
-#: includes/services/class-microsoft-teams.php:259
-#: includes/services/class-microsoft-teams.php:266
+#: includes/services/class-microsoft-teams.php:255
+#: includes/services/class-microsoft-teams.php:256
+#: includes/services/class-microsoft-teams.php:263
 msgid "Notification from Hey Notify"
+msgstr ""
+
+#: includes/helpers.php:133
+msgid "Notifications"
 msgstr ""
 
 #: includes/admin/settings/class-general.php:91
@@ -240,41 +238,39 @@ msgstr ""
 
 #: includes/services/class-discord.php:92
 #: includes/services/class-discord.php:198
-#: includes/services/class-discord.php:437
 msgid "Override the default avatar of the webhook. Not required."
 msgstr ""
 
 #: includes/services/class-discord.php:111
 #: includes/services/class-discord.php:215
-#: includes/services/class-discord.php:440
 msgid "Override the default username of the webhook. Not required."
 msgstr ""
 
-#: includes/events/page/class-page-event.php:29
+#: includes/events/page/class-page-event.php:27
 msgid "Page Draft"
 msgstr ""
 
-#: includes/events/page/class-page-event.php:34
+#: includes/events/page/class-page-event.php:32
 msgid "Page Moved to Trash"
 msgstr ""
 
-#: includes/events/page/class-page-event.php:30
+#: includes/events/page/class-page-event.php:28
 msgid "Page Pending"
 msgstr ""
 
-#: includes/events/page/class-page-event.php:31
+#: includes/events/page/class-page-event.php:29
 msgid "Page Published"
 msgstr ""
 
-#: includes/events/page/class-page-event.php:32
+#: includes/events/page/class-page-event.php:30
 msgid "Page Scheduled"
 msgstr ""
 
-#: includes/events/page/class-page-event.php:33
+#: includes/events/page/class-page-event.php:31
 msgid "Page Updated"
 msgstr ""
 
-#: includes/events/page/class-page-event.php:46
+#: includes/events/page/class-page-event.php:44
 msgid "Pages"
 msgstr ""
 
@@ -290,35 +286,35 @@ msgstr ""
 msgid "Please enter your license keys in order to receive updates and support."
 msgstr ""
 
-#: includes/events/system/class-system-event.php:31
+#: includes/events/system/class-system-event.php:29
 msgid "Plugin Activated"
 msgstr ""
 
-#: includes/events/system/class-system-event.php:32
+#: includes/events/system/class-system-event.php:30
 msgid "Plugin Deactivated"
 msgstr ""
 
-#: includes/events/system/class-system-event.php:30
+#: includes/events/system/class-system-event.php:28
 msgid "Plugin Update Available"
 msgstr ""
 
-#: includes/events/post/class-post-event.php:29
+#: includes/events/post/class-post-event.php:27
 msgid "Post Draft"
 msgstr ""
 
-#: includes/events/post/class-post-event.php:34
+#: includes/events/post/class-post-event.php:32
 msgid "Post Moved to Trash"
 msgstr ""
 
-#: includes/events/post/class-post-event.php:30
+#: includes/events/post/class-post-event.php:28
 msgid "Post Pending"
 msgstr ""
 
-#: includes/events/post/class-post-event.php:31
+#: includes/events/post/class-post-event.php:29
 msgid "Post Published"
 msgstr ""
 
-#: includes/events/post/class-post-event.php:32
+#: includes/events/post/class-post-event.php:30
 msgid "Post Scheduled"
 msgstr ""
 
@@ -332,11 +328,11 @@ msgctxt "Post Type Singular Name"
 msgid "Notification"
 msgstr ""
 
-#: includes/events/post/class-post-event.php:33
+#: includes/events/post/class-post-event.php:31
 msgid "Post Updated"
 msgstr ""
 
-#: includes/events/post/class-post-event.php:46
+#: includes/events/post/class-post-event.php:44
 msgid "Posts"
 msgstr ""
 
@@ -357,8 +353,8 @@ msgstr ""
 msgid "Search Notifications"
 msgstr ""
 
-#: includes/services/class-microsoft-teams.php:87
-#: includes/services/class-microsoft-teams.php:173
+#: includes/services/class-microsoft-teams.php:85
+#: includes/services/class-microsoft-teams.php:171
 msgid "Select a color to use for the message attachment."
 msgstr ""
 
@@ -375,7 +371,7 @@ msgstr ""
 msgid "Select Image"
 msgstr ""
 
-#: includes/services/class-email.php:63 includes/services/class-email.php:129
+#: includes/services/class-email.php:62
 msgid "Send notifications to"
 msgstr ""
 
@@ -383,13 +379,13 @@ msgstr ""
 msgid "Service"
 msgstr ""
 
-#: includes/admin/class-pages.php:42 includes/admin/class-pages.php:43
-#: includes/admin/class-pages.php:70
+#: includes/helpers.php:136 includes/admin/class-pages.php:42
+#: includes/admin/class-pages.php:43
 msgid "Settings"
 msgstr ""
 
-#: includes/services/class-slack.php:49 includes/services/class-slack.php:96
-#: includes/services/class-slack.php:183
+#: includes/services/class-slack.php:48 includes/services/class-slack.php:95
+#: includes/services/class-slack.php:182
 msgid "Slack"
 msgstr ""
 
@@ -397,34 +393,33 @@ msgstr ""
 msgid "Spam"
 msgstr ""
 
-#: includes/events/system/class-system-event.php:46
+#: includes/events/system/class-system-event.php:44
 msgid "System"
 msgstr ""
 
 #: includes/services/class-discord.php:72
 #: includes/services/class-discord.php:182
-#: includes/services/class-discord.php:435
 msgid "The webhook that you created for your Discord channel."
 msgstr ""
 
-#: includes/services/class-microsoft-teams.php:67
-#: includes/services/class-microsoft-teams.php:157
+#: includes/services/class-microsoft-teams.php:65
+#: includes/services/class-microsoft-teams.php:155
 msgid "The webhook that you created for your Microsoft Teams channel."
 msgstr ""
 
-#: includes/services/class-slack.php:66 includes/services/class-slack.php:136
+#: includes/services/class-slack.php:65 includes/services/class-slack.php:135
 msgid "The webhook that you created for your Slack channel."
 msgstr ""
 
-#: includes/events/system/class-system-event.php:34
+#: includes/events/system/class-system-event.php:32
 msgid "Theme Changed"
 msgstr ""
 
-#: includes/events/system/class-system-event.php:33
+#: includes/events/system/class-system-event.php:31
 msgid "Theme Update Available"
 msgstr ""
 
-#: includes/services/class-email.php:66
+#: includes/services/class-email.php:65
 msgid "There are email addresses yet."
 msgstr ""
 
@@ -449,17 +444,17 @@ msgstr ""
 msgid "Upgrade to Pro"
 msgstr ""
 
-#: includes/admin/settings/class-uninstall.php:92
+#: includes/admin/settings/class-uninstall.php:99
 msgid ""
 "Upon deletion of Hey Notify, you can optionally remove any custom tables, "
 "settings, and license keys that have been entered."
 msgstr ""
 
-#: includes/events/user/class-user-event.php:43
+#: includes/events/user/class-user-event.php:41
 msgid "Users"
 msgstr ""
 
-#: includes/services/class-microsoft-teams.php:307
+#: includes/services/class-microsoft-teams.php:304
 msgid "View"
 msgstr ""
 
@@ -497,16 +492,19 @@ msgstr ""
 msgid "View user's profile"
 msgstr ""
 
-#: includes/services/class-slack.php:65 includes/services/class-slack.php:128
+#: includes/services/class-slack.php:64 includes/services/class-slack.php:127
 #: includes/services/class-discord.php:71
 #: includes/services/class-discord.php:174
-#: includes/services/class-discord.php:433
-#: includes/services/class-microsoft-teams.php:66
-#: includes/services/class-microsoft-teams.php:149
+#: includes/services/class-microsoft-teams.php:64
+#: includes/services/class-microsoft-teams.php:147
 msgid "Webhook URL"
 msgstr ""
 
-#: includes/events/system/class-system-event.php:29
+#: includes/cpt.php:260
+msgid "While in the Live Preview mode, notifications will not be sent."
+msgstr ""
+
+#: includes/events/system/class-system-event.php:27
 msgid "WordPress Update Available"
 msgstr ""
 
