@@ -4,6 +4,8 @@
 
 [View plugin on WordPress.org](https://wordpress.org/plugins/hey-notify)
 
+[Live Preview in WordPress Playground](https://wordpress.org/plugins/hey-notify/?preview=1)
+
 Get notified when things happen in WordPress.
 
 **Notifications can be sent to:**

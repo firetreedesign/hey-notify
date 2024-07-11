@@ -4,7 +4,7 @@ Tags: notifications, alert, slack, discord, email
 Requires at least: 4.3
 Tested up to: 6.6
 Requires PHP: 7.2
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 License: GPLv2 or later
 License URI: http://ww.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,11 @@ Stay in the know with [Hey Notify Pro](https://heynotifywp.com/pro/). Premium fe
 
 == Changelog ==
 
+= 2.0.3 =
+* Added support for Live Preview in the Plugin Directory.
+* Expanded admin header to add and edit notification pages.
+* Updated language file for translations.
+
 = 2.0.2 =
 * Fixed version.
 
@@ -89,14 +94,3 @@ Stay in the know with [Hey Notify Pro](https://heynotifywp.com/pro/). Premium fe
 * Notification event tags now show their complete event name.
 * Updated Slack settings to reflect their new webhook API.
 * New Comment notifications are not sent if comment is marked as spam.
-
-= 1.4.2 =
-* Fixed an issue with Post/Page/CPT Updated notifications being triggered.
-
-= 1.4.1 =
-* Fixed a reference to a function that did not exist.
-
-= 1.4.0 =
-* Added support for Microsoft Teams.
-* Improved the type of status changes than can be detected for Posts, Pages, and Custom Post Types.
-* Reorganized the Settings page.
