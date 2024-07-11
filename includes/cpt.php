@@ -18,6 +18,7 @@ add_action( 'manage_hey_notify_posts_custom_column', __NAMESPACE__ . '\\column_c
 add_action( 'admin_head', __NAMESPACE__ . '\\admin_head' );
 add_action( 'admin_menu', __NAMESPACE__ . '\\admin_menu' );
 add_action( 'admin_notices', __NAMESPACE__ . '\\admin_notices', 1 );
+add_action( 'admin_notices', __NAMESPACE__ . '\\admin_notices_live_preview' );
 
 // Filters.
 add_filter( 'use_block_editor_for_post_type', __NAMESPACE__ . '\\disable_block_editor', 10, 2 );
@@ -198,18 +199,19 @@ function admin_menu() {
  */
 function admin_notices() {
 	global $pagenow;
+	global $typenow;
 
-	if ( 'edit.php' !== $pagenow ) {
+	if ( 'edit.php' !== $pagenow && 'post-new.php' !== $pagenow && 'post.php' !== $pagenow ) {
 		return;
 	}
 
 	// phpcs:ignore
-	if ( ! isset( $_GET['post_type'] ) ) {
+	if ( ! isset( $_GET['post_type'] ) && 'hey_notify' !== $typenow ) {
 		return;
 	}
 
 	// phpcs:ignore
-	if ( 'hey_notify' !== $_GET['post_type'] ) {
+	if ( isset( $_GET['post_type'] ) && 'hey_notify' !== $_GET['post_type'] ) {
 		return;
 	}
 
@@ -219,4 +221,45 @@ function admin_notices() {
 	}
 
 	\Hey_Notify\Helpers\admin_header();
+}
+
+/**
+ * Function for handling live preview notifications in the admin area.
+ */
+function admin_notices_live_preview() {
+	global $pagenow;
+	global $typenow;
+
+	if ( 'edit.php' !== $pagenow && 'post-new.php' !== $pagenow && 'post.php' !== $pagenow ) {
+		return;
+	}
+
+	// phpcs:ignore
+	if ( ! isset( $_GET['post_type'] ) && 'hey_notify' !== $typenow ) {
+		return;
+	}
+
+	// phpcs:ignore
+	if ( isset( $_GET['post_type'] ) && 'hey_notify' !== $_GET['post_type'] ) {
+		return;
+	}
+
+	$screen = function_exists( 'get_current_screen' ) ? \get_current_screen() : false;
+	if ( $screen && $screen->is_block_editor() ) {
+		return;
+	}
+
+	if ( boolval( get_option( 'hey_notify_live_preview', 0 ) ) !== true ) {
+		return;
+	}
+
+	?>
+	<div class="notice notice-info">
+		<p>
+			<?php
+			esc_html_e( 'While in the Live Preview mode, notifications will not be sent.', 'hey-notify' );
+			?>
+		</p>
+	</div>
+	<?php
 }

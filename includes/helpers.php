@@ -114,6 +114,9 @@ function get_allowed_tags() {
  * Outputs the admin header HTML content.
  */
 function admin_header() {
+	global $pagenow;
+	global $typenow;
+
 	$all_tabs        = \apply_filters( 'hey_notify_settings_page_tabs', array() );
 	$active_tab      = isset( $_GET['tab'] ) ? $_GET['tab'] : ( count( $all_tabs ) > 0 ? $all_tabs[0]['tab_id'] : '' ); // phpcs:ignore
 	$all_tab_actions = \apply_filters( 'hey_notify_settings_page_actions', array() );
@@ -130,17 +133,23 @@ function admin_header() {
 	$page_title   = __( 'Notifications', 'hey-notify' );
 	switch ( $current_page ) {
 		case 'settings':
-			$page_title = __( 'Settings', 'easy-digital-downloads' );
+			$page_title   = __( 'Settings', 'hey-notify' );
 			break;
+	}
+	if ( 'post-new.php' === $pagenow ) {
+		$page_title   = __( 'Add Notification', 'hey-notify' );
+	}
+	if ( 'post.php' === $pagenow && 'hey_notify' === $typenow ) {
+		$page_title   = __( 'Edit Notification', 'hey-notify' );
 	}
 	?>
 		<style>
 			.wrap h1.wp-heading-inline {
 				display: none;
 			}
-			.page-title-action {
+			/* .page-title-action {
 				visibility: hidden;
-			}
+			} */
 			.hey-notify-admin-header-container {
 				background-color: #fff;
 				margin-left: -20px;
