@@ -2,6 +2,17 @@
 
 This is an archive of older changelog entries. Most recent entries are maintained in readme.txt
 
+= 1.4.2 =
+* Fixed an issue with Post/Page/CPT Updated notifications being triggered.
+
+= 1.4.1 =
+* Fixed a reference to a function that did not exist.
+
+= 1.4.0 =
+* Added support for Microsoft Teams.
+* Improved the type of status changes than can be detected for Posts, Pages, and Custom Post Types.
+* Reorganized the Settings page.
+
 = 1.3.0 =
 * Added default settings for Slack and Discord.
 * Added a button to manually refresh the list of Custom Post Types.
