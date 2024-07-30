@@ -58,6 +58,7 @@ Get notified when things happen in WordPress.
 
 Stay in the know with [Hey Notify Pro](https://heynotifywp.com/pro/). Premium features to keep you up to date with everything happening on your website.
 
+* Customize notification messages.
 * Native integration with Gravity Forms.
 * Native integration with Ninja Forms.
 * Sales notifications from Easy Digital Downloads.
