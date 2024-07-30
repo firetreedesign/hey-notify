@@ -88,14 +88,6 @@
 		<wp:meta_value><![CDATA[]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
-		<wp:meta_key><![CDATA[_hey_notify_microsoft_teams_webhook]]></wp:meta_key>
-		<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_hey_notify_microsoft_teams_color]]></wp:meta_key>
-		<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
 		<wp:meta_key><![CDATA[_hey_notify_email_addresses]]></wp:meta_key>
 		<wp:meta_value><![CDATA[[{"email":"user@host.com"}]]]></wp:meta_value>
 		</wp:postmeta>
@@ -149,14 +141,6 @@
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_hey_notify_discord_username]]></wp:meta_key>
-		<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_hey_notify_microsoft_teams_webhook]]></wp:meta_key>
-		<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_hey_notify_microsoft_teams_color]]></wp:meta_key>
 		<wp:meta_value><![CDATA[]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>

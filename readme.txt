@@ -4,7 +4,7 @@ Tags: notifications, alert, slack, discord, email
 Requires at least: 4.3
 Tested up to: 6.6
 Requires PHP: 7.2
-Stable tag: 2.0.3
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://ww.gnu.org/licenses/gpl-2.0.html
 
@@ -18,7 +18,6 @@ Get notified when things happen in WordPress.
 
 * Slack
 * Discord
-* Microsoft Teams
 * Email
 
 = Notifications for: =
@@ -75,6 +74,10 @@ Stay in the know with [Hey Notify Pro](https://heynotifywp.com/pro/). Premium fe
 2. Hey Notify Settings Page
 
 == Changelog ==
+
+= 2.1.0 =
+* Microsoft Teams support has been removed due to changes with Office 365 connectors.
+* Changes to improve Hey Notify Pro capabilities.
 
 = 2.0.3 =
 * Added support for Live Preview in the Plugin Directory.

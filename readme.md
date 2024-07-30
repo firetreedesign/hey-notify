@@ -12,7 +12,6 @@ Get notified when things happen in WordPress.
 
 - Slack
 - Discord
-- Microsoft Teams
 - Email
 
 **Notifications for:**
