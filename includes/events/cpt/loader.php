@@ -98,7 +98,9 @@ function get_post_types_object( $post_type = null ) {
 	}
 
 	// Remove the "cpt_" prefix.
-	$post_type = \substr( $post_type, 4 );
+	if ( str_starts_with( $post_type, 'cpt_' ) ) {
+		$post_type = \substr( $post_type, 4 );
+	}
 
 	return $decoded_post_types->{$post_type};
 }

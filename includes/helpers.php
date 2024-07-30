@@ -142,6 +142,8 @@ function admin_header() {
 	if ( 'post.php' === $pagenow && 'hey_notify' === $typenow ) {
 		$page_title   = __( 'Edit Notification', 'hey-notify' );
 	}
+
+	$page_title = apply_filters( 'hey_notify_admin_page_title', $page_title );
 	?>
 		<style>
 			.wrap h1.wp-heading-inline {

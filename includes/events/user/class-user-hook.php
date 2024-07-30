@@ -40,7 +40,6 @@ class User_Hook extends Hook {
 		$subject = apply_filters( 'hey_notify_user_new_subject', $subject, $user );
 
 		$this->prepare_data( $subject, $user );
-
 	}
 
 	/**
@@ -65,7 +64,6 @@ class User_Hook extends Hook {
 		$subject = apply_filters( 'hey_notify_user_admin_login_subject', $subject, $user );
 
 		$this->prepare_data( $subject, $user );
-
 	}
 
 	/**
@@ -156,7 +154,6 @@ class User_Hook extends Hook {
 	 * @return string
 	 */
 	private function get_ip_address() {
-
 		if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
 			return sanitize_text_field( wp_unslash( $_SERVER['HTTP_CLIENT_IP'] ) );
 		} elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) && '::1' !== $_SERVER['HTTP_X_FORWARDED_FOR'] ) {
@@ -166,6 +163,5 @@ class User_Hook extends Hook {
 		} else {
 			return __( 'Unknown', 'hey-notify' );
 		}
-
 	}
 }

@@ -48,6 +48,7 @@
     right: 0;
     bottom: 0;
     z-index: 1;
+    background-color: #fff;
 }
 .hey-notify-imageinput-field-preview img {
     position: relative;
