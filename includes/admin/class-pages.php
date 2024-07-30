@@ -67,26 +67,22 @@ class Pages {
 				<?php endforeach; ?>
 			</h1>
 			<div id="hey_notify_tab_container" class="metabox-holder">
-				<div class="postbox">
-					<div class="inside">
-						<form method="post" action="options.php">
-							<table class="form-table">
-								<?php
-								foreach ( $all_tabs as $tab ) {
-									if ( isset( $tab['tab_id'] ) && isset( $tab['settings_id'] ) && $tab['tab_id'] === $active_tab ) {
-										settings_fields( $tab['settings_id'] );
-										do_settings_sections( $tab['settings_id'] );
-										if ( true === $tab['submit'] ) {
-											submit_button();
-										}
-										settings_errors();
-									}
+				<form method="post" action="options.php">
+					<table class="form-table">
+						<?php
+						foreach ( $all_tabs as $tab ) {
+							if ( isset( $tab['tab_id'] ) && isset( $tab['settings_id'] ) && $tab['tab_id'] === $active_tab ) {
+								settings_fields( $tab['settings_id'] );
+								do_settings_sections( $tab['settings_id'] );
+								if ( true === $tab['submit'] ) {
+									submit_button();
 								}
-								?>
-							</table>
-						</form>
-					</div>
-				</div>
+								settings_errors();
+							}
+						}
+						?>
+					</table>
+				</form>
 			</div><!-- #tab_container-->
 		</div>
 		<?php

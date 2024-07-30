@@ -45,7 +45,7 @@ class General extends Settings {
 		add_settings_section(
 			'hey_notify_settings_general_section',
 			__( 'General Settings', 'hey-notify' ),
-			array( $this, 'general_section_callback' ),
+			null,
 			'hey_notify_settings_general'
 		);
 
@@ -74,7 +74,7 @@ class General extends Settings {
 		add_settings_section(
 			'hey_notify_settings_general_cpt_section',
 			__( 'Custom Post Type Settings', 'hey-notify' ),
-			array( $this, 'cpt_section_callback' ),
+			null,
 			'hey_notify_settings_general'
 		);
 
@@ -111,28 +111,6 @@ class General extends Settings {
 			'hey_notify_settings_general', // The name of the set of options being registered.
 			array( $this, 'sanitize_callback' ) // The name of the function responsible for validating the fields.
 		);
-	}
-
-	/**
-	 * General section callback
-	 *
-	 * @since 1.5.0
-	 *
-	 * @return void
-	 */
-	public function general_section_callback() {
-		// Do nothing.
-	}
-
-	/**
-	 * CPT section callback
-	 *
-	 * @since 1.5.0
-	 *
-	 * @return void
-	 */
-	public function cpt_section_callback() {
-		// Do nothing.
 	}
 
 	/**

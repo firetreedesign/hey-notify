@@ -170,6 +170,9 @@ function admin_head() {
 	<style>
 		.hey-notify-tag { border-radius: 3px; display: inline-block; margin-bottom: 4px; padding: 2px 4px; font-size: 11px; }
 		.hey-notify-tag:not(:last-of-type) { margin-right: 4px; }
+		form table.form-table + h2 {
+			margin-top: 30px !important;
+		}
 	</style>
 	<?php
 }

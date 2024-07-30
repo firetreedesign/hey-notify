@@ -303,7 +303,6 @@ class System_Hook extends Hook {
 		);
 
 		$this->send( $data );
-
 	}
 
 	/**
@@ -334,7 +333,6 @@ class System_Hook extends Hook {
 		}
 
 		\update_option( 'hey_notify_plugin_versions', $new_plugin_versions );
-
 	}
 
 	/**
