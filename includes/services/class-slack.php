@@ -31,7 +31,7 @@ class Slack extends Service {
 		// Actions.
 		\add_action( 'hey_notify_send_message_slack', array( $this, 'send' ), 10, 3 );
 		\add_action( 'admin_init', array( $this, 'settings' ) );
-		\add_action( 'hey_notify_slack_settings_core', array( $this, 'get_core_settings' ), 10, 1 );
+		\add_filter( 'hey_notify_slack_settings_core', array( $this, 'get_core_settings' ), 10, 1 );
 
 		// Filters.
 		\add_filter( 'hey_notify_settings_page_tabs', array( $this, 'settings_page_tabs' ) );
@@ -210,7 +210,7 @@ class Slack extends Service {
 	 * @return string
 	 */
 	private function sanitize( $value ) {
-		$value = null === $value ? '' : $value;
+		$value = $value ?? '';
 		$value = str_replace( '&', '&amp;', $value );
 		$value = str_replace( '<', '&lt;', $value );
 		$value = str_replace( '>', '&gt;', $value );
