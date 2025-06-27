@@ -3,7 +3,7 @@
  * Plugin Name: Hey Notify
  * Plugin URI: https://heynotifywp.com/
  * Description: Get notified when things happen in WordPress.
- * Version: 2.1.0
+ * Version: 2.1.1
  * Author: FireTree Design, LLC <info@firetreedesign.com>
  * Author URI: https://firetreedesign.com/
  * Text Domain: hey-notify
