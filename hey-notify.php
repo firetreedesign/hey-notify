@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'HEY_NOTIFY_VERSION', '2.1.0' );
+define( 'HEY_NOTIFY_VERSION', '2.1.1' );
 define( 'HEY_NOTIFY_PLUGIN_FILE', __FILE__ );
 define( 'HEY_NOTIFY_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'HEY_NOTIFY_PLUGIN_URL', plugin_dir_url( __FILE__ ) );

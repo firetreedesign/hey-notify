@@ -2,9 +2,9 @@
 Contributors: firetree, danielmilner
 Tags: notifications, alert, slack, discord, email
 Requires at least: 4.3
-Tested up to: 6.6
+Tested up to: 6.8
 Requires PHP: 7.2
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 License: GPLv2 or later
 License URI: http://ww.gnu.org/licenses/gpl-2.0.html
 
@@ -75,6 +75,9 @@ Stay in the know with [Hey Notify Pro](https://heynotifywp.com/pro/). Premium fe
 2. Hey Notify Settings Page
 
 == Changelog ==
+
+= 2.1.1 =
+* Fixed an issue that caused Slack notifications to not send.
 
 = 2.1.0 =
 * Microsoft Teams support has been removed due to changes with Office 365 connectors.

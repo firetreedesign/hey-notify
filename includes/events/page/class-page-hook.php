@@ -24,7 +24,6 @@ class Page_Hook extends Hook {
 	 * @return void
 	 */
 	public function page_draft( $post ) {
-
 		if ( empty( $post ) || ! is_object( $post ) ) {
 			return;
 		}

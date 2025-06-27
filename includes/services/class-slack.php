@@ -31,6 +31,7 @@ class Slack extends Service {
 		// Actions.
 		\add_action( 'hey_notify_send_message_slack', array( $this, 'send' ), 10, 3 );
 		\add_action( 'admin_init', array( $this, 'settings' ) );
+		\add_action( 'hey_notify_slack_settings_core', array( $this, 'get_core_settings' ), 10, 1 );
 
 		// Filters.
 		\add_filter( 'hey_notify_settings_page_tabs', array( $this, 'settings_page_tabs' ) );
@@ -170,6 +171,23 @@ class Slack extends Service {
 	}
 
 	/**
+	 * Get service settings
+	 *
+	 * @param object $data Data.
+	 * @return boolean|array
+	 */
+	public function get_core_settings( $data ) {
+
+		if ( ! is_object( $data ) || ! isset( $data->ID ) ) {
+			return false;
+		}
+
+		return array(
+			'webhook_url' => \get_post_meta( $data->ID, '_hey_notify_slack_webhook', true ),
+		);
+	}
+
+	/**
 	 * Add the service
 	 *
 	 * @param array $services Services.
@@ -192,6 +210,7 @@ class Slack extends Service {
 	 * @return string
 	 */
 	private function sanitize( $value ) {
+		$value = null === $value ? '' : $value;
 		$value = str_replace( '&', '&amp;', $value );
 		$value = str_replace( '<', '&lt;', $value );
 		$value = str_replace( '>', '&gt;', $value );
@@ -301,27 +320,8 @@ class Slack extends Service {
 			);
 		}
 
-		$body = array();
-
-		$body['attachments'][] = array(
-			'color'  => $settings['color'],
-			'blocks' => $blocks,
-		);
-
-		if ( '' !== $settings['username'] ) {
-			$body['username'] = $settings['username'];
-		}
-
-		if ( '' !== $settings['icon'] ) {
-			if ( filter_var( $settings['icon'], FILTER_VALIDATE_URL ) ) {
-				$body['icon_url'] = $settings['icon'];
-			} else {
-				$icon_url = \wp_get_attachment_image_url( $settings['icon'], array( 250, 250 ) );
-				if ( false !== $icon_url ) {
-					$body['icon_url'] = $icon_url;
-				}
-			}
-		}
+		$body           = array();
+		$body['blocks'] = $blocks;
 
 		return $body;
 	}
@@ -335,7 +335,6 @@ class Slack extends Service {
 	 * @return void
 	 */
 	public function send( $message, $trigger, $data ) {
-
 		$settings = \apply_filters( "hey_notify_slack_settings_{$trigger}", $data );
 
 		if ( ! is_array( $settings ) || ! isset( $settings['webhook_url'] ) ) {
